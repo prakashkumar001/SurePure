@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SurePure</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="copyright">\u00A9 2017 copyright all rights reserved</string>
+    <string name="Rupees">\u20B9 </string>
+    <string name="press_again">Press again to Exit</string>
+    <string name="runtime_permissions_txt">Please enable ALL permissions from app settings.</string>
+
+</resources>

@@ -1,0 +1,71 @@
+package com.sure.pure;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
+import android.widget.Button;
+import android.widget.EditText;
+
+/**
+ * Created by Creative IT Works on 09-Jun-17.
+ */
+
+public class Profile extends AppCompatActivity {
+
+    EditText name,email,phonenumber,pinnumber,address;
+    Button submit;
+    private CollapsingToolbarLayout collapsingToolbarLayout = null;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.profile);
+
+        name=(EditText)findViewById(R.id.user);
+        email=(EditText)findViewById(R.id.email);
+        phonenumber=(EditText)findViewById(R.id.phone);
+        pinnumber=(EditText)findViewById(R.id.pin);
+        address=(EditText)findViewById(R.id.address);
+        submit=(Button)findViewById(R.id.submit);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle("Prakash");
+
+        dynamicToolbarColor();
+
+        toolbarTextAppernce();
+
+    }
+
+    private void dynamicToolbarColor() {
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+                R.drawable.water1);
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(getResources().getColor(R.color.colorPrimary)));
+                collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedColor(getResources().getColor(R.color.colorPrimaryDark)));
+            }
+        });
+    }
+
+
+    private void toolbarTextAppernce() {
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
+    }
+
+
+}
