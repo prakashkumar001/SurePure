@@ -161,10 +161,26 @@ public class MainActivity extends AppCompatActivity
 
         if(id==R.id.history)
         {
-            Intent i=new Intent(MainActivity.this,Order_History.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-            finish();
+
+            if(databaseHelper.getSignup()=="false")
+            {
+                Intent i=new Intent(MainActivity.this,Login.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+
+
+
+            }else {
+
+                Intent i=new Intent(MainActivity.this,Order_History.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+
+            }
+
+
+
         }
 
         if(id==R.id.logout)
@@ -179,10 +195,23 @@ public class MainActivity extends AppCompatActivity
 
          if(id==R.id.profile)
         {
-            Intent i=new Intent(MainActivity.this,Profile.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-            finish();
+            if(databaseHelper.getSignup()=="false")
+            {
+                Intent i=new Intent(MainActivity.this,Login.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+
+
+
+            }else {
+
+                Intent i=new Intent(MainActivity.this,Profile.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+
+            }
+
         }
 
 

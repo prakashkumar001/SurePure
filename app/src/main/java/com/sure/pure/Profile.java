@@ -1,5 +1,6 @@
 package com.sure.pure;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -63,15 +64,15 @@ public class Profile extends AppCompatActivity {
 
     private void dynamicToolbarColor() {
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+       /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.water1);
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
-            public void onGenerated(Palette palette) {
-                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(getResources().getColor(R.color.colorPrimary)));
-                collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedColor(getResources().getColor(R.color.colorPrimaryDark)));
-            }
-        });
+            public void onGenerated(Palette palette) {*/
+                collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorPrimary));
+                collapsingToolbarLayout.setStatusBarScrimColor(getResources().getColor(R.color.colorPrimaryDark));
+          /*  }
+        });*/
     }
 
 
@@ -79,6 +80,13 @@ public class Profile extends AppCompatActivity {
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        finish();
+    }
 
 }
