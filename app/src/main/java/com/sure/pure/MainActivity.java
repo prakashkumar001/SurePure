@@ -32,7 +32,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sure.pure.badge.BadgeDrawable;
+
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Home;
@@ -79,8 +79,12 @@ public class MainActivity extends AppCompatActivity
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.name);
         ImageView userpic = (ImageView)hView.findViewById(R.id.profile);
-        nav_user.setText(databaseHelper.getUser().name);
-        userpic.setImageResource(R.drawable.sundar);
+        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
+        {
+            nav_user.setText(databaseHelper.getUser().name);
+            userpic.setImageResource(R.drawable.sundar);
+
+        }
 
 
 
@@ -245,23 +249,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public static void setBadgeCount(Context context, LayerDrawable icon, String count) {
 
-        BadgeDrawable badge;
-
-        // Reuse drawable if possible
-        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_badge);
-        if (reuse != null && reuse instanceof BadgeDrawable) {
-            badge = (BadgeDrawable) reuse;
-        } else {
-            badge = new BadgeDrawable(context);
-        }
-
-        badge.setCount(count);
-        icon.mutate();
-        icon.setDrawableByLayerId(R.id.ic_badge, badge);
-
-    }
 
 
 
