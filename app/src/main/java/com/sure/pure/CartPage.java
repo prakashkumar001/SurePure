@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.sure.pure.adapter.CartpageAdapter;
 import com.sure.pure.badge.BadgeDrawable;
 import com.sure.pure.common.GlobalClass;
+import com.sure.pure.db.DatabaseHelper;
 
 import static android.view.Gravity.BOTTOM;
 
@@ -47,6 +48,7 @@ public class CartPage extends AppCompatActivity {
     TextView emptytext;
     public static TextView title,cartcount;
     ImageView carticon;
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class CartPage extends AppCompatActivity {
         emptytext=(TextView)findViewById(R.id.empty);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-
+        databaseHelper=new DatabaseHelper(getApplicationContext());
           // getSupportActionBar().setIcon(R.drawable.logo);
 
         if(global.cartValues.size()>0)
@@ -134,8 +136,27 @@ public class CartPage extends AppCompatActivity {
 */
 
 // How to retrieve your Java object back from the string
-                    Intent i=new Intent(CartPage.this,CommingSoon.class);
-                    startActivity(i);
+
+                    if(databaseHelper.getSignup()=="false")
+                 {
+                    Intent mainIntent = new Intent(
+                        CartPage.this,
+                        Login.class);
+
+                    CartPage.this.startActivity(mainIntent);
+
+
+
+                }else {
+                    Intent mainIntent = new Intent(
+                            CartPage.this,
+                            CommingSoon.class);
+
+                        CartPage.this.startActivity(mainIntent);
+
+                      }
+
+
 
                 }
             });

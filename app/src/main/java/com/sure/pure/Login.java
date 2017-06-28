@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -68,7 +69,7 @@ public class Login extends RuntimePermissionActivity {
     public String names,pass;
     ImageView back;
     Button signupfree;
-    int backPressedCount=0;
+
     private static final int REQUEST_PERMISSIONS = 20;
     DatabaseHelper databaseHelper;
    GlobalClass global;
@@ -258,8 +259,10 @@ public class Login extends RuntimePermissionActivity {
                                             databaseHelper.addUser(global.user);
                                         }
                                                 Intent i=new Intent(Login.this,MainActivity.class);
-                                                startActivity(i);
-                                                finish();
+                                        ActivityCompat.finishAffinity(Login.this);
+
+                                        startActivity(i);
+                                        finish();
                                             }
 
 
@@ -344,33 +347,9 @@ public class Login extends RuntimePermissionActivity {
     @Override
     public void onBackPressed() {
 
+        finish();
 
-            int count = getFragmentManager().getBackStackEntryCount();
-            if (count == 0) {
-                if (backPressedCount == 1) {
-                    finish();
-                } else {
-                    backPressedCount++;
-                   Toast toast= Toast.makeText(getApplicationContext(), getResources().getString(R.string.press_again), Toast.LENGTH_SHORT);
 
-                    toast.show();
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            //super.run();
-                            try {
-                                sleep(3000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } finally {
-                                backPressedCount = 0;
-                            }
-                        }
-                    }.start();
-                }
-            } else{
-                super.onBackPressed();
-            }
 
 
         }

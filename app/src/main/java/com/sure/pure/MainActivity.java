@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     ImageView carticon,sorticon,profile;
     Point p;
     DatabaseHelper databaseHelper;
-
+    int backPressedCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +116,37 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+
+        int count = getFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            if (backPressedCount == 1) {
+                finish();
+            } else {
+                backPressedCount++;
+                Toast toast= Toast.makeText(getApplicationContext(), getResources().getString(R.string.press_again), Toast.LENGTH_SHORT);
+
+                toast.show();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        //super.run();
+                        try {
+                            sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            backPressedCount = 0;
+                        }
+                    }
+                }.start();
+            }
+        } else{
             super.onBackPressed();
         }
+
+
+
     }
 
 
@@ -229,4 +257,6 @@ public class MainActivity extends AppCompatActivity
 
         popup.show();
     }
+
+
 }

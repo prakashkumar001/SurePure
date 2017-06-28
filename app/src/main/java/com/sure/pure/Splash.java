@@ -28,7 +28,7 @@ public class Splash extends AppCompatActivity {
                 overridePendingTransition(R.anim.fadeinact,
                         R.anim.fadeoutact);
 
-                if(databaseHelper.getSignup()=="false")
+               /* if(databaseHelper.getSignup()=="false")
                 {
                     Intent mainIntent = new Intent(
                         Splash.this,
@@ -37,14 +37,14 @@ public class Splash extends AppCompatActivity {
                     Splash.this.startActivity(mainIntent);
 
 
-                }else {
+                }else {*/
                     Intent mainIntent = new Intent(
                             Splash.this,
                             MainActivity.class);
 
                     Splash.this.startActivity(mainIntent);
 
-                }
+              //  }
 
 
             }
