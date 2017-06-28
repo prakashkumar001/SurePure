@@ -30,14 +30,17 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView orderid,ordertype,orderquantity,orderstatus;
+        TextView orderid,paymenttype,orderquantity,orderstatus,prd_name,prd_price,paymentdate;
 
         public MyViewHolder(View view) {
             super(view);
             orderid = (TextView) view.findViewById(R.id.orderid);
-            ordertype = (TextView) view.findViewById(R.id.ordertype);
+            paymenttype = (TextView) view.findViewById(R.id.ordertype);
             orderquantity = (TextView) view.findViewById(R.id.orderqunatity);
             orderstatus = (TextView) view.findViewById(R.id.orderstatus);
+            prd_name = (TextView) view.findViewById(R.id.productname);
+            prd_price = (TextView) view.findViewById(R.id.price);
+            paymentdate = (TextView) view.findViewById(R.id.date);
 
 
 
@@ -68,10 +71,13 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.MyViewHo
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         final Deliver item=items.get(position);
-        holder.orderid.setText(item.id);
-        holder.orderquantity.setText("1");
-        holder.ordertype.setText(item.message);
-        holder.orderstatus.setText(item.Status);
+        holder.orderid.setText(item.order_id);
+        holder.orderquantity.setText(item.prd_quantity);
+        holder.paymenttype.setText(item.payment_type);
+        holder.prd_name.setText(item.prd_name);
+        holder.prd_price.setText(item.prd_price);
+        holder.paymentdate.setText(item.payment_date);
+        holder.orderstatus.setText(item.status);
 
 
     }

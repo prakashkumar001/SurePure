@@ -399,14 +399,7 @@ public class Signup extends RuntimePermissionActivity {
                                         // if this button is clicked, close
                                         // current activity
                                         dialog.dismiss();
-                                        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
-                                        {
-                                            User users=new User(user,add,pin,emails,pass,profiledata(),phoneno,city);
-                                            databaseHelper.updateUser(users);
-                                        }else {
-                                            User users=new User(user,add,pin,emails,pass,profiledata(),phoneno,city);
-                                            databaseHelper.addUser(users);
-                                        }
+
                                         Intent i=new Intent(Signup.this,Login.class);
                                         startActivity(i);
                                         finish();

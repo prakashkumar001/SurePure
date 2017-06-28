@@ -77,6 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=" Name"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
 
         </android.support.design.widget.TextInputLayout>
@@ -92,6 +94,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
                 android:hint=" Email"
 
                 android:textColorHint="@android:color/darker_gray" />
@@ -108,6 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
                 android:hint=" Phone number"
                 android:textColorHint="@android:color/darker_gray"
 
@@ -124,6 +130,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:password="true"
                 android:hint=" Password"
 
                 android:textColorHint="@android:color/darker_gray" />
@@ -139,6 +148,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
                 android:hint="City"
                 android:textColorHint="@android:color/darker_gray" />
 
@@ -154,6 +165,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="Pin Number"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
 
         </android.support.design.widget.TextInputLayout>
@@ -170,6 +183,7 @@
                 android:inputType="textMultiLine"
                 android:paddingLeft="5dp"
                 android:gravity="top"
+                android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
 
         </android.support.design.widget.TextInputLayout>

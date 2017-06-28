@@ -17,14 +17,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 
 import com.sure.pure.common.GlobalClass;
+import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Delivered;
 import com.sure.pure.fragments.Pending;
 import com.sure.pure.model.Deliver;
 import com.sure.pure.model.Pendings;
 import com.sure.pure.utils.FileUploader;
+import com.sure.pure.utils.WSUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,20 +48,16 @@ public class Order_History extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     GlobalClass globalClass;
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderhistory);
         globalClass=(GlobalClass)getApplicationContext();
-
+        databaseHelper=new DatabaseHelper(getApplicationContext());
+        Log.i("user_id","user_id"+databaseHelper.getLoginid());
         uploadFile();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
-        tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
 
 
 
@@ -105,6 +105,7 @@ public class Order_History extends AppCompatActivity {
 
         class uploads extends AsyncTask<String, Void, String> {
             ProgressDialog dialog;
+            String response;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -115,59 +116,70 @@ public class Order_History extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String[] params) {
-                String charset = "UTF-8";
-                //File uploadFile1 = new File("e:/Test/PIC1.JPG");
-                //File uploadFile2 = new File("e:/Test/PIC2.JPG");
-
-                String response=null;
-                String requestURL = "http://sridharchits.com/surepure/index.php/mobile/mobile_userhistory";
-
                 try {
 
-                    FileUploader multipart = new FileUploader(requestURL, charset,getApplicationContext());
-                      multipart.addFormField("userid","7");
+                    HashMap<String,String> data=new HashMap<>();
 
-                    response = multipart.finish();
+                    data.put("user_id",databaseHelper.getUser().id);
 
-                    globalClass.deliverdata=new ArrayList<>();
-                    globalClass.pendingdata=new ArrayList<>();
+
+
+                    String requestURL = "http://sridharchits.com/surepure/index.php/mobile/mobile_userhistory";
+                    WSUtils utils=new WSUtils();
+                    response= utils.getResultFromHttpRequest(requestURL,"POST",data);
 
                     System.out.println("SERVER REPLIED:"+response);
 
-                    JSONArray array=new JSONArray(response);
-                    for(int i=0;i<array.length();i++)
-                    {
-                        JSONObject object=array.getJSONObject(i);
-                        String id=object.getString("id");
-                        String status=object.getString("status");
-                        String message=object.getString("message");
-
-                        if(status.equalsIgnoreCase("deliverd"))
-                        {
-                            globalClass.deliverdata.add(new Deliver(id,status,message));
-                        }else {
-                            globalClass.pendingdata.add(new Pendings(id,status,message));
-                        }
-                    }
 
 
-                    dialog.dismiss();
 
-
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     System.err.println(ex);
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-
                 return response;
             }
+
 
 
             @Override
             protected void onPostExecute(String o) {
 
+                globalClass.deliverdata=new ArrayList<>();
+                globalClass.pendingdata=new ArrayList<>();
                 dialog.dismiss();
+
+                try {
+                    JSONArray array=new JSONArray(o);
+                    for(int i=0;i<array.length();i++)
+                    {
+                        JSONObject object=array.getJSONObject(i);
+                        String orderid=object.getString("order_id");
+                        String productname=object.getString("prd_name");
+                        String productprice=object.getString("prd_price");
+                        String quantity=object.getString("qty");
+                        String payment_type=object.getString("payment_type");
+                        String status=object.getString("status");
+                        String payment_date=object.getString("payment_date");
+
+                        if(status.equalsIgnoreCase("paid"))
+                        {
+                            globalClass.deliverdata.add(new Deliver(orderid,status,productname,productprice,quantity,payment_date,payment_type));
+                        }else {
+                            globalClass.pendingdata.add(new Pendings(orderid,status,productname,productprice,quantity,payment_date,payment_type));
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                setupViewPager(viewPager);
+
+                tabLayout = (TabLayout) findViewById(R.id.tabs);
+                tabLayout.setupWithViewPager(viewPager);
+                tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+                tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
+
+
             }
         } new uploads().execute();
 

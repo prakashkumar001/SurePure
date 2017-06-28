@@ -7,9 +7,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.sure.pure.model.Deliver;
-import com.sure.pure.model.Pendings;
-import com.sure.pure.model.Product;
+import com.sure.pure.model.*;
 
 import java.util.ArrayList;
 
@@ -22,6 +20,7 @@ public class GlobalClass extends Application {
     public static String listmodel;
     public static ArrayList<Deliver> deliverdata=new ArrayList<>();
     public static ArrayList<Pendings> pendingdata=new ArrayList<>();
+    public static com.sure.pure.common.User user;
 
 
     public static String Userid;

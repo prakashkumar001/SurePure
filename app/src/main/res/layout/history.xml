@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+  <TextView
+      android:id="@+id/title"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:textSize="20dp"
+      android:text=""
+      />
+
   <android.support.v7.widget.RecyclerView
       android:id="@+id/orderhistory"
       android:layout_width="match_parent"

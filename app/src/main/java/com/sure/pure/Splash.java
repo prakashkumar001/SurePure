@@ -28,7 +28,7 @@ public class Splash extends AppCompatActivity {
                 overridePendingTransition(R.anim.fadeinact,
                         R.anim.fadeoutact);
 
-                if(databaseHelper.getLogin()=="false")
+                if(databaseHelper.getSignup()=="false")
                 {
                     Intent mainIntent = new Intent(
                         Splash.this,

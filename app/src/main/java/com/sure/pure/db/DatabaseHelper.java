@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sure.pure.model.User;
+
+import com.sure.pure.common.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_SIGNUP = "signup";
 
+    private static final String TABLE_USER_DETAIL = "user_detail";
+
     // Contacts Table Columns names
     private static final String ID = "id";
+    private static final String USERID = "user_id";
     private static final String NAME = "name";
     private static final String EMAIL = "email";
     private static final String PIN = "pin";
     private static final String ADDRESS = "address";
+    private static final String COUNTRY = "country";
     private static final String CITY = "city";
     private static final String IMAGE ="image";
     private static final String PASSWORD = "password";
@@ -45,13 +50,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SIGNUP_TABLE = "CREATE TABLE " + TABLE_SIGNUP + "("
-                + ID + " INTEGER PRIMARY KEY," + NAME + " TEXT," + EMAIL + " TEXT," + PIN + " TEXT,"+ IMAGE + " BLOB,"+ PASSWORD + " TEXT,"+ CITY + " TEXT," +PHONE + " TEXT,"+ ADDRESS + " TEXT" + ")";
+                + ID + " INTEGER PRIMARY KEY," + USERID + " TEXT,"+ NAME + " TEXT," + EMAIL + " TEXT," + PIN + " TEXT,"+ IMAGE + " BLOB,"+ PASSWORD + " TEXT,"+ CITY + " TEXT," +PHONE + " TEXT,"+ ADDRESS + " TEXT" + ")";
 
         String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_LOGIN + "("
-                + ID + " INTEGER PRIMARY KEY," + EMAIL + " TEXT," + PASSWORD + " TEXT" +  ")";
+                + ID + " INTEGER PRIMARY KEY," + USERID + " TEXT," + EMAIL + " TEXT," + PASSWORD + " TEXT" +  ")";
+
+        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER_DETAIL + "("
+                + ID + " INTEGER PRIMARY KEY," + USERID + " TEXT,"+ NAME + " TEXT," + EMAIL + " TEXT," + PHONE + " TEXT,"+ COUNTRY + " TEXT,"+ IMAGE + " BLOB,"+ CITY + " TEXT," +ADDRESS + " TEXT,"+ PIN + " TEXT" + ")";
 
         db.execSQL(CREATE_SIGNUP_TABLE);
         db.execSQL(CREATE_LOGIN_TABLE);
+        db.execSQL(CREATE_USER_TABLE);
 
     }
 
@@ -60,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SIGNUP);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_DETAIL);
 
 
         // Create tables again
@@ -71,37 +81,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PIN, user.pin); // Contact Name
+        values.put(USERID, user.id); // Contact Name
         values.put(NAME, user.name); // Contact Phone Number
         values.put(ADDRESS, user.address);
-        values.put(IMAGE, user.image);
+        values.put(IMAGE, "");
         values.put(EMAIL, user.email);
-        values.put(PASSWORD, user.password);
-        values.put(PHONE, user.phone);
+        values.put(PHONE, user.mobile);
+        values.put(CITY, user.city);
+        values.put(PIN, user.pincode);
         // Inserting Row
-        db.insert(TABLE_SIGNUP, null, values);
+        db.insert(TABLE_USER_DETAIL, null, values);
         db.close(); // Closing database connection
     }
 
-    public int updateUser(User staff) {
+    public int updateUser(User user) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
 
 
         ContentValues values = new ContentValues();
-        values.put(PIN, staff.pin); // Contact Name
-        values.put(NAME, staff.name); // Contact Phone Number
-        values.put(ADDRESS, staff.address);
-        values.put(IMAGE, staff.image);
-        values.put(EMAIL, staff.email);
-        values.put(PASSWORD, staff.password);
-        values.put(PHONE, staff.phone);
+        values.put(USERID, user.id); // Contact Name
+        values.put(NAME, user.name); // Contact Phone Number
+        values.put(ADDRESS, user.address);
+        //values.put(IMAGE, user.image);
+        values.put(EMAIL, user.email);
+        values.put(PHONE, user.mobile);
+        values.put(CITY, user.city);
+        values.put(PIN, user.pincode);
 
 
         // updating row
 
-        return db.update(TABLE_SIGNUP, values, ID + " = ?",
+        return db.update(TABLE_USER_DETAIL, values, ID + " = ?",
 
                 new String[] { String.valueOf(1) });
 
@@ -111,11 +123,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         User user=null;
         String resume="";
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT  *  FROM " + TABLE_SIGNUP  ;
+        String selectQuery = "SELECT  *  FROM " + TABLE_USER_DETAIL  ;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                user=new User(cursor.getString(1),cursor.getString(6),cursor.getString(3),cursor.getString(2),cursor.getString(5),cursor.getBlob(4),cursor.getString(8),cursor.getString(7));
+                user=new User(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9));
 
 
             } while (cursor.moveToNext());
@@ -127,15 +139,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Adding new contact
-    public void addLogin(String email, String password) {
+    public void addLogin(String id,String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
 
-
+        values.put(USERID, id);
         values.put(EMAIL, email);
         values.put(PASSWORD, password);
+
 
         // Inserting Row
         db.insert(TABLE_LOGIN, null, values);
@@ -160,14 +173,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int updateLogin(String email, String password) {
+    public String getLoginid() {
+        String userid="false";
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT  *  FROM " + TABLE_LOGIN  ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+                userid=cursor.getString(1);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return userid;
+
+    }
+
+    public int updateLogin(String id,String email, String password) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
 
 
         ContentValues values = new ContentValues();
-
+        values.put(USERID, id);
         values.put(EMAIL, email);
         values.put(PASSWORD, password);
 
@@ -193,7 +224,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String getSignup() {
         String user="false";
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT  *  FROM " + TABLE_SIGNUP  ;
+        String selectQuery = "SELECT  *  FROM " + TABLE_USER_DETAIL  ;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {

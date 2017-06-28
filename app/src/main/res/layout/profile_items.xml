@@ -10,92 +10,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:layout_marginTop="50dp"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"
-        android:text="Profile"
+        android:text="Hello Prakash"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:gravity="center"
+
         >
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/userwrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-            <EditText
+
+            <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:hint="Enter your name"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:gravity="center"
                 android:layout_height="wrap_content" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/emailwrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-            <EditText
+
+
+            <TextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:gravity="center"
+
                 android:layout_height="wrap_content"
-                android:hint="Enter your email"
 
                 />
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/phonewrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-            <EditText
+            <TextView
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your phone number"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:gravity="center"
+
 
                 />
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/pinwrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-            <EditText
+            <TextView
                 android:id="@+id/pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your postal code"
+                android:textSize="20dp"
+                android:gravity="center"
+
+                android:layout_marginTop="10dp"
 
                 />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/addresswrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-            <EditText
+
+            <TextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your Address"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:gravity="center"
+
 
                 />
-        </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:textColor="@android:color/white"
-            android:text="Submit"/>
+
+
     </LinearLayout>
 </LinearLayout>

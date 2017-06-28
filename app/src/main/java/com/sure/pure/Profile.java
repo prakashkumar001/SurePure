@@ -11,6 +11,10 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.sure.pure.common.User;
+import com.sure.pure.db.DatabaseHelper;
 
 /**
  * Created by Creative IT Works on 09-Jun-17.
@@ -18,21 +22,23 @@ import android.widget.EditText;
 
 public class Profile extends AppCompatActivity {
 
-    EditText name,email,phonenumber,pinnumber,address;
-    Button submit;
+    TextView name,email,phonenumber,pinnumber,address;
+    DatabaseHelper databaseHelper;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
-
+    User user;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        name=(EditText)findViewById(R.id.user);
-        email=(EditText)findViewById(R.id.email);
-        phonenumber=(EditText)findViewById(R.id.phone);
-        pinnumber=(EditText)findViewById(R.id.pin);
-        address=(EditText)findViewById(R.id.address);
-        submit=(Button)findViewById(R.id.submit);
+        databaseHelper=new DatabaseHelper(getApplicationContext());
+        user=databaseHelper.getUser();
+        name=(TextView)findViewById(R.id.name);
+        email=(TextView)findViewById(R.id.email);
+        phonenumber=(TextView)findViewById(R.id.phone);
+        pinnumber=(TextView)findViewById(R.id.pin);
+        address=(TextView)findViewById(R.id.address);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,11 +46,18 @@ public class Profile extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Prakash");
+        collapsingToolbarLayout.setTitle("Profile");
 
         dynamicToolbarColor();
 
         toolbarTextAppernce();
+
+        name.setText(user.name);
+        email.setText(user.email);
+        phonenumber.setText(user.mobile);
+        pinnumber.setText(user.pincode);
+        address.setText(user.address);
+
 
     }
 

@@ -35,17 +35,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Home;
-import com.sure.pure.model.User;
+import com.sure.pure.common.User;
 import com.sure.pure.utils.FileUploader;
 import com.sure.pure.utils.RuntimePermissionActivity;
+import com.sure.pure.utils.WSUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.view.Gravity.CENTER;
@@ -61,13 +65,13 @@ public class Login extends RuntimePermissionActivity {
     EditText user,password;
     Button signin;
     private Boolean saveLogin;
-    String name,pass;
+    public String names,pass;
     ImageView back;
     Button signupfree;
     int backPressedCount=0;
     private static final int REQUEST_PERMISSIONS = 20;
     DatabaseHelper databaseHelper;
-
+   GlobalClass global;
 
     //Toolbar toolbar;
     @Override
@@ -80,6 +84,7 @@ public class Login extends RuntimePermissionActivity {
         back=(ImageView) findViewById(R.id.back);
         signupfree=(Button)findViewById(R.id.signupfree);
         databaseHelper=new DatabaseHelper(getApplicationContext());
+        global=(GlobalClass)getApplicationContext();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
@@ -104,34 +109,20 @@ public class Login extends RuntimePermissionActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = user.getText().toString();
+                names = user.getText().toString();
                 pass = password.getText().toString();
 
 
 
-                if(name.length()>0 && pass.length()>0)
+                if(names.length()>0 && pass.length()>0)
                 {
-                    if(name.equalsIgnoreCase("admin@surepure.com") && pass.equalsIgnoreCase("123456"))
-                    {
-                        if(databaseHelper.getLogin().equalsIgnoreCase("true"))
-                        {
-                            databaseHelper.updateLogin(name,pass);
-                        }else {
-                            databaseHelper.addLogin(name,pass);
-                        }
 
-                        Intent i=new Intent(Login.this,MainActivity.class);
-                        startActivity(i);
-                        finish();
-
-                    }else
-                    {
                         loginService();
-                    }
 
-                }else if(name.equalsIgnoreCase("") || pass.equalsIgnoreCase(""))
+
+                }else if(names.equalsIgnoreCase("") || pass.equalsIgnoreCase(""))
                 {
-                    if(name.equalsIgnoreCase("") && pass.equalsIgnoreCase("") )
+                    if(names.equalsIgnoreCase("") && pass.equalsIgnoreCase("") )
                     {
                         user.setError("Username is invalid");
                         password.setError("Password is invalid");
@@ -171,7 +162,7 @@ public class Login extends RuntimePermissionActivity {
 
     public void loginService()
     {
-        class uploadTOserver extends AsyncTask<String, Void, String> {
+        class uploadTOserver extends AsyncTask<String, String, String> {
             ProgressDialog dialog;
             String response=null;
             @Override
@@ -186,21 +177,21 @@ public class Login extends RuntimePermissionActivity {
                 try {
 
                     String charset = "UTF-8";
+                    HashMap<String,String> data=new HashMap<>();
+                    data.put("email",names);
+                    data.put("password",pass);
 
 
                     String requestURL = "http://sridharchits.com/surepure/index.php/mobile/mobile_login";
-                    FileUploader multipart = new FileUploader(requestURL, charset,Login.this);
+                    WSUtils utils=new WSUtils();
+                     response= utils.getResultFromHttpRequest(requestURL,"POST",data);
 
-
-                    multipart.addFormField("email", name);
-                    multipart.addFormField("password", pass);
-
-
-                   response = multipart.finish();
                     System.out.println("SERVER REPLIED:"+response);
 
+                    dialog.dismiss();
 
-                } catch (IOException ex) {
+
+                } catch (Exception ex) {
                     System.err.println(ex);
                 }
                 return response;
@@ -210,13 +201,39 @@ public class Login extends RuntimePermissionActivity {
             @Override
             protected void onPostExecute(String o) {
 
-                dialog.dismiss();
 
-                JSONObject object= null;
+
+
+
+
+                Log.i("DATADATADATA","DATADATADATA"+response);
                 try {
-                    object = new JSONObject(o);
-                    String status=object.getString("status");
-                    if(status.equalsIgnoreCase("success"))
+
+                    JSONArray object = new JSONArray(response);
+
+
+                    for(int i=0;i<object.length();i++)
+                    {
+
+
+
+                    JSONObject object1=object.getJSONObject(0);
+                    String id=object1.getString("id");
+                    String name=object1.getString("uname");
+                    String email=object1.getString("email");
+                    String phone=object1.getString("mobile");
+                    String city=object1.getString("city");
+                    String address=object1.getString("address");
+                    String country=object1.getString("country");
+                    String pincode=object1.getString("pincode");
+
+
+                    User user1=new User(id,name,email,phone,country,null,city,address,pincode);
+
+
+                    global.user=user1;
+                    }
+                    if(global.user.name.length()>0)
                     {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 Login.this);
@@ -233,27 +250,20 @@ public class Login extends RuntimePermissionActivity {
                                         // if this button is clicked, close
                                         // current activity
                                         dialog.dismiss();
-                                        JSONObject object= null;
-                                        try {
-                                            object = new JSONObject(response);
-                                            String status=object.getString("status");
-                                            if(status.equalsIgnoreCase("success"))
-                                            {
-                                                if(databaseHelper.getLogin().equalsIgnoreCase("true"))
-                                                {
-                                                    databaseHelper.updateLogin(name,pass);
-                                                }else {
-                                                    databaseHelper.addLogin(name,pass);
-                                                }
+
+                                        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
+                                        {
+                                            databaseHelper.updateUser(global.user);
+                                        }else {
+                                            databaseHelper.addUser(global.user);
+                                        }
                                                 Intent i=new Intent(Login.this,MainActivity.class);
                                                 startActivity(i);
                                                 finish();
                                             }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
 
-                                    }
+
+
                                 })
                                 .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
@@ -268,16 +278,7 @@ public class Login extends RuntimePermissionActivity {
 
                         // show it
                         alertDialog.show();
-
-
-
-
-
-
-
-                    }else
-                    {
-                        // Toast.makeText(Signup.this,"Please try again Later",Toast.LENGTH_SHORT).show();
+                    }else {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 Login.this);
 
@@ -303,11 +304,35 @@ public class Login extends RuntimePermissionActivity {
                         // show it
                         alertDialog.show();
 
-
-
                     }
 
+
                 } catch (JSONException e) {
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            Login.this);
+
+                    // set title
+                    alertDialogBuilder.setTitle("Alert");
+
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Please try again Later")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    dialog.dismiss();
+                                }
+                            });
+
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
                     e.printStackTrace();
                 }
 
