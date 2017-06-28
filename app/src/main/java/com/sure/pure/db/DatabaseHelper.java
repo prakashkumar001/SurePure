@@ -215,7 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        return db.delete(TABLE_LOGIN, ID + " = ?",
+        return db.delete(TABLE_USER_DETAIL, ID + " = ?",
 
                 new String[] { String.valueOf(1) });
 
