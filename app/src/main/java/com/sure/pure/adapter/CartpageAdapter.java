@@ -195,8 +195,10 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 set.start();
                 if(global.cartValues.size()>0)
                 {
+                    CartPage.cartcount.setVisibility(View.VISIBLE);
                     CartPage.total.setText(String.valueOf(totalvalue()));
                 }else {
+                    CartPage.cartcount.setVisibility(View.GONE);
                     CartPage.total.setText("0.0");
                 }
               /*  MainActivity.setBadgeCount(ctx,MainActivity.icon, String.valueOf(global.cartValues.size()));

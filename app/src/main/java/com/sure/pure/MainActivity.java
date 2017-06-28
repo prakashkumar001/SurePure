@@ -91,7 +91,10 @@ public class MainActivity extends AppCompatActivity
 
         if(global.cartValues.size()>0)
         {
+            cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
+        }else {
+            cartcount.setVisibility(View.GONE);
         }
 
         carticon.setOnClickListener(new View.OnClickListener() {

@@ -74,7 +74,10 @@ public class ProductDetailPage extends AppCompatActivity {
 
         if(global.cartValues.size()>0)
         {
+            cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
+        }else {
+            cartcount.setVisibility(View.GONE);
         }
 
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
@@ -283,6 +286,7 @@ public class ProductDetailPage extends AppCompatActivity {
                       setBadgeCount(getApplicationContext(),icon,global.BadgeCount);
 */
 
+                      cartcount.setVisibility(View.VISIBLE);
                       AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ProductDetailPage.this,R.animator.flip);
                       set.setTarget(cartcount);
                       cartcount.setText(String.valueOf(global.cartValues.size()));

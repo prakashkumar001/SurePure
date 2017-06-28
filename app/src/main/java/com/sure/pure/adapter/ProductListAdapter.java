@@ -206,6 +206,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                    */ Toast.makeText(ctx,product.get(position).getProductname()+" "+"Added in the cart", Toast.LENGTH_SHORT).show();
                     // notifyDataSetChanged();
 
+                    MainActivity.cartcount.setVisibility(View.VISIBLE);
                     AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx,R.animator.flip);
                     set.setTarget(MainActivity.cartcount);
                     MainActivity.cartcount.setText(global.BadgeCount);

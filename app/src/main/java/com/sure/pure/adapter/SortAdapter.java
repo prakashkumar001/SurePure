@@ -94,7 +94,7 @@ public class SortAdapter extends BaseAdapter {
 
             HolderClass.optionSelected = mPosition;
 
-            Toast.makeText(context,"You selected"+data.get(HolderClass.optionSelected), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context,"You selected"+data.get(HolderClass.optionSelected), Toast.LENGTH_SHORT).show();
             notifyDataSetChanged();
 
         }
