@@ -20,7 +20,7 @@ public class GlobalClass extends Application {
     public static String listmodel;
     public static ArrayList<Deliver> deliverdata=new ArrayList<>();
     public static ArrayList<Pendings> pendingdata=new ArrayList<>();
-    public static com.sure.pure.common.User user;
+    public static User user;
 
 
     public static String Userid;
