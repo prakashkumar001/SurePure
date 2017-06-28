@@ -47,13 +47,12 @@ public class Profile extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Profile");
+        collapsingToolbarLayout.setTitle(user.name);
 
         dynamicToolbarColor();
 
         toolbarTextAppernce();
 
-        name.setText(user.name);
         email.setText(user.email);
         phonenumber.setText(user.mobile);
         pinnumber.setText(user.pincode);

@@ -75,6 +75,15 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.name);
+        ImageView userpic = (ImageView)hView.findViewById(R.id.profile);
+        nav_user.setText(databaseHelper.getUser().name);
+        userpic.setImageResource(R.drawable.sundar);
+
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         selectFirstItemAsDefault();
