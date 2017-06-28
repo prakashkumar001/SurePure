@@ -134,6 +134,8 @@ public class CartPage extends AppCompatActivity {
 */
 
 // How to retrieve your Java object back from the string
+                    Intent i=new Intent(CartPage.this,CommingSoon.class);
+                    startActivity(i);
 
                 }
             });
