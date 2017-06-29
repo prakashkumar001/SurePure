@@ -3,6 +3,7 @@ package com.sure.pure.adapter;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,8 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
 
 
      ImageLoader loader;
+    Typeface fonts,bold;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView productname,description;
         public TextView offerprice,quantity;
@@ -76,6 +79,8 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         global=(GlobalClass)ctx;
        // drawables=new int[]{R.drawable.apple,R.drawable.banana,R.drawable.kiwi,R.drawable.grapes,R.drawable.starwbery,R.drawable.orange,R.drawable.watermelon};
         loader=ImageLoader.getInstance();
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Bold.ttf");
     }
 
     @Override
@@ -117,7 +122,15 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         holder.productname.setText(global.cartValues.get(position).getProductname());
         holder.description.setText(global.cartValues.get(position).getProductdes());
         holder.offerprice.setText(global.cartValues.get(position).getOfferprice());
-       //holder.image.setImageResource(global.cartValues.get(position).getProductimage());
+
+
+        holder.total.setTypeface(fonts);
+        holder.productname.setTypeface(bold);
+        holder.description.setTypeface(fonts);
+        holder.offerprice.setTypeface(fonts);
+
+
+        //holder.image.setImageResource(global.cartValues.get(position).getProductimage());
        loader.displayImage("http://sridharchits.com/surepure/uploads/products/"+global.cartValues.get(position).getProductimage(),holder.image,options);
         holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
 
@@ -157,6 +170,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 global.cartValues.get(position).setTotalprice(String.valueOf(b));
                 holder.total.setText(seller+String.valueOf(b));
                 CartPage.total.setText(String.valueOf(totalvalue()));
+                CartPage.sub.setText(String.valueOf(totalvalue()));
 
             }
         });
@@ -183,6 +197,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 global.cartValues.get(position).setTotalprice(String.valueOf(b));
                 holder.total.setText(seller+String.valueOf(b));
                 CartPage.total.setText(String.valueOf(totalvalue()));
+                CartPage.sub.setText(String.valueOf(totalvalue()));
             }
         });
 
@@ -199,9 +214,11 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 {
                     CartPage.cartcount.setVisibility(View.VISIBLE);
                     CartPage.total.setText(String.valueOf(totalvalue()));
+                    CartPage.sub.setText(String.valueOf(totalvalue()));
                 }else {
                     CartPage.cartcount.setVisibility(View.GONE);
                     CartPage.total.setText("0.0");
+                    CartPage.sub.setText("0.0");
                 }
               /*  MainActivity.setBadgeCount(ctx,MainActivity.icon, String.valueOf(global.cartValues.size()));
                 CartPage.setBadgeCount(ctx,CartPage.icon, String.valueOf(global.cartValues.size()));

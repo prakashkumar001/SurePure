@@ -3,6 +3,7 @@ package com.sure.pure;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -23,10 +24,11 @@ import com.sure.pure.db.DatabaseHelper;
 
 public class Profile extends AppCompatActivity {
 
-    TextView name,email,phonenumber,pinnumber,address;
+    TextView name,email,phonenumber,pinnumber,address,address_info,personal;
     DatabaseHelper databaseHelper;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     User user;
+    Typeface font;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,8 @@ public class Profile extends AppCompatActivity {
         databaseHelper=new DatabaseHelper(getApplicationContext());
         user=databaseHelper.getUser();
         name=(TextView)findViewById(R.id.name);
+        address_info=(TextView)findViewById(R.id.address_info);
+        personal=(TextView)findViewById(R.id.personal);
         email=(TextView)findViewById(R.id.email);
         phonenumber=(TextView)findViewById(R.id.phone);
         pinnumber=(TextView)findViewById(R.id.pin);
@@ -47,11 +51,25 @@ public class Profile extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+         font = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
         collapsingToolbarLayout.setTitle(user.name);
+
 
         dynamicToolbarColor();
 
         toolbarTextAppernce();
+
+        name.setTypeface(font);
+        email.setTypeface(font);
+        phonenumber.setTypeface(font);
+        pinnumber.setTypeface(font);
+        address.setTypeface(font);
+
+        Typeface fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        personal.setTypeface(fonts);
+        address_info.setTypeface(fonts);
+
 
         name.setText(user.name);
         email.setText(user.email);
@@ -79,6 +97,8 @@ public class Profile extends AppCompatActivity {
     private void toolbarTextAppernce() {
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
+        collapsingToolbarLayout.setCollapsedTitleTypeface(font);
+        collapsingToolbarLayout.setExpandedTitleTypeface(font);
     }
     @Override
     public void onBackPressed() {

@@ -1,15 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/cardview_shadow_start_color"
+    android:layout_height="100dp"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal"
+            >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.3"
+            android:gravity="right"
+            android:textColor="@color/colorPrimary"
+            android:text="Sub total"
+            />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:text=":"
+                />
+            <TextView
+                android:id="@+id/sub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:layout_weight=".5"
+                android:text="120"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.3"
+                android:gravity="right"
+                android:textColor="@color/colorPrimary"
+                android:text="Total"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:text=":"
+                />
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:textColor="@color/colorPrimary"
+                android:text="120"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        >
+
+
     <Button
-        android:id="@+id/place_order"
-        android:text="Place Order"
+        android:id="@+id/back"
+        android:text="Back"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        android:background="@drawable/round_button"
         android:layout_height="wrap_content" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/place_order"
+            android:text="Check out"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:background="@drawable/round_button"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

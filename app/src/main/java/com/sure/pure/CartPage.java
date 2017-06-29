@@ -33,13 +33,13 @@ import org.json.JSONObject;
 public class CartPage extends AppCompatActivity {
     public static RecyclerView recyclerView;
     CartpageAdapter adapter;
-    Button placeorder;
-    public static TextView total;
+    Button placeorder,back;
+    public static TextView total,sub;
     public static LayerDrawable icon;
     public static MenuItem itemCart;
     GlobalClass global;
     Toolbar toolbar;
-    LinearLayout place,totals,footerlay;
+    LinearLayout footerlay;
     TextView emptytext;
     public static TextView title,cartcount;
     ImageView carticon;
@@ -50,9 +50,6 @@ public class CartPage extends AppCompatActivity {
         setContentView(R.layout.cartpage);
         global=(GlobalClass)getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        place = (LinearLayout) findViewById(R.id.place);
-        totals = (LinearLayout) findViewById(R.id.totals);
-        footerlay = (LinearLayout) findViewById(R.id.footerlay);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         emptytext=(TextView)findViewById(R.id.empty);
         cartcount=(TextView)findViewById(R.id.cartcount);
@@ -62,10 +59,8 @@ public class CartPage extends AppCompatActivity {
 
         if(global.cartValues.size()>0)
         {
-            place.setVisibility(View.VISIBLE);
-            totals.setVisibility(View.VISIBLE);
+
             emptytext.setVisibility(View.INVISIBLE);
-            footerlay.setVisibility(View.VISIBLE);
             cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
 
@@ -73,10 +68,8 @@ public class CartPage extends AppCompatActivity {
 
         }else
         {
-            place.setVisibility(View.INVISIBLE);
-            totals.setVisibility(View.INVISIBLE);
+
             emptytext.setVisibility(View.VISIBLE);
-            footerlay.setVisibility(View.INVISIBLE);
             cartcount.setVisibility(View.GONE);
         }
             adapter=new CartpageAdapter(getApplicationContext(),global.cartValues);
@@ -91,8 +84,8 @@ public class CartPage extends AppCompatActivity {
                 public void onClick(View v) {
                     //What to do on back clicked
                     Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
                     finish();
                 }
             });
@@ -112,6 +105,8 @@ public class CartPage extends AppCompatActivity {
                 }
             });*/
             placeorder=(Button) findViewById(R.id.place_order);
+            back=(Button) findViewById(R.id.back);
+            sub=(TextView) findViewById(R.id.sub);
             total=(TextView) findViewById(R.id.total);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(mLayoutManager);
@@ -120,6 +115,7 @@ public class CartPage extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
 
             total.setText(String.valueOf(adapter.totalvalue()));
+            sub.setText(String.valueOf(adapter.totalvalue()));
             placeorder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -191,6 +187,16 @@ public class CartPage extends AppCompatActivity {
                 }
             });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                finish();
+            }
+        });
+
 
 
 
@@ -219,10 +225,10 @@ public class CartPage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+       /* Intent i=new Intent(getApplicationContext(),MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
-
+*/
     }
 }

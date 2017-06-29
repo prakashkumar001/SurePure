@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), CartPage.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 finish();
             }
         });

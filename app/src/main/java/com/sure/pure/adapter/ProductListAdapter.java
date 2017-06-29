@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +51,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     String sort;
      ImageLoader loader;
 
+    Typeface fonts,bold;
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView offerprice,productname,sellerprice;
         public ImageView image;
@@ -79,6 +83,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         sort=item;
         Log.i("Log","Log"+listformat);
         loader=ImageLoader.getInstance();
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Bold.ttf");
 
     }
 
@@ -143,6 +149,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.offerprice.setText(seller + product.get(position).getOfferprice());
         holder.productname.setText(product.get(position).getProductname());
         holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        holder.sellerprice.setTypeface(fonts);
+        holder.offerprice.setTypeface(fonts);
+        holder.productname.setTypeface(bold);
+
         //String images=String.valueOf(drawables[position]);
         //loader.displayImage(images,holder.image,options);
         //holder.image.setImageResource(product.get(position).getProductimage());
