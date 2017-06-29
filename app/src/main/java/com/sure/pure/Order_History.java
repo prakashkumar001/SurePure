@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 
 import com.sure.pure.common.GlobalClass;
@@ -49,17 +50,33 @@ public class Order_History extends AppCompatActivity {
     private ViewPager viewPager;
     GlobalClass globalClass;
     DatabaseHelper databaseHelper;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderhistory);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         globalClass=(GlobalClass)getApplicationContext();
         databaseHelper=new DatabaseHelper(getApplicationContext());
         Log.i("user_id","user_id"+databaseHelper.getLoginid());
         uploadFile();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Sure Pure");
+        //getSupportActionBar().setIcon(R.drawable.logo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }
+        });
 
 
 

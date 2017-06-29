@@ -70,7 +70,9 @@ public class CartPage extends AppCompatActivity {
             totals.setVisibility(View.VISIBLE);
             emptytext.setVisibility(View.INVISIBLE);
             footerlay.setVisibility(View.VISIBLE);
+            cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
+
 
 
         }else
@@ -79,6 +81,7 @@ public class CartPage extends AppCompatActivity {
             totals.setVisibility(View.INVISIBLE);
             emptytext.setVisibility(View.VISIBLE);
             footerlay.setVisibility(View.INVISIBLE);
+            cartcount.setVisibility(View.GONE);
         }
             adapter=new CartpageAdapter(getApplicationContext(),global.cartValues);
 

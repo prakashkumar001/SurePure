@@ -41,6 +41,7 @@ import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Home;
 import com.sure.pure.common.User;
 import com.sure.pure.utils.FileUploader;
+import com.sure.pure.utils.InternetPermissions;
 import com.sure.pure.utils.RuntimePermissionActivity;
 import com.sure.pure.utils.WSUtils;
 
@@ -73,6 +74,8 @@ public class Login extends RuntimePermissionActivity {
     private static final int REQUEST_PERMISSIONS = 20;
     DatabaseHelper databaseHelper;
    GlobalClass global;
+    InternetPermissions internetPermissions;
+    private static final int NETPERMISSION = 1888;
 
     //Toolbar toolbar;
     @Override
@@ -94,7 +97,7 @@ public class Login extends RuntimePermissionActivity {
         StrictMode.setThreadPolicy(policy);
 
         Login.super.requestAppPermissions(new
-                        String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, R.string
+                        String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE}, R.string
                         .runtime_permissions_txt
                 , REQUEST_PERMISSIONS);
 
@@ -117,8 +120,34 @@ public class Login extends RuntimePermissionActivity {
 
                 if(names.length()>0 && pass.length()>0)
                 {
-
+                    internetPermissions=new InternetPermissions(Login.this);
+                    if(internetPermissions.isInternetOn())
+                    {
                         loginService();
+                    }else
+                    {
+
+                        Snackbar snack= Snackbar.make(findViewById(android.R.id.content), "No Internet Connection",Snackbar.LENGTH_LONG);
+                        View vv=snack.getView();
+                        TextView textView=(TextView)vv.findViewById(android.support.design.R.id.snackbar_text);
+                        textView.setGravity(Gravity.CENTER);
+                        snack.show();
+                        snack.setAction("Enable", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(internetPermissions.isInternetOn())
+                                {
+                                    loginService();
+                                }else
+                                {
+                                    startActivityForResult(new Intent(Settings.ACTION_SETTINGS),NETPERMISSION);
+                                }
+                            }
+                        });
+
+
+                    }
+
 
 
                 }else if(names.equalsIgnoreCase("") || pass.equalsIgnoreCase(""))
@@ -165,7 +194,7 @@ public class Login extends RuntimePermissionActivity {
     {
         class uploadTOserver extends AsyncTask<String, String, String> {
             ProgressDialog dialog;
-            String response=null;
+            String response="";
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -184,7 +213,7 @@ public class Login extends RuntimePermissionActivity {
 
 
                     String requestURL = "http://sridharchits.com/surepure/index.php/mobile/mobile_login";
-                    WSUtils utils=new WSUtils();
+                      WSUtils utils=new WSUtils();
                      response= utils.getResultFromHttpRequest(requestURL,"POST",data);
 
                     System.out.println("SERVER REPLIED:"+response);
@@ -201,10 +230,6 @@ public class Login extends RuntimePermissionActivity {
 
             @Override
             protected void onPostExecute(String o) {
-
-
-
-
 
 
                 Log.i("DATADATADATA","DATADATADATA"+response);
@@ -320,12 +345,15 @@ public class Login extends RuntimePermissionActivity {
 
                     // set dialog message
                     alertDialogBuilder
-                            .setMessage("Please try again Later")
+                            .setMessage("Invalid email or password")
                             .setCancelable(false)
                             .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     // if this button is clicked, close
                                     // current activity
+                                    user.setText("");
+                                    password.setText("");
+
                                     dialog.dismiss();
                                 }
                             });
