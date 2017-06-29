@@ -193,6 +193,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     products.setProductdes(product.get(position).getProductdes());
                     products.setOfferprice(product.get(position).getOfferprice());
                     products.setProductname(product.get(position).getProductname());
+                    products.setTotalprice(product.get(position).getOfferprice());
                     products.setQuantity(1);
                     global.productIDS.add(product.get(position).getProduct_id());
                     global.cartValues.add(products);

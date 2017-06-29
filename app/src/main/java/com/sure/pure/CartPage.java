@@ -1,8 +1,6 @@
 package com.sure.pure;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.google.gson.Gson;
 import com.sure.pure.adapter.CartpageAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
 
-import static android.view.Gravity.BOTTOM;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 /**
@@ -150,11 +146,43 @@ public class CartPage extends AppCompatActivity {
 
 
                 }else {
+
+                        JSONObject object;
+                       global.jsonArraydetails=new JSONArray();
+
+                        for(int i=0;i<global.cartValues.size();i++)
+                        {
+                            object=new JSONObject();
+                            try{
+                                object.put("product_id",global.cartValues.get(i).getProduct_id());
+                                object.put("product_price",global.cartValues.get(i).getOfferprice());
+                                object.put("product_quantity",global.cartValues.get(i).getQuantity());
+                                object.put("product_total",global.cartValues.get(i).getTotalprice());
+                                object.put("product_name",global.cartValues.get(i).getProductname());
+                                global.jsonArraydetails.put(object);
+
+                            }catch (Exception e)
+                            {
+
+                            }
+                        }
+
+                        JSONObject arr=new JSONObject();
+                        try {
+                            arr.put("booking_orders",global.jsonArraydetails);
+                        }catch (Exception e)
+                        {
+
+                        }
+
+                        Log.i("JJJJJJJJJJJJJJJ","JJJJJJJJJJJJJ"+arr);
                     Intent mainIntent = new Intent(
                             CartPage.this,
                             CommingSoon.class);
 
                         CartPage.this.startActivity(mainIntent);
+
+
 
                       }
 

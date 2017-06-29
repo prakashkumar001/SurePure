@@ -53,6 +53,7 @@ public class Profile extends AppCompatActivity {
 
         toolbarTextAppernce();
 
+        name.setText(user.name);
         email.setText(user.email);
         phonenumber.setText(user.mobile);
         pinnumber.setText(user.pincode);

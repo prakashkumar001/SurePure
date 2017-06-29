@@ -13,6 +13,7 @@ public class Product {
     String productimage;
     String sellerprice;
     String offerprice;
+     String totalprice;
    // int drawables[];
 
     public Product()
@@ -36,7 +37,15 @@ public class Product {
         this.productdes = productdes;
     }
 
-    public Product(String product_id, String productname, String productimage, String sellerprice, String offerprice, String productdes)
+    public String getTotalprice() {
+        return totalprice;
+    }
+
+    public void setTotalprice(String totalprice) {
+        this.totalprice = totalprice;
+    }
+
+    public Product(String product_id, String productname, String productimage, String sellerprice, String offerprice, String productdes, String totalprice)
     {
         this.productname=productname;
         this.productimage=productimage;
@@ -44,6 +53,8 @@ public class Product {
         this.offerprice=offerprice;
         this.product_id=product_id;
         this.productdes=productdes;
+
+        this.totalprice=totalprice;
 
 
 

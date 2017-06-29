@@ -276,6 +276,7 @@ public class ProductDetailPage extends AppCompatActivity {
                       products.setOfferprice(offerprice);
                       products.setProductimage(images);
                       products.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                      products.setTotalprice(String.valueOf(b));
                       global.cartValues.add(products);
                       global.productIDS.add(product_id);
                       count=global.cartValues.size();

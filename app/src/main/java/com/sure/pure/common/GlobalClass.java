@@ -9,6 +9,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.sure.pure.model.*;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 public class GlobalClass extends Application {
@@ -22,7 +24,7 @@ public class GlobalClass extends Application {
     public static ArrayList<Pendings> pendingdata=new ArrayList<>();
     public static User user;
 
-
+    public static JSONArray jsonArraydetails=new JSONArray();
     public static String Userid;
 
 

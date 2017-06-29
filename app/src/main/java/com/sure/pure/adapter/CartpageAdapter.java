@@ -154,6 +154,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
                 String seller = ctx.getResources().getString(R.string.Rupees);
                 b=global.cartValues.get(position).getQuantity()* Double.parseDouble(global.cartValues.get(position).getOfferprice());
+                global.cartValues.get(position).setTotalprice(String.valueOf(b));
                 holder.total.setText(seller+String.valueOf(b));
                 CartPage.total.setText(String.valueOf(totalvalue()));
 
@@ -179,6 +180,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
                 String seller = ctx.getResources().getString(R.string.Rupees);
                 b=global.cartValues.get(position).getQuantity()* Double.parseDouble(global.cartValues.get(position).getOfferprice());
+                global.cartValues.get(position).setTotalprice(String.valueOf(b));
                 holder.total.setText(seller+String.valueOf(b));
                 CartPage.total.setText(String.valueOf(totalvalue()));
             }

@@ -6,49 +6,42 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.daimajia.androidanimations.library.Techniques;
 import com.sure.pure.db.DatabaseHelper;
+import com.viksaa.sssplash.lib.activity.AwesomeSplash;
+import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 /**
  * Created by Creative IT Works on 20-Apr-17.
  */
 
-public class Splash extends AppCompatActivity {
-    DatabaseHelper databaseHelper;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
-        databaseHelper=new DatabaseHelper(getApplicationContext());
+public class Splash extends AwesomeSplash {
+    public void initSplash(ConfigSplash configSplash) {
+        configSplash.setBackgroundColor(R.color.colorPrimary);
+        configSplash.setAnimCircularRevealDuration(2000);
+        configSplash.setRevealFlagX(4);
+        configSplash.setRevealFlagY(2);
+        configSplash.setLogoSplash(R.mipmap.logo);
+        configSplash.setAnimLogoSplashDuration(2000);
+        configSplash.setOriginalHeight(1200);
+        configSplash.setOriginalWidth(1200);
+        configSplash.setAnimLogoSplashTechnique(Techniques.Landing);
+        configSplash.setTitleSplash("Sure Pure");
+        configSplash.setTitleTextColor(android.R.color.white);
+        configSplash.setTitleTextSize(25.0f);
+        configSplash.setAnimTitleDuration(500);
+        configSplash.setAnimTitleTechnique(Techniques.FadeInLeft);
+        configSplash.setTitleFont("fonts/Comfortaa_Bold.ttf");
+    }
 
-        final int SPLASH_DISPLAY_TIME = 3000;
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-
-                Splash.this.finish();
-                overridePendingTransition(R.anim.fadeinact,
-                        R.anim.fadeoutact);
-
-               /* if(databaseHelper.getSignup()=="false")
-                {
-                    Intent mainIntent = new Intent(
-                        Splash.this,
-                        Login.class);
-
-                    Splash.this.startActivity(mainIntent);
-
-
-                }else {*/
-                    Intent mainIntent = new Intent(
-                            Splash.this,
-                            MainActivity.class);
-
-                    Splash.this.startActivity(mainIntent);
-
-              //  }
-
-
-            }
-        }, SPLASH_DISPLAY_TIME);
-
+    public void animationsFinished() {
+       /* startActivity(new Intent(this, MainActivity.class));
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+        finish();
+*/
+        Intent i=new Intent(Splash.this,MainActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+        finish();
     }
 }

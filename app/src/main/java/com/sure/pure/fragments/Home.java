@@ -263,7 +263,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                                     productdescription= "No description";
                                 }
 
-                                Product p = new Product(productid, productname, null, productsellerprice, productretailprice, productdescription);
+                                Product p = new Product(productid, productname, null, productsellerprice, productretailprice, productdescription,productretailprice);
                               /*  Product p=new Product();
                                 p.setProductname(productname);
                                 p.setProduct_id(productid);
@@ -452,7 +452,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                                 productdescription = "No description";
                             }
 
-                            Product p = new Product(productid, productname, productimage, productsellerprice, productretailprice, productdescription);
+                            Product p = new Product(productid, productname, productimage, productsellerprice, productretailprice, productdescription,productretailprice);
 
                             productList.add(p);
                         } catch (JSONException e) {
