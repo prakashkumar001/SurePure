@@ -153,6 +153,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.sellerprice.setTypeface(fonts);
         holder.offerprice.setTypeface(fonts);
         holder.productname.setTypeface(bold);
+        holder.add.setTypeface(bold);
 
         //String images=String.valueOf(drawables[position]);
         //loader.displayImage(images,holder.image,options);

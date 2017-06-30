@@ -29,8 +29,8 @@ public class Splash extends AwesomeSplash {
         configSplash.setTitleSplash("Sure Pure");
         configSplash.setTitleTextColor(android.R.color.white);
         configSplash.setTitleTextSize(25.0f);
-        configSplash.setAnimTitleDuration(500);
-        configSplash.setAnimTitleTechnique(Techniques.FadeInLeft);
+        configSplash.setAnimTitleDuration(1000);
+        configSplash.setAnimTitleTechnique(Techniques.SlideInUp);
         configSplash.setTitleFont("fonts/Comfortaa_Bold.ttf");
     }
 

@@ -52,7 +52,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         public TextView offerprice,quantity;
         public ImageView image,increase,decrease;
         public RelativeLayout remove;
-        public TextView plus,minus,total;
+        public TextView plus,minus,total,removetext;
 
 
         public MyViewHolder(View view) {
@@ -63,6 +63,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
             decrease = (ImageView) view.findViewById(R.id.minus);
             quantity = (TextView) view.findViewById(R.id.quantity);
             total = (TextView) view.findViewById(R.id.total);
+            removetext = (TextView) view.findViewById(R.id.remove);
 
             increase = (ImageView) view.findViewById(R.id.add);
             image = (ImageView) view.findViewById(R.id.image);
@@ -129,6 +130,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         holder.productname.setTypeface(bold);
         holder.description.setTypeface(fonts);
         holder.offerprice.setTypeface(fonts);
+        holder.removetext.setTypeface(bold);
 
 
         //holder.image.setImageResource(global.cartValues.get(position).getProductimage());

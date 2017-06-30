@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -13,9 +15,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.PopupMenu;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +36,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -33,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.sure.pure.common.CustomTypeface;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Home;
@@ -44,29 +56,33 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static MenuItem itemCart;
     public static LayerDrawable icon;
     GlobalClass global;
-   public static TextView title,cartcount;
-    ImageView carticon,sorticon,profile;
+    public static TextView title, cartcount, text;
+    ImageView carticon, sorticon, profile;
     Point p;
     DatabaseHelper databaseHelper;
-    int backPressedCount=0;
+    int backPressedCount = 0;
+    Typeface fonts, bold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        title=(TextView)findViewById(R.id.title);
-        cartcount=(TextView)findViewById(R.id.cartcount);
-        profile=(ImageView)findViewById(R.id.profile);
-        carticon=(ImageView)findViewById(R.id.carticon);
-        sorticon=(ImageView)findViewById(R.id.sorticon);
-        databaseHelper=new DatabaseHelper(getApplicationContext());
+        title = (TextView) findViewById(R.id.title);
+        cartcount = (TextView) findViewById(R.id.cartcount);
+        profile = (ImageView) findViewById(R.id.profile);
+        carticon = (ImageView) findViewById(R.id.carticon);
+        sorticon = (ImageView) findViewById(R.id.sorticon);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Sure Pure");
+        title.setText("Home");
+        title.setTypeface(bold);
 
+        invalidateOptionsMenu();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,17 +91,24 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu m = navigationView.getMenu();
+        for (int i = 0; i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
 
-        View hView =  navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.name);
-        ImageView userpic = (ImageView)hView.findViewById(R.id.profile);
-        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
-        {
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+        }
+        View hView = navigationView.getHeaderView(0);
+        TextView nav_user = (TextView) hView.findViewById(R.id.name);
+        ImageView userpic = (ImageView) hView.findViewById(R.id.profile);
+
+
+        if (databaseHelper.getSignup().equalsIgnoreCase("true")) {
             nav_user.setText(databaseHelper.getUser().name);
             userpic.setImageResource(R.drawable.sundar);
 
         }
-
 
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -93,11 +116,10 @@ public class MainActivity extends AppCompatActivity
         selectFirstItemAsDefault();
 
 
-        if(global.cartValues.size()>0)
-        {
+        if (global.cartValues.size() > 0) {
             cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
-        }else {
+        } else {
             cartcount.setVisibility(View.GONE);
         }
 
@@ -126,6 +148,8 @@ public class MainActivity extends AppCompatActivity
                 onPopupButtonClick(view);
             }
         });
+
+
     }
 
     @Override
@@ -141,7 +165,7 @@ public class MainActivity extends AppCompatActivity
                 finish();
             } else {
                 backPressedCount++;
-                Toast toast= Toast.makeText(getApplicationContext(), getResources().getString(R.string.press_again), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.press_again), Toast.LENGTH_SHORT);
 
                 toast.show();
                 new Thread() {
@@ -158,16 +182,12 @@ public class MainActivity extends AppCompatActivity
                     }
                 }.start();
             }
-        } else{
+        } else {
             super.onBackPressed();
         }
 
 
-
     }
-
-
-
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -176,20 +196,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id==R.id.history)
-        {
+        if (id == R.id.history) {
 
-            if(databaseHelper.getSignup()=="false")
-            {
-                Intent i=new Intent(MainActivity.this,Login.class);
+            if (databaseHelper.getSignup() == "false") {
+                Intent i = new Intent(MainActivity.this, Login.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
 
 
+            } else {
 
-            }else {
-
-                Intent i=new Intent(MainActivity.this,Order_History.class);
+                Intent i = new Intent(MainActivity.this, Order_History.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 finish();
@@ -197,32 +214,27 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-
         }
 
-        if(id==R.id.logout)
-        {
+        if (id == R.id.logout) {
 
             databaseHelper.removeLogin();
-            Intent i=new Intent(MainActivity.this,Login.class);
+            Intent i = new Intent(MainActivity.this, Login.class);
             startActivity(i);
             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
             finish();
         }
 
-         if(id==R.id.profile)
-        {
-            if(databaseHelper.getSignup()=="false")
-            {
-                Intent i=new Intent(MainActivity.this,Login.class);
+        if (id == R.id.profile) {
+            if (databaseHelper.getSignup() == "false") {
+                Intent i = new Intent(MainActivity.this, Login.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
 
 
+            } else {
 
-            }else {
-
-                Intent i=new Intent(MainActivity.this,Profile.class);
+                Intent i = new Intent(MainActivity.this, Profile.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 finish();
@@ -250,17 +262,12 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
-
-
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         //setBadgeCount(MainActivity.this, icon, global.BadgeCount);
+
         return super.onPrepareOptionsMenu(menu);
     }
-
 
 
     public void onPopupButtonClick(View button) {
@@ -270,13 +277,11 @@ public class MainActivity extends AppCompatActivity
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
 
-                int id=item.getItemId();
-                if(id==R.id.signup)
-                {
+                int id = item.getItemId();
+                if (id == R.id.signup) {
                     Intent i = new Intent(getApplicationContext(), Signup.class);
                     startActivity(i);
-                }else if(id==R.id.login)
-                {
+                } else if (id == R.id.login) {
                     Intent i = new Intent(getApplicationContext(), Login.class);
                     startActivity(i);
                 }
@@ -288,5 +293,10 @@ public class MainActivity extends AppCompatActivity
         popup.show();
     }
 
-
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypeface("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+    }
 }

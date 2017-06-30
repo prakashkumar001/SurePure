@@ -35,6 +35,7 @@
 
 
             <TextView
+                android:id="@+id/order_text"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
 
 
                 <TextView
+                    android:id="@+id/product_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -101,6 +103,7 @@
 
 
                 <TextView
+                    android:id="@+id/quantity_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -131,6 +134,7 @@
 
 
                 <TextView
+                    android:id="@+id/price_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -162,6 +166,7 @@
 
 
                 <TextView
+                    android:id="@+id/type_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -192,6 +197,7 @@
 
 
                 <TextView
+                    android:id="@+id/date_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -221,6 +227,7 @@
 
 
                 <TextView
+                    android:id="@+id/status_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"

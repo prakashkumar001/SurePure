@@ -3,6 +3,7 @@ package com.sure.pure.fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -107,6 +108,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         StrictMode.setThreadPolicy(policy);
 
         search = (EditText) v.findViewById(R.id.search);
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Comfortaa_Regular.ttf");
+        search.setTypeface(typeface);
+
 
         list_grid.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,15 +268,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                                 }
 
                                 Product p = new Product(productid, productname, null, productsellerprice, productretailprice, productdescription,productretailprice);
-                              /*  Product p=new Product();
-                                p.setProductname(productname);
-                                p.setProduct_id(productid);
-                                p.setProductdes(productdescription);
-                                p.setProductimage(productimage);
-                                p.setSellerprice(productsellerprice);
-                                p.setOfferprice(productretailprice);*/
+
                                 productList.add(p);
-                                // productListdummy=productList;
+
                                 layoutchange1();
 
                             } catch (Exception e) {
@@ -384,28 +382,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     @Override
     public void onResume() {
         super.onResume();
-      /*  productList.clear();
-        Product p = new Product("1", "Bisleri", R.drawable.water1, "22", "20", "Pure water");
-        Product pp = new Product("2", "Aquafina", R.drawable.water2, "50", "22", "Pure water");
-        Product ppp = new Product("3", "Aquaguard", R.drawable.water3, "150", "30", "Pure water");
-        Product pppp = new Product("4", "Kinley", R.drawable.water4, "19", "40", "Pure water");
-        Product ppppp = new Product("5", "Pepsi", R.drawable.water5, "13", "50", "Pure water");
-        Product pppppp = new Product("6", "Coke", R.drawable.water6, "17", "60", "Pure water");
-                              *//*  Product p=new Product();
-                                p.setProductname(productname);
-                                p.setProduct_id(productid);
-                                p.setProductdes(productdescription);
-                                p.setProductimage(productimage);
-                                p.setSellerprice(productsellerprice);
-                                p.setOfferprice(productretailprice);*//*
-        productList.add(p);
-        productList.add(pp);
-        productList.add(ppp);
-        productList.add(pppp);
-        productList.add(ppppp);
-        productList.add(ppppp);
-        productList.add(pppppp);
-        layoutchange1();*/
+
     }
 
     public void getAlldata()

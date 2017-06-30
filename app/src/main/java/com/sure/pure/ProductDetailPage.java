@@ -48,6 +48,7 @@ public class ProductDetailPage extends AppCompatActivity {
     Toolbar toolbar;
     public static TextView title,cartcount;
     ImageView carticon;
+    Typeface fonts,bold;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,8 @@ public class ProductDetailPage extends AppCompatActivity {
         title=(TextView)findViewById(R.id.title);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
         loader=ImageLoader.getInstance();
 
         add.setVisibility(View.INVISIBLE);
@@ -80,9 +82,11 @@ public class ProductDetailPage extends AppCompatActivity {
             cartcount.setVisibility(View.GONE);
         }
 
+        cartcount.setTypeface(fonts);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Sure Pure");
+        title.setText("Sure Pure");
+        title.setTypeface(bold);
        // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

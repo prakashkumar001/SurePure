@@ -5,6 +5,7 @@ package com.sure.pure.adapter;
  */
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.MyViewHo
 
     ArrayList<Pendings> items;
     Context ctx;
-
+    Typeface font;
 
 
 
@@ -35,6 +36,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView orderid,paymenttype,orderquantity,orderstatus,prd_name,prd_price,paymentdate;
+        TextView order_text,type_text,quantity_text,status_text,product_text,price_text,date_text;
 
         public MyViewHolder(View view) {
             super(view);
@@ -46,6 +48,13 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.MyViewHo
             prd_price = (TextView) view.findViewById(R.id.price);
             paymentdate = (TextView) view.findViewById(R.id.date);
 
+            order_text = (TextView) view.findViewById(R.id.order_text);
+            type_text = (TextView) view.findViewById(R.id.type_text);
+            quantity_text = (TextView) view.findViewById(R.id.quantity_text);
+            status_text = (TextView) view.findViewById(R.id.status_text);
+            product_text = (TextView) view.findViewById(R.id.product_text);
+            price_text = (TextView) view.findViewById(R.id.price_text);
+            date_text = (TextView) view.findViewById(R.id.date_text);
 
 
         }
@@ -57,7 +66,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.MyViewHo
         this.items=items;
         ctx=context;
 
-
+        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Regular.ttf");
     }
 
     @Override
@@ -82,6 +91,22 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.MyViewHo
         holder.prd_price.setText(item.prd_price);
         holder.paymentdate.setText(item.payment_date);
         holder.orderstatus.setText(item.status);
+
+        holder.order_text.setTypeface(font);
+        holder.quantity_text.setTypeface(font);
+        holder.type_text.setTypeface(font);
+        holder.product_text.setTypeface(font);
+        holder.price_text.setTypeface(font);
+        holder.date_text.setTypeface(font);
+        holder.status_text.setTypeface(font);
+
+        holder.orderid.setTypeface(font);
+        holder.orderquantity.setTypeface(font);
+        holder.paymenttype.setTypeface(font);
+        holder.prd_name.setTypeface(font);
+        holder.prd_price.setTypeface(font);
+        holder.paymentdate.setTypeface(font);
+        holder.orderstatus.setTypeface(font);
 
 
     }

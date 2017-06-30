@@ -1,6 +1,7 @@
 package com.sure.pure;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,6 +45,7 @@ public class CartPage extends AppCompatActivity {
     public static TextView title,cartcount;
     ImageView carticon;
     DatabaseHelper databaseHelper;
+    Typeface fonts,bold;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,9 @@ public class CartPage extends AppCompatActivity {
        emptytext=(TextView)findViewById(R.id.empty);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
+        title=(TextView)findViewById(R.id.title);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
         databaseHelper=new DatabaseHelper(getApplicationContext());
           // getSupportActionBar().setIcon(R.drawable.logo);
 
@@ -75,7 +80,8 @@ public class CartPage extends AppCompatActivity {
             adapter=new CartpageAdapter(getApplicationContext(),global.cartValues);
 
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Sure Pure");
+        title.setText("Sure Pure");
+        title.setTypeface(bold);
             //getSupportActionBar().setIcon(R.drawable.logo);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);

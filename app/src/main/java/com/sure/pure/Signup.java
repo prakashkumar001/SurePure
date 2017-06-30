@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -68,6 +70,8 @@ public class Signup extends RuntimePermissionActivity {
    // Toolbar toolbar;
    private int PICK_IMAGE_REQUEST = 1;
     DatabaseHelper databaseHelper;
+    Typeface fonts,bold;
+    TextView title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +86,11 @@ public class Signup extends RuntimePermissionActivity {
         signup=(Button) findViewById(R.id.signup);
         back=(ImageView) findViewById(R.id.back);
         profile=(CircleImage) findViewById(R.id.profileimage);
-
+        title=(TextView)findViewById(R.id.title);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        title.setText("Sign Up");
+        title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()

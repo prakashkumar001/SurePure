@@ -3,6 +3,7 @@ package com.sure.pure;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.sure.pure.common.GlobalClass;
@@ -51,11 +54,19 @@ public class Order_History extends AppCompatActivity {
     GlobalClass globalClass;
     DatabaseHelper databaseHelper;
     Toolbar toolbar;
+    Typeface fonts,bold;
+    public static TextView title,cartcount;
+    ImageView carticon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderhistory);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        title=(TextView)findViewById(R.id.title);
+        cartcount=(TextView)findViewById(R.id.cartcount);
+        carticon=(ImageView)findViewById(R.id.carticon);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
         globalClass=(GlobalClass)getApplicationContext();
         databaseHelper=new DatabaseHelper(getApplicationContext());
         Log.i("user_id","user_id"+databaseHelper.getLoginid());
@@ -63,7 +74,8 @@ public class Order_History extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Sure Pure");
+        title.setText("Order History");
+        title.setTypeface(bold);
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -72,13 +84,35 @@ public class Order_History extends AppCompatActivity {
             public void onClick(View v) {
                 //What to do on back clicked
                 Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
                 finish();
             }
         });
 
+        if(globalClass.cartValues.size()>0)
+        {
 
+
+            cartcount.setVisibility(View.VISIBLE);
+            cartcount.setText(String.valueOf(globalClass.cartValues.size()));
+
+
+
+        }else
+        {
+            cartcount.setVisibility(View.GONE);
+        }
+
+        carticon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CartPage.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+            }
+        });
 
     }
 

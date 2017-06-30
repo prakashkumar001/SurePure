@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -76,6 +77,8 @@ public class Login extends RuntimePermissionActivity {
    GlobalClass global;
     InternetPermissions internetPermissions;
     private static final int NETPERMISSION = 1888;
+    Typeface fonts,bold;
+    TextView title;
 
     //Toolbar toolbar;
     @Override
@@ -89,7 +92,11 @@ public class Login extends RuntimePermissionActivity {
         signupfree=(Button)findViewById(R.id.signupfree);
         databaseHelper=new DatabaseHelper(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
-
+        title=(TextView)findViewById(R.id.title);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        title.setText("Sign Up");
+        title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()
