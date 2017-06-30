@@ -51,7 +51,7 @@ public class CartPage extends AppCompatActivity {
         global=(GlobalClass)getApplicationContext();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        emptytext=(TextView)findViewById(R.id.empty);
+       emptytext=(TextView)findViewById(R.id.empty);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
         databaseHelper=new DatabaseHelper(getApplicationContext());
@@ -60,7 +60,7 @@ public class CartPage extends AppCompatActivity {
         if(global.cartValues.size()>0)
         {
 
-            emptytext.setVisibility(View.INVISIBLE);
+           emptytext.setVisibility(View.INVISIBLE);
             cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
 

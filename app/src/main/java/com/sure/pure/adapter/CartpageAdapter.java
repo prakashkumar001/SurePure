@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sure.pure.CartPage;
 import com.sure.pure.MainActivity;
 import com.sure.pure.ProductDetailPage;
+
 import com.sure.pure.R;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
