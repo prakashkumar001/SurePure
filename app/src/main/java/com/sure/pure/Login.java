@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -95,7 +96,7 @@ public class Login extends RuntimePermissionActivity {
         title=(TextView)findViewById(R.id.title);
         fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
         bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
-        title.setText("Sign Up");
+        title.setText("Login");
         title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
@@ -272,11 +273,10 @@ public class Login extends RuntimePermissionActivity {
                                 Login.this);
 
                         // set title
-                        alertDialogBuilder.setTitle("Alert");
 
                         // set dialog message
                         alertDialogBuilder
-                                .setMessage("Login Success")
+                                .setMessage("Welcome to Sure Pure")
                                 .setCancelable(false)
                                 .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
@@ -284,29 +284,40 @@ public class Login extends RuntimePermissionActivity {
                                         // current activity
                                         dialog.dismiss();
 
+
+                                        new Handler().postDelayed(new Runnable() {
+                                            public void run() {
+
+                                                Login.this.finish();
+                                                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+
+
+                                                Intent mainIntent = new Intent(
+                                                        Login.this,
+                                                        MainActivity.class);
+
+                                                Login.this.startActivity(mainIntent);
+
+
+                                                ActivityCompat.finishAffinity(Login.this);
+
+                                            }
+                                        }, 1000);
+
+
                                         if(databaseHelper.getSignup().equalsIgnoreCase("true"))
                                         {
                                             databaseHelper.updateUser(global.user);
                                         }else {
                                             databaseHelper.addUser(global.user);
                                         }
-                                                Intent i=new Intent(Login.this,MainActivity.class);
-                                        ActivityCompat.finishAffinity(Login.this);
 
-                                        startActivity(i);
-                                        finish();
                                             }
 
 
 
-                                })
-                                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        // if this button is clicked, just close
-                                        // the dialog box and do nothing
-                                        dialog.cancel();
-                                    }
                                 });
+
 
                         // create alert dialog
                         AlertDialog alertDialog = alertDialogBuilder.create();

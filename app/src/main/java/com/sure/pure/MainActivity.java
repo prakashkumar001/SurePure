@@ -145,7 +145,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                onPopupButtonClick(view);
+                if(databaseHelper.getSignup().equalsIgnoreCase("true"))
+                {
+                    onPopupButtonClickProfile(view);
+
+                }else {
+                    onPopupButtonClick(view);
+                }
             }
         });
 
@@ -274,17 +280,32 @@ public class MainActivity extends AppCompatActivity
         PopupMenu popup = new PopupMenu(this, button);
         popup.getMenuInflater().inflate(R.menu.main, popup.getMenu());
 
+        MenuItem shareItem = popup.getMenu().findItem(R.id.profile);
+        if(shareItem.getItemId()==R.id.profile)
+        {
+            shareItem.setVisible(false);
+        }
+
+
+
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
 
-                int id = item.getItemId();
-                if (id == R.id.signup) {
-                    Intent i = new Intent(getApplicationContext(), Signup.class);
-                    startActivity(i);
-                } else if (id == R.id.login) {
-                    Intent i = new Intent(getApplicationContext(), Login.class);
-                    startActivity(i);
-                }
+
+                    int id = item.getItemId();
+
+
+                    if (id == R.id.signup) {
+                        Intent i = new Intent(getApplicationContext(), Signup.class);
+                        startActivity(i);
+                    } else if (id == R.id.login) {
+                        Intent i = new Intent(getApplicationContext(), Login.class);
+                        startActivity(i);
+                    }
+
+
+
 
                 return true;
             }
@@ -298,5 +319,42 @@ public class MainActivity extends AppCompatActivity
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypeface("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
+    }
+
+    public void onPopupButtonClickProfile(View button) {
+        PopupMenu popup = new PopupMenu(this, button);
+        popup.getMenuInflater().inflate(R.menu.main, popup.getMenu());
+
+
+        MenuItem signup = popup.getMenu().findItem(R.id.signup);
+        MenuItem login = popup.getMenu().findItem(R.id.login);
+        if(signup.getItemId()==R.id.signup)
+        {
+            signup.setVisible(false);
+        }
+
+        if(login.getItemId()==R.id.login)
+        {
+            login.setVisible(false);
+        }
+
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+
+                int id = item.getItemId();
+                if (id == R.id.profile) {
+                    Intent i = new Intent(getApplicationContext(), Profile.class);
+                    startActivity(i);
+                }
+
+
+
+                return true;
+            }
+        });
+
+        popup.show();
     }
 }
