@@ -14,10 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
+import com.sure.pure.utils.ProfilePicture;
 
 /**
  * Created by Creative IT Works on 09-Jun-17.
@@ -26,6 +28,7 @@ import com.sure.pure.db.DatabaseHelper;
 public class Profile extends AppCompatActivity {
 
     TextView name,email,phonenumber,pinnumber,address,address_info,personal;
+    ImageView profile_id;
     DatabaseHelper databaseHelper;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     User user;
@@ -44,6 +47,7 @@ public class Profile extends AppCompatActivity {
         phonenumber=(TextView)findViewById(R.id.phone);
         pinnumber=(TextView)findViewById(R.id.pin);
         address=(TextView)findViewById(R.id.address);
+        profile_id=(ImageView)findViewById(R.id.profile_id);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,6 +81,7 @@ public class Profile extends AppCompatActivity {
         phonenumber.setText(user.mobile);
         pinnumber.setText(user.pincode);
         address.setText(user.address);
+        profile_id.setImageBitmap(new ProfilePicture(getApplicationContext(),databaseHelper.getUser().image).bitmap);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

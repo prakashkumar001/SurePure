@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 import com.sure.pure.common.User;
@@ -84,10 +85,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(USERID, user.id); // Contact Name
         values.put(NAME, user.name); // Contact Phone Number
         values.put(ADDRESS, user.address);
-        values.put(IMAGE, "");
+        values.put(IMAGE, user.image);
         values.put(EMAIL, user.email);
         values.put(PHONE, user.mobile);
         values.put(CITY, user.city);
+        values.put(COUNTRY, user.country);
         values.put(PIN, user.pincode);
         // Inserting Row
         db.insert(TABLE_USER_DETAIL, null, values);
@@ -104,10 +106,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(USERID, user.id); // Contact Name
         values.put(NAME, user.name); // Contact Phone Number
         values.put(ADDRESS, user.address);
-        //values.put(IMAGE, user.image);
+        values.put(IMAGE, user.image);
         values.put(EMAIL, user.email);
         values.put(PHONE, user.mobile);
         values.put(CITY, user.city);
+        values.put(COUNTRY, user.country);
         values.put(PIN, user.pincode);
 
 
@@ -127,6 +130,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
+
+                Log.i("id","id"+cursor.getString(cursor.getColumnIndex(ID)));
+                Log.i("name","name"+cursor.getString(2));
+                Log.i("email","email"+cursor.getString(3));
+                Log.i("mobile","mobile"+cursor.getString(4));
+                Log.i("country","country"+cursor.getString(5));
+                Log.i("inage","inage"+cursor.getBlob(6));
+                Log.i("city","city"+cursor.getString(7));
+                Log.i("address","address"+cursor.getString(8));
+                Log.i("pincode","pincode"+cursor.getString(9));
+
+
                 user=new User(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9));
 
 

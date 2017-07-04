@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -49,8 +51,10 @@ import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Home;
 import com.sure.pure.model.Product;
+import com.sure.pure.utils.ProfilePicture;
 
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -104,10 +108,18 @@ public class MainActivity extends AppCompatActivity
         ImageView userpic = (ImageView) hView.findViewById(R.id.profile);
 
 
+        Log.i("LLLLLLLLL","LLLLLLLLLL"+databaseHelper.getUser());
+
         if (databaseHelper.getSignup().equalsIgnoreCase("true")) {
             nav_user.setText(databaseHelper.getUser().name);
-            userpic.setImageResource(R.drawable.sundar);
 
+
+
+                userpic.setImageBitmap(new ProfilePicture(getApplicationContext(),databaseHelper.getUser().image).bitmap);
+
+        }else
+        {
+            userpic.setImageResource(R.drawable.sundar);
         }
 
 
@@ -356,5 +368,15 @@ public class MainActivity extends AppCompatActivity
         });
 
         popup.show();
+    }
+
+    public byte[] sundarprofile()
+    {
+        Bitmap b= BitmapFactory.decodeResource(getResources(),R.drawable.sundar);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.PNG, 50, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        return byteArray;
     }
 }

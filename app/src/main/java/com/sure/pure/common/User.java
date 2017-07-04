@@ -9,6 +9,7 @@ public class User {
     public String name;
     public String email;
     public String mobile;
+    public byte[] image;
 
     public User(String id, String name, String email, String mobile, String country,byte[] image, String city, String address, String pincode) {
         this.id = id;
@@ -17,6 +18,7 @@ public class User {
         this.mobile = mobile;
         this.country = country;
         this.city = city;
+        this.image=image;
         this.address = address;
         this.pincode = pincode;
     }

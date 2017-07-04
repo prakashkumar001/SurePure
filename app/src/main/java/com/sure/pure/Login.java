@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -51,11 +53,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.R.attr.maxHeight;
+import static android.R.attr.maxWidth;
 import static android.view.Gravity.CENTER;
 
 /**
@@ -262,10 +267,26 @@ public class Login extends RuntimePermissionActivity {
                     String pincode=object1.getString("pincode");
 
 
-                    User user1=new User(id,name,email,phone,country,null,city,address,pincode);
+
+                        User user1;
+                        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
+                        {
+
+                             user1=new User(id,name,email,phone,country,databaseHelper.getUser().image,city,address,pincode);
+                            global.user=user1;
+                            databaseHelper.updateUser(global.user);
+                        }else
+                        {
+                            user1=new User(id,name,email,phone,country,profiledata(),city,address,pincode);
+                            global.user=user1;
+                            databaseHelper.addUser(global.user);
+                        }
 
 
-                    global.user=user1;
+
+
+
+
                     }
                     if(global.user.name.length()>0)
                     {
@@ -305,12 +326,7 @@ public class Login extends RuntimePermissionActivity {
                                         }, 500);
 
 
-                                        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
-                                        {
-                                            databaseHelper.updateUser(global.user);
-                                        }else {
-                                            databaseHelper.addUser(global.user);
-                                        }
+
 
                                             }
 
@@ -433,5 +449,52 @@ public class Login extends RuntimePermissionActivity {
             }
         }
     }
+    public byte[] profiledata()
+    {
+        Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.sundar);
+        //Bitmap resized = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+        Bitmap bb=resize(bitmap,1000,1000);
 
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bb.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        return byteArray;
+    }
+
+    public byte[] sundarprofile()
+    {
+        Bitmap b= BitmapFactory.decodeResource(getResources(),R.drawable.sundar);
+
+
+
+       Bitmap bb=resize(b,1000,1000);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bb.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        return byteArray;
+    }
+
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
 }

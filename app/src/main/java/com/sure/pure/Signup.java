@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -18,9 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,8 +34,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sure.pure.common.GlobalClass;
+import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
-import com.sure.pure.model.User;
 import com.sure.pure.utils.CircleImage;
 import com.sure.pure.utils.FilePickUtils;
 import com.sure.pure.utils.FileUploader;
@@ -51,6 +50,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static android.R.attr.maxHeight;
+import static android.R.attr.maxWidth;
 
 
 /**
@@ -70,6 +71,7 @@ public class Signup extends RuntimePermissionActivity {
    // Toolbar toolbar;
    private int PICK_IMAGE_REQUEST = 1;
     DatabaseHelper databaseHelper;
+    GlobalClass global;
     Typeface fonts,bold;
     TextView title;
     @Override
@@ -97,6 +99,7 @@ public class Signup extends RuntimePermissionActivity {
                 .build();
         StrictMode.setThreadPolicy(policy);
         databaseHelper=new DatabaseHelper(getApplicationContext());
+        global=(GlobalClass)getApplicationContext();
 
         Signup.super.requestAppPermissions(new
                         String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, R.string
@@ -124,34 +127,7 @@ public class Signup extends RuntimePermissionActivity {
 
             }
         });
-       // toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-       // setSupportActionBar(toolbar);
-      //  getSupportActionBar().setTitle("SignUp");
-       // getSupportActionBar().setIcon(R.drawable.logo);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-       /* toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //What to do on back clicked
-                finish();
-            }
-        });
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                   *//* HomeFragment comedy=new HomeFragment();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, comedy, comedy.getClass().getSimpleName()).commit();
-*//*
-
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });*/
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -392,6 +368,25 @@ public class Signup extends RuntimePermissionActivity {
                     String status=object.getString("status");
                     if(status.equalsIgnoreCase("success"))
                     {
+                       User user1;
+                        if(bitmap==null)
+                        {
+                             user1=new User("1",user,emails,phoneno,"india",sundarprofile(),city,add,pin);
+
+                        }else {
+                             user1=new User("1",user,emails,phoneno,"india",profiledata(),city,add,pin);
+
+                        }
+
+                        global.user=user1;
+                        if(databaseHelper.getSignup().equalsIgnoreCase("true"))
+                        {
+                            databaseHelper.updateUser(global.user);
+                        }else {
+                            databaseHelper.addUser(global.user);
+                        }
+
+
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 Signup.this);
 
@@ -521,10 +516,45 @@ public class Signup extends RuntimePermissionActivity {
 
     public byte[] profiledata()
     {
+       // Bitmap resized = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+        Bitmap resized= resize(bitmap,1000,1000);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
         return byteArray;
+    }
+
+    public byte[] sundarprofile()
+    {
+        Bitmap b= BitmapFactory.decodeResource(getResources(),R.drawable.sundar);
+        //Bitmap resized = Bitmap.createScaledBitmap(b, 300, 300, true);
+        Bitmap resized= resize(b,1000,1000);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        return byteArray;
+    }
+
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
     }
 }
