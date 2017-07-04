@@ -302,7 +302,7 @@ public class Login extends RuntimePermissionActivity {
                                                 ActivityCompat.finishAffinity(Login.this);
 
                                             }
-                                        }, 1000);
+                                        }, 500);
 
 
                                         if(databaseHelper.getSignup().equalsIgnoreCase("true"))
