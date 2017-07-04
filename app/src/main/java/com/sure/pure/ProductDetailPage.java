@@ -74,6 +74,8 @@ public class ProductDetailPage extends AppCompatActivity {
 
         add.setVisibility(View.INVISIBLE);
 
+        add.setTypeface(fonts);
+
         if(global.cartValues.size()>0)
         {
             cartcount.setVisibility(View.VISIBLE);
@@ -137,6 +139,10 @@ public class ProductDetailPage extends AppCompatActivity {
             price.setText(seller + offerprice);
             productdescription.setText(description);
 
+            productname.setTypeface(fonts);
+            price.setTypeface(fonts);
+            productdescription.setTypeface(fonts);
+
 
             // productdescription.setText(description);
 
@@ -160,6 +166,8 @@ public class ProductDetailPage extends AppCompatActivity {
                    b=value* Double.parseDouble(offerprice);
                     //total.setText(String.valueOf(b));
                 tv.setText(String.valueOf(b));
+
+                tv.setTypeface(fonts);
 
 
 
@@ -319,6 +327,7 @@ public class ProductDetailPage extends AppCompatActivity {
         tv.setPadding(5, 0, 5, 0);
         tv.setTypeface(null, Typeface.BOLD);
         tv.setTextSize(14);
+        tv.setTypeface(fonts);
         menu.add(0, 1, 1, R.string.Rupees).setActionView(tv).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         invalidateOptionsMenu();

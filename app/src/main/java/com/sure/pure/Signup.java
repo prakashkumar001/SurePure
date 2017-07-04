@@ -128,6 +128,15 @@ public class Signup extends RuntimePermissionActivity {
             }
         });
 
+        name.setTypeface(fonts);
+        password.setTypeface(fonts);
+        phone.setTypeface(fonts);
+        email.setTypeface(fonts);
+        citys.setTypeface(fonts);
+        pins.setTypeface(fonts);
+        address.setTypeface(fonts);
+        signup.setTypeface(fonts);
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +147,8 @@ public class Signup extends RuntimePermissionActivity {
                 city=citys.getText().toString();
                 pin=pins.getText().toString();
                 add=address.getText().toString();
+
+
                 if(user.length()>3 && pass.length()>3 && emails.length()> 3 && phoneno.length()>3 && city.length()>3 &&pin.length()>5)
                 {
                     if(filePath==null)

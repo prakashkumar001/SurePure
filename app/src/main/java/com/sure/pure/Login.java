@@ -84,7 +84,7 @@ public class Login extends RuntimePermissionActivity {
     InternetPermissions internetPermissions;
     private static final int NETPERMISSION = 1888;
     Typeface fonts,bold;
-    TextView title;
+    TextView title,account;
 
     //Toolbar toolbar;
     @Override
@@ -95,6 +95,7 @@ public class Login extends RuntimePermissionActivity {
         password=(EditText)findViewById(R.id.password);
         signin=(Button)findViewById(R.id.signup);
         back=(ImageView) findViewById(R.id.back);
+        account=(TextView) findViewById(R.id.account);
         signupfree=(Button)findViewById(R.id.signupfree);
         databaseHelper=new DatabaseHelper(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
@@ -122,6 +123,12 @@ public class Login extends RuntimePermissionActivity {
                 finish();
             }
         });
+
+        user.setTypeface(fonts);
+        password.setTypeface(fonts);
+        signin.setTypeface(fonts);
+        signupfree.setTypeface(fonts);
+        account.setTypeface(fonts);
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override

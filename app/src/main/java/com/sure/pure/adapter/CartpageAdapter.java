@@ -54,6 +54,9 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         public RelativeLayout remove;
         public TextView plus,minus,total,removetext;
 
+        public TextView pricedummy,quantext,totaltext;
+
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -68,6 +71,10 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
             increase = (ImageView) view.findViewById(R.id.add);
             image = (ImageView) view.findViewById(R.id.image);
             remove=(RelativeLayout) view.findViewById(R.id.removelay);
+
+            pricedummy = (TextView) view.findViewById(R.id.pricedummy);
+            quantext = (TextView) view.findViewById(R.id.quantext);
+            totaltext = (TextView) view.findViewById(R.id.totaltext);
 
 
         }
@@ -131,6 +138,13 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         holder.description.setTypeface(fonts);
         holder.offerprice.setTypeface(fonts);
         holder.removetext.setTypeface(bold);
+
+
+        holder.totaltext.setTypeface(fonts);
+        holder.pricedummy.setTypeface(fonts);
+        holder.totaltext.setTypeface(fonts);
+
+
 
 
         //holder.image.setImageResource(global.cartValues.get(position).getProductimage());
