@@ -57,6 +57,10 @@
         <activity android:name=".CommingSoon"
             android:theme="@style/AppTheme.NoActionBar"
             />
+
+        <activity android:name=".payment.Payment"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.sure.pure.adapter.CartpageAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
+import com.sure.pure.payment.Payment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -180,7 +181,7 @@ public class CartPage extends AppCompatActivity {
                         Log.i("JJJJJJJJJJJJJJJ","JJJJJJJJJJJJJ"+arr);
                     Intent mainIntent = new Intent(
                             CartPage.this,
-                            CommingSoon.class);
+                            Payment.class);
 
                         CartPage.this.startActivity(mainIntent);
 

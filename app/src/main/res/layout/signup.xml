@@ -79,14 +79,19 @@
             </com.sure.pure.utils.CircleImage>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="54dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false">
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:hint=" Name"
+                android:layout_height="54dp"
+                android:padding="10dp"
+                android:background="@drawable/editext_border"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
@@ -96,14 +101,21 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="54dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false"
+
+            >
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
+                android:background="@drawable/editext_border"
                 android:layout_marginTop="10dp"
+                android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:hint=" Email"
@@ -114,15 +126,20 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="54dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false">
 
             <EditText
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
+                android:background="@drawable/editext_border"
                 android:layout_marginTop="10dp"
                 android:singleLine="true"
+                android:padding="10dp"
                 android:textColor="@android:color/black"
                 android:hint=" Phone number"
                 android:textColorHint="@android:color/darker_gray"
@@ -132,15 +149,20 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="54dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
+                android:background="@drawable/editext_border"
                 android:layout_marginTop="10dp"
                 android:singleLine="true"
+                android:padding="10dp"
                 android:textColor="@android:color/black"
                 android:password="true"
                 android:hint=" Password"
@@ -150,15 +172,20 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="54dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false">
 
             <EditText
                 android:id="@+id/city"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
+                android:background="@drawable/editext_border"
                 android:layout_marginTop="10dp"
                 android:singleLine="true"
+                android:padding="10dp"
                 android:textColor="@android:color/black"
                 android:hint="City"
                 android:textColorHint="@android:color/darker_gray" />
@@ -166,15 +193,20 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="54dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false">
 
             <EditText
                 android:id="@+id/pin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
+                android:background="@drawable/editext_border"
                 android:layout_marginTop="10dp"
                 android:hint="Pin Number"
+                android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
@@ -182,16 +214,20 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_height="100dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:paddingTop="4dp"
+            android:clipToPadding="false">
 
             <EditText
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:background="@drawable/editext_border"
                 android:hint="Address"
                 android:inputType="textMultiLine"
-                android:paddingLeft="5dp"
+                android:padding="10dp"
                 android:gravity="top"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
