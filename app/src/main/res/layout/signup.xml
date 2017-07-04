@@ -70,8 +70,8 @@
         >
 
             <com.sure.pure.utils.CircleImage
-                android:layout_height="80dp"
-                android:layout_width="80dp"
+                android:layout_height="150dp"
+                android:layout_width="150dp"
                 android:id="@+id/profileimage"
                 android:src="@drawable/user_pic"
                 android:layout_alignParentTop="true"
