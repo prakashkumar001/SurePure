@@ -1,6 +1,7 @@
 package com.sure.pure;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -32,6 +33,8 @@ public class Splash extends AwesomeSplash {
         configSplash.setAnimTitleDuration(1000);
         configSplash.setAnimTitleTechnique(Techniques.SlideInUp);
         configSplash.setTitleFont("fonts/Comfortaa_Bold.ttf");
+
+
     }
 
     public void animationsFinished() {
