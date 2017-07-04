@@ -115,7 +115,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
-                userpic.setImageBitmap(new ProfilePicture(getApplicationContext(),databaseHelper.getUser().image).bitmap);
+                global.profile=new ProfilePicture(getApplicationContext(),databaseHelper.getUser().image).bitmap;
+                userpic.setImageBitmap(global.profile);
 
         }else
         {

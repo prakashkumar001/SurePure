@@ -2,6 +2,7 @@ package com.sure.pure.common;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,6 +24,7 @@ public class GlobalClass extends Application {
     public static ArrayList<Deliver> deliverdata=new ArrayList<>();
     public static ArrayList<Pendings> pendingdata=new ArrayList<>();
     public static User user;
+    public static Bitmap profile;
 
     public static JSONArray jsonArraydetails=new JSONArray();
     public static String Userid;

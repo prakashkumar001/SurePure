@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.sure.pure.common.GlobalClass;
 import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.utils.ProfilePicture;
@@ -33,6 +35,7 @@ public class Profile extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     User user;
     Typeface font;
+    GlobalClass global;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,7 @@ public class Profile extends AppCompatActivity {
         address=(TextView)findViewById(R.id.address);
         profile_id=(ImageView)findViewById(R.id.profile_id);
 
-
+        global=(GlobalClass)getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -81,7 +84,7 @@ public class Profile extends AppCompatActivity {
         phonenumber.setText(user.mobile);
         pinnumber.setText(user.pincode);
         address.setText(user.address);
-        profile_id.setImageBitmap(new ProfilePicture(getApplicationContext(),databaseHelper.getUser().image).bitmap);
+        profile_id.setImageBitmap(global.profile);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
