@@ -22,12 +22,12 @@ public class Splash extends AwesomeSplash {
         configSplash.setAnimCircularRevealDuration(2000);
         configSplash.setRevealFlagX(4);
         configSplash.setRevealFlagY(2);
-        configSplash.setLogoSplash(R.mipmap.logo);
+        configSplash.setLogoSplash(R.drawable.logo_text);
         configSplash.setAnimLogoSplashDuration(2000);
         configSplash.setOriginalHeight(1200);
         configSplash.setOriginalWidth(1200);
         configSplash.setAnimLogoSplashTechnique(Techniques.Landing);
-        configSplash.setTitleSplash("Sure Pure");
+        configSplash.setTitleSplash("");
         configSplash.setTitleTextColor(android.R.color.white);
         configSplash.setTitleTextSize(25.0f);
         configSplash.setAnimTitleDuration(1000);
