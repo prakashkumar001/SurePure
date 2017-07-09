@@ -22,7 +22,7 @@ public class Splash extends AwesomeSplash {
         configSplash.setAnimCircularRevealDuration(2000);
         configSplash.setRevealFlagX(4);
         configSplash.setRevealFlagY(2);
-        configSplash.setLogoSplash(R.drawable.logo_text);
+        configSplash.setLogoSplash(R.drawable.logo);
         configSplash.setAnimLogoSplashDuration(2000);
         configSplash.setOriginalHeight(1200);
         configSplash.setOriginalWidth(1200);

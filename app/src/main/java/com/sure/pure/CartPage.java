@@ -181,7 +181,8 @@ public class CartPage extends AppCompatActivity {
                         Log.i("JJJJJJJJJJJJJJJ","JJJJJJJJJJJJJ"+arr);
                     Intent mainIntent = new Intent(
                             CartPage.this,
-                            Payment.class);
+                            Checkout.class);
+                        mainIntent.putExtra("Total",total.getText().toString());
 
                         CartPage.this.startActivity(mainIntent);
 

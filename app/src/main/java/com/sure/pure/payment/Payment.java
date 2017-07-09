@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -25,7 +26,7 @@ public class Payment extends AppCompatActivity {
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(true);
-        startWebView("http://www.androidexample.com/media/webview/login.html");
+        startWebView("http://sridharchits.com/surepure/index.php/mobile/addto_cart/");
     }
 
     private void startWebView(String url) {
@@ -39,6 +40,9 @@ public class Payment extends AppCompatActivity {
 
             //If you will not use this method url links are opeen in new brower not in webview
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                Log.i("URL","URL"+url);
+
                 view.loadUrl(url);
                 return true;
             }

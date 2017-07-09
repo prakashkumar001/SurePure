@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:id="@+id/linear"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:textSize="25dp"
+                android:background="@android:color/darker_gray"
+                android:textColor="@android:color/black"
+                android:text="Shipping Address"/>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                card_view:cardBackgroundColor="@android:color/white"
+                card_view:cardCornerRadius="4dp"
+                android:elevation="3dp"
+                >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="10dp"
+                >
+
+                <TextView
+                    android:text="Name : "
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:layout_weight=".7"
+                    android:textColor="@android:color/black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:hint="Enter name"
+                    android:layout_weight="1.3"
+                    android:padding="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:ems="5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="10dp"
+                >
+
+                <TextView
+                    android:text="Phone : "
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:layout_weight=".7"
+                    android:textColor="@android:color/black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:hint="Enter Phone"
+                    android:layout_marginRight="10dp"
+                    android:textSize="18dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:layout_weight="1.3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="10dp"
+                >
+
+                <TextView
+                    android:text="Email : "
+                    android:textSize="18dp"
+                    android:layout_weight=".7"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:hint="Enter Email"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp"
+                    android:layout_weight="1.3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:text="Address 1: "
+                    android:textSize="18dp"
+                    android:layout_weight=".7"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:hint="Enter Address 1"
+                    android:layout_marginRight="10dp"
+                    android:padding="20dp"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:layout_weight="1.3"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp" />
+
+
+            </LinearLayout>
+
+            </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <LinearLayout
+                android:id="@+id/radio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Payment Details"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:background="@android:color/darker_gray"
+                    />
+
+                <RadioGroup
+
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/myRadioGroup"
+                    android:checkedButton="@+id/sound" >
+
+                    <RadioButton
+
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:id="@+id/cash"
+
+                        android:text="Cash On Delivery(COD)" />
+
+                    <RadioButton
+
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:id="@+id/card"
+
+                        android:text="Card" />
+
+
+                </RadioGroup>
+
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/radio"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+
+                    android:layout_gravity="center|bottom"
+
+                    >
+                    <Button
+                        android:id="@+id/continue_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/round_button"
+                        android:text="Continue"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+
+                    android:layout_marginTop="30dp"
+                    >
+                    <include android:id="@+id/footer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/footer"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

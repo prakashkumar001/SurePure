@@ -54,11 +54,15 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
 
-        <activity android:name=".CommingSoon"
+        <activity android:name=".Checkout"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity android:name=".payment.Payment"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity android:name=".payment.PayuMoneyActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
     </application>
