@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -36,6 +37,7 @@ public class Profile extends AppCompatActivity {
     User user;
     Typeface font;
     GlobalClass global;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class Profile extends AppCompatActivity {
         pinnumber=(TextView)findViewById(R.id.pin);
         address=(TextView)findViewById(R.id.address);
         profile_id=(ImageView)findViewById(R.id.profile_id);
+        fab=(FloatingActionButton) findViewById(R.id.fab);
 
         global=(GlobalClass)getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,6 +97,16 @@ public class Profile extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i=new Intent(Profile.this,ProfileUpdate.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
             }
         });
 

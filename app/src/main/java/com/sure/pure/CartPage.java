@@ -78,7 +78,7 @@ public class CartPage extends AppCompatActivity {
             emptytext.setVisibility(View.VISIBLE);
             cartcount.setVisibility(View.GONE);
         }
-            adapter=new CartpageAdapter(getApplicationContext(),global.cartValues);
+            adapter=new CartpageAdapter(CartPage.this,global.cartValues);
 
             setSupportActionBar(toolbar);
         title.setText("Sure Pure");

@@ -13,8 +13,7 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar_cart" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"

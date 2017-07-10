@@ -65,6 +65,12 @@
         <activity android:name=".payment.PayuMoneyActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
+
+        <activity android:name=".ProfileUpdate"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+
     </application>
 
 </manifest>

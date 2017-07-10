@@ -39,7 +39,7 @@ public class CircleImage extends ImageView {
     private static final int COLORDRAWABLE_DIMENSION = 2;
 
     private static final int DEFAULT_BORDER_WIDTH = 10;
-    private static final int DEFAULT_BORDER_COLOR = Color.parseColor("#1F97EC");
+    private static final int DEFAULT_BORDER_COLOR = Color.parseColor("#FED53F");
     private static final int DEFAULT_FILL_COLOR = Color.TRANSPARENT;
     private static final boolean DEFAULT_BORDER_OVERLAY = false;
 

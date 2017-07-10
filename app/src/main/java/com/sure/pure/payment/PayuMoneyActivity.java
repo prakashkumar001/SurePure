@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,7 +53,7 @@ import java.util.Iterator;
  * Created by Prakash on 7/9/2017.
  */
 
-public class PayuMoneyActivity  extends AppCompatActivity implements OneClickPaymentListener {
+public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaymentListener {
 
     private String merchantKey, userCredentials;
 
@@ -76,8 +77,8 @@ public class PayuMoneyActivity  extends AppCompatActivity implements OneClickPay
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
-        Intent i=getIntent();
-        Total=i.getStringExtra("Total");
+        Intent i = getIntent();
+        Total = i.getStringExtra("Total");
 
 
         //TODO Must write this code if integrating One Tap payments
@@ -86,15 +87,15 @@ public class PayuMoneyActivity  extends AppCompatActivity implements OneClickPay
         //TODO Must write below code in your activity to set up initial context for PayU
         Payu.setInstance(this);
 
-        global=(GlobalClass)getApplicationContext();
-        databaseHelper=new DatabaseHelper(getApplicationContext());
+        global = (GlobalClass) getApplicationContext();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
 
         // lets set up the tool bar;
 
         // lets tell the people what version of sdk we are using
         PayUSdkDetails payUSdkDetails = new PayUSdkDetails();
 
-       // Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
 
       /*  //Lets setup the environment spinner
         environmentSpinner = (Spinner) findViewById(R.id.spinner_environment);
@@ -140,6 +141,7 @@ public class PayuMoneyActivity  extends AppCompatActivity implements OneClickPay
         if (requestCode == PayuConstants.PAYU_REQUEST_CODE) {
             if (data != null) {
 
+                Log.i("DATADATA", "DATADATA" + data.getStringExtra("result"));
                 /**
                  * Here, data.getStringExtra("payu_response") ---> Implicit response sent by PayU
                  * data.getStringExtra("result") ---> Response received from merchant's Surl/Furl
@@ -156,9 +158,9 @@ public class PayuMoneyActivity  extends AppCompatActivity implements OneClickPay
                                 dialog.dismiss();
 
                                 global.cartValues.clear();
-                                global.jsonArraydetails=new JSONArray();
+                                global.jsonArraydetails = new JSONArray();
 
-                                Intent i=new Intent(PayuMoneyActivity.this,MainActivity.class);
+                                Intent i = new Intent(PayuMoneyActivity.this, MainActivity.class);
                                 startActivity(i);
                                 ActivityCompat.finishAffinity(PayuMoneyActivity.this);
                             }
@@ -662,6 +664,8 @@ public class PayuMoneyActivity  extends AppCompatActivity implements OneClickPay
                     for (int i; (i = responseInputStream.read(byteContainer)) != -1; ) {
                         responseStringBuffer.append(new String(byteContainer, 0, i));
                     }
+
+                    Log.i("SSSSSSSSSS", "SSSSSSSSSS" + responseStringBuffer.toString());
 
                     JSONObject response = new JSONObject(responseStringBuffer.toString());
 

@@ -2,15 +2,19 @@ package com.sure.pure;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -36,6 +40,10 @@ public class Checkout extends AppCompatActivity {
     Button continue_button;
     DatabaseHelper database;
     String total;
+    Toolbar toolbar;
+    Typeface fonts,bold;
+    public static TextView title,cartcount;
+    ImageView carticon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +58,55 @@ public class Checkout extends AppCompatActivity {
         cash=(RadioButton) findViewById(R.id.cash);
         continue_button=(Button)findViewById(R.id.continue_button);
         card_payment=(RadioButton) findViewById(R.id.card);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        title=(TextView)findViewById(R.id.title);
+        cartcount=(TextView)findViewById(R.id.cartcount);
+        carticon=(ImageView)findViewById(R.id.carticon);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
         global=(GlobalClass)getApplicationContext();
         database=new DatabaseHelper(getApplicationContext());
+        setSupportActionBar(toolbar);
+        title.setText("Check Out");
+        title.setTypeface(bold);
+        //getSupportActionBar().setIcon(R.drawable.logo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+                Intent i=new Intent(getApplicationContext(),CartPage.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                finish();
+            }
+        });
+
+
+        if(global.cartValues.size()>0)
+        {
+
+
+            cartcount.setVisibility(View.VISIBLE);
+            cartcount.setText(String.valueOf(global.cartValues.size()));
+
+
+
+        }else
+        {
+            cartcount.setVisibility(View.GONE);
+        }
+
+        carticon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CartPage.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+            }
+        });
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
