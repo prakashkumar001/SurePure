@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Splash"
+            android:name=".SplashAcitvity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -63,6 +63,10 @@
             />
 
         <activity android:name=".payment.PayuMoneyActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity android:name=".ProfileUpdate"
             android:theme="@style/AppTheme.NoActionBar"
             />
     </application>
