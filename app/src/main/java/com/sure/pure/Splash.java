@@ -18,7 +18,7 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 public class Splash extends AwesomeSplash {
     public void initSplash(ConfigSplash configSplash) {
-        configSplash.setBackgroundColor(R.color.colorPrimary);
+        configSplash.setBackgroundColor(android.R.color.white);
         configSplash.setAnimCircularRevealDuration(2000);
         configSplash.setRevealFlagX(4);
         configSplash.setRevealFlagY(2);

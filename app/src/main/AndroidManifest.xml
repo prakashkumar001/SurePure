@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Splash"
+            android:name=".SplashAcitvity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -69,8 +69,11 @@
         <activity android:name=".ProfileUpdate"
             android:theme="@style/AppTheme.NoActionBar"
             />
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> cf447b7280006ed103f464ff0ce930f308fceae1
     </application>
 
 </manifest>

@@ -178,6 +178,7 @@ public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaym
     public void navigateToBaseActivity() {
 
         merchantKey = "gtKFFx";
+       // merchantKey="7Y51AJ37";
         String amount = Total;
         String email = databaseHelper.getUser().email;
 
@@ -212,8 +213,8 @@ public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaym
          * Surl --> Success url is where the transaction response is posted by PayU on successful transaction
          * Furl --> Failre url is where the transaction response is posted by PayU on failed transaction
          */
-        mPaymentParams.setSurl("https://payu.herokuapp.com/success");
-        mPaymentParams.setFurl("https://payu.herokuapp.com/failure");
+        mPaymentParams.setSurl("http://192.168.1.6/success");
+        mPaymentParams.setFurl("http://192.168.1.6/failure");
 
         /*
          * udf1 to udf5 are options params where you can pass additional information related to transaction.
@@ -400,7 +401,7 @@ public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaym
             try {
 
                 //TODO Below url is just for testing purpose, merchant needs to replace this with their server side hash generation url
-                URL url = new URL("https://payu.herokuapp.com/get_hash");
+                URL url = new URL("http://192.168.1.6/payumoney/test.php");
 
                 // get the payuConfig first
                 String postParam = postParams[0];
@@ -421,11 +422,14 @@ public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaym
                     responseStringBuffer.append(new String(byteContainer, 0, i));
                 }
 
+
                 JSONObject response = new JSONObject(responseStringBuffer.toString());
+                Log.i("KKKKKKKKKKKKKK","KKKKKKKKK"+response);
 
                 Iterator<String> payuHashIterator = response.keys();
                 while (payuHashIterator.hasNext()) {
                     String key = payuHashIterator.next();
+
                     switch (key) {
                         //TODO Below three hashes are mandatory for payment flow and needs to be generated at merchant server
                         /**

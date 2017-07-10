@@ -1,5 +1,6 @@
 package com.sure.pure;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,29 @@ public class SplashAcitvity extends AppCompatActivity {
         imageView=(ImageView)findViewById(R.id.image);
         Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this,
                 R.anim.zoomout);
-        imageView.startAnimation(hyperspaceJumpAnimation);
+
+         imageView.startAnimation(hyperspaceJumpAnimation);
+
+        hyperspaceJumpAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                imageView.startAnimation(animation);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Intent i=new Intent(SplashAcitvity.this,MainActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 }
