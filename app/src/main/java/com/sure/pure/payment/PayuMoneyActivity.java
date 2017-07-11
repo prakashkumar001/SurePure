@@ -90,48 +90,7 @@ public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaym
         global = (GlobalClass) getApplicationContext();
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
-        // lets set up the tool bar;
 
-        // lets tell the people what version of sdk we are using
-        PayUSdkDetails payUSdkDetails = new PayUSdkDetails();
-
-        // Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
-
-      /*  //Lets setup the environment spinner
-        environmentSpinner = (Spinner) findViewById(R.id.spinner_environment);
-        //  List<String> list = new ArrayList<String>();
-        String[] environmentArray = getResources().getStringArray(R.array.environment_array);
-*//*        list.add("Test");
-        list.add("Production");*//*
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, environmentArray);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        environmentSpinner.setAdapter(dataAdapter);
-        environmentSpinner.setSelection(0);
-*/
-       /* environmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (environmentSpinner.getSelectedItem().equals("Production")) {
-                    Toast.makeText(PayuMoneyActivity.this, getString(R.string.use_live_key_in_production_environment), Toast.LENGTH_SHORT).show();
-
-                    *//* 0MQaQP is test key in PRODUCTION_ENv just for testing purpose in this app. Merchant should use their
-                    * own key in PRODUCTION_ENV
-                    *//*
-                    ((EditText) findViewById(R.id.editTextMerchantKey)).setText("0MQaQP");
-                }
-                else{
-                    //set the test key in test environment
-                    ((EditText) findViewById(R.id.editTextMerchantKey)).setText("gtKFFx");
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
         navigateToBaseActivity();
     }
@@ -401,7 +360,7 @@ public class PayuMoneyActivity extends AppCompatActivity implements OneClickPaym
             try {
 
                 //TODO Below url is just for testing purpose, merchant needs to replace this with their server side hash generation url
-                URL url = new URL("http://192.168.1.6/payumoney/test.php");
+                URL url = new URL("http://dev192.com/thabresh/test/test.php");
 
                 // get the payuConfig first
                 String postParam = postParams[0];

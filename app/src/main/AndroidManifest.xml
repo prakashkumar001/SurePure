@@ -69,11 +69,9 @@
         <activity android:name=".ProfileUpdate"
             android:theme="@style/AppTheme.NoActionBar"
             />
-<<<<<<< HEAD
 
 
-=======
->>>>>>> cf447b7280006ed103f464ff0ce930f308fceae1
+
     </application>
 
 </manifest>
