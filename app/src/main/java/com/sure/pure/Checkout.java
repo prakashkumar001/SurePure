@@ -34,6 +34,7 @@ import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
 import com.payu.payuui.Activity.PayUBaseActivity;
 import com.sure.pure.common.GlobalClass;
+import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.payment.Payment;
 import com.sure.pure.payment.PayuMoneyActivity;
@@ -65,6 +66,7 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
     Typeface fonts,bold;
     public static TextView title,cartcount;
     ImageView carticon;
+    String PaymentType;
 
 
     private String merchantKey, userCredentials;
@@ -84,6 +86,8 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
     GlobalClass global;
     String Total;
 
+    TextView name,email,address,phone;
+User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +104,11 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
         //TODO Must write below code in your activity to set up initial context for PayU
         Payu.setInstance(this);
 
+
+        name=(TextView)findViewById(R.id.name);
+        email=(TextView)findViewById(R.id.email);
+        address=(TextView)findViewById(R.id.address);
+        phone=(TextView)findViewById(R.id.phone);
 
 
         radioGroup=(RadioGroup) findViewById(R.id.myRadioGroup);
@@ -120,6 +129,16 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        user=databaseHelper.getUser();
+        name.setText(user.name);
+        email.setText(user.email);
+        phone.setText(user.mobile);
+        address.setText(user.address+"\n"+user.pincode);
+
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,13 +189,12 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
 
                 if (checkedId == R.id.cash) {
 
-                    Toast.makeText(getApplicationContext(), "You selected Cash",
 
-                            Toast.LENGTH_SHORT).show();
+                    PaymentType="Cash";
 
                 } else if (checkedId == R.id.card) {
 
-
+                    PaymentType="Card";
                    // addToOrders();
 
 
@@ -188,10 +206,20 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
         });
 
 
-        continue_button.setOnClickListener(new View.OnClickListener() {
+        continue_button.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToBaseActivity();
+
+                if(PaymentType.equalsIgnoreCase("Card"))
+                {
+                    navigateToBaseActivity();
+                }else
+
+                {
+
+                }
+
 
             }
         });
@@ -339,8 +367,8 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
         mPaymentParams.setKey(merchantKey);
         mPaymentParams.setAmount(amount);
         mPaymentParams.setProductInfo("product_info");
-        mPaymentParams.setFirstName("firstname");
-        mPaymentParams.setEmail("xyz@gmail.com");
+        mPaymentParams.setFirstName("Prakash");
+        mPaymentParams.setEmail("akshav00@gmail.com");
 
         /*
         * Transaction Id should be kept unique for each transaction.
@@ -538,6 +566,7 @@ public class Checkout extends AppCompatActivity implements OneClickPaymentListen
             PayuHashes payuHashes = new PayuHashes();
             try {
 
+                //http://192.168.1.4/payumoney/test.php
                 //TODO Below url is just for testing purpose, merchant needs to replace this with their server side hash generation url
                 URL url = new URL("http://dev192.com/thabresh/test/test.php");
 

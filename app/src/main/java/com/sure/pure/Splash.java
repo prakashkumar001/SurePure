@@ -28,7 +28,7 @@ public class Splash extends AwesomeSplash {
         configSplash.setOriginalWidth(1200);
         configSplash.setAnimLogoSplashTechnique(Techniques.Landing);
         configSplash.setTitleSplash("");
-        configSplash.setTitleTextColor(android.R.color.white);
+        configSplash.setTitleTextColor(R.color.colorPrimary);
         configSplash.setTitleTextSize(25.0f);
         configSplash.setAnimTitleDuration(1000);
         configSplash.setAnimTitleTechnique(Techniques.SlideInUp);

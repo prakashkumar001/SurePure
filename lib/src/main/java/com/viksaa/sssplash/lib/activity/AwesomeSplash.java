@@ -67,7 +67,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
         switch (flag) {
             case Flags.WITH_PATH:
-                mFl = (FrameLayout) findViewById(R.id.flCentral);
+               // mFl = (FrameLayout) findViewById(R.id.flCentral);
                 initPathAnimation();
                 break;
             case Flags.WITH_LOGO:
@@ -98,7 +98,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
         params.setMargins(0, 0, 0, 50);
         FillableLoaderBuilder loaderBuilder = new FillableLoaderBuilder();
         mPathLogo = loaderBuilder
-                .parentView(mFl)
+                //.parentView(mFl)
                 .layoutParams(params)
                 .svgPath(mConfigSplash.getPathSplash())
                 .originalDimensions(mConfigSplash.getOriginalWidth(), mConfigSplash.getOriginalHeight())
@@ -199,7 +199,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
             setFont(mConfigSplash.getTitleFont());
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, R.id.flCentral);
+        //params.addRule(RelativeLayout.BELOW, R.id.flCentral);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         mTxtTitle.setLayoutParams(params);
         mTxtTitle.setVisibility(View.VISIBLE);
