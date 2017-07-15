@@ -70,6 +70,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
 
+        <activity android:name=".ChangePassword"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
 
     </application>

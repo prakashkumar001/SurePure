@@ -382,10 +382,10 @@ public class Signup extends RuntimePermissionActivity {
                        User user1;
                         if(bitmap==null)
                         {
-                             user1=new User("1",user,emails,phoneno,"india",sundarprofile(),city,add,pin);
+                             user1=new User("1",user,emails,phoneno,"india",sundarprofile(),city,add,pin,pass);
 
                         }else {
-                             user1=new User("1",user,emails,phoneno,"india",profiledata(),city,add,pin);
+                             user1=new User("1",user,emails,phoneno,"india",profiledata(),city,add,pin,pass);
 
                         }
 

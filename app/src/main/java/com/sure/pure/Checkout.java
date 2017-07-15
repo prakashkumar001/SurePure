@@ -568,7 +568,7 @@ User user;
 
                 //http://192.168.1.4/payumoney/test.php
                 //TODO Below url is just for testing purpose, merchant needs to replace this with their server side hash generation url
-                URL url = new URL("http://dev192.com/thabresh/test/test.php");
+                URL url = new URL("http://sridharchits.com/getkey/");
 
                 // get the payuConfig first
                 String postParam = postParams[0];

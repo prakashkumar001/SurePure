@@ -279,12 +279,12 @@ public class Login extends RuntimePermissionActivity {
                         if(databaseHelper.getSignup().equalsIgnoreCase("true"))
                         {
 
-                             user1=new User(id,name,email,phone,country,databaseHelper.getUser().image,city,address,pincode);
+                             user1=new User(id,name,email,phone,country,databaseHelper.getUser().image,city,address,pincode,pass);
                             global.user=user1;
                             databaseHelper.updateUser(global.user);
                         }else
                         {
-                            user1=new User(id,name,email,phone,country,profiledata(),city,address,pincode);
+                            user1=new User(id,name,email,phone,country,profiledata(),city,address,pincode,pass);
                             global.user=user1;
                             databaseHelper.addUser(global.user);
                         }
