@@ -281,6 +281,16 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        if (id == R.id.contactus) {
+
+                Intent i = new Intent(MainActivity.this, WebActivity.class);
+                 i.putExtra("url","file:///android_asset/contactus.html");
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+
+
+            }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -400,10 +410,10 @@ public class MainActivity extends AppCompatActivity
         return byteArray;
     }
 
-   public void privacyData(View view)
+    public void privacyData(View view)
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url","file:///android_asset/ourbelief.html");
+        i.putExtra("url","file:///android_asset/privacy.html");
         startActivity(i);
 
     }
@@ -411,7 +421,7 @@ public class MainActivity extends AppCompatActivity
     public void webData(View view)
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url","file:///android_asset/ourstory.html");
+        i.putExtra("url","file:///android_asset/aboutus.html");
         startActivity(i);
 
     }

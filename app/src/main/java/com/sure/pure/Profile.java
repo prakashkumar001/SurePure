@@ -144,7 +144,7 @@ public class Profile extends AppCompatActivity {
     public void privacyData(View view)
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url","file:///android_asset/ourbelief.html");
+        i.putExtra("url","file:///android_asset/privacy.html");
         startActivity(i);
 
     }
@@ -152,7 +152,7 @@ public class Profile extends AppCompatActivity {
     public void webData(View view)
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url","file:///android_asset/ourstory.html");
+        i.putExtra("url","file:///android_asset/aboutus.html");
         startActivity(i);
 
     }

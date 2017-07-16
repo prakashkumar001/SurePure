@@ -279,4 +279,14 @@ public class ChangePassword extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i = new Intent(ChangePassword.this, MainActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        finish();
     }
+}
