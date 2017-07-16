@@ -52,6 +52,11 @@
             android:paddingTop="10dp">
 
             <include layout="@layout/profile_items" />
+            <include android:id="@+id/footer"
+
+                layout="@layout/footer"/>
+
+
 
 
 

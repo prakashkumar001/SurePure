@@ -504,4 +504,20 @@ public class Login extends RuntimePermissionActivity {
             return image;
         }
     }
+
+    public void privacyData(View view)
+    {
+        Intent i = new Intent(getApplicationContext(), WebActivity.class);
+        i.putExtra("url","file:///android_asset/ourbelief.html");
+        startActivity(i);
+
+    }
+
+    public void webData(View view)
+    {
+        Intent i = new Intent(getApplicationContext(), WebActivity.class);
+        i.putExtra("url","file:///android_asset/ourstory.html");
+        startActivity(i);
+
+    }
 }
