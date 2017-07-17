@@ -10,6 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Enabling multidex support.
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -26,7 +29,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(":lib")
-    compile project(":sdkui")
+    compile project(":payUMoneysdk")
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.volley:volley:1.0.0'
