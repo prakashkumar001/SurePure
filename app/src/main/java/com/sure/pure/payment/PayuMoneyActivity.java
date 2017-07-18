@@ -166,7 +166,7 @@ public class PayuMoneyActivity extends AppCompatActivity {
     private void calculateServerSideHashAndInitiatePayment(final PayUmoneySdkInitilizer.PaymentParam paymentParam) {
 
         // Replace your server side hash generator API URL
-        String url = "http://192.168.1.8/payumoney/moneyhash.php";
+        String url = "http://192.168.1./payumoney/moneyhash.php";
 
         Toast.makeText(this, "Please wait... Generating hash from server ... ", Toast.LENGTH_LONG).show();
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
