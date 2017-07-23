@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-include ':app', ':lib', ':sdkui'
-=======
-include ':app', ':lib' ,':sdkui'
->>>>>>> cf447b7280006ed103f464ff0ce930f308fceae1
+include ':app', ':lib', ':payUMoneysdk'

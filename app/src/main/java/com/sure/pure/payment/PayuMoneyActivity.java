@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -63,10 +65,16 @@ public class PayuMoneyActivity extends AppCompatActivity {
     String Total;
     User user;
     public static final String TAG = "Payu Money";
+    TextView status;
+    Button submit;
+    GlobalClass globalClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.payment);
+        status=(TextView)findViewById(R.id.webview);
+        submit=(Button)findViewById(R.id.submit);
+        globalClass=(GlobalClass)getApplicationContext();
         Intent i=getIntent();
         Total=i.getStringExtra("Total");
 
@@ -74,6 +82,19 @@ public class PayuMoneyActivity extends AppCompatActivity {
         user=databaseHelper.getUser();
         //setContentView(R.layout.activity_main);
         makePayment();
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i=new Intent(PayuMoneyActivity.this,MainActivity.class);
+                startActivity(i);
+                globalClass.cartValues.clear();
+                globalClass.jsonArraydetails=new JSONArray();
+                ActivityCompat.finishAffinity(PayuMoneyActivity.this);
+
+            }
+        });
 
     }
 
@@ -92,8 +113,8 @@ public class PayuMoneyActivity extends AppCompatActivity {
         String udf4 = "";
         String udf5 = "";
         boolean isDebug = true;
-        String key = "7Y51AJ37";
-        String merchantId = "4942591";
+        String key = "dRQuiA";
+        String merchantId = "4928174";
 
         PayUmoneySdkInitilizer.PaymentParam.Builder builder = new PayUmoneySdkInitilizer.PaymentParam.Builder();
 
@@ -166,7 +187,7 @@ public class PayuMoneyActivity extends AppCompatActivity {
     private void calculateServerSideHashAndInitiatePayment(final PayUmoneySdkInitilizer.PaymentParam paymentParam) {
 
         // Replace your server side hash generator API URL
-        String url = "http://192.168.1./payumoney/moneyhash.php";
+        String url = "https://test.payumoney.com/payment/op/calculateHashForTest";
 
         Toast.makeText(this, "Please wait... Generating hash from server ... ", Toast.LENGTH_LONG).show();
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -241,10 +262,17 @@ public class PayuMoneyActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Log.i(TAG, "Success - Payment ID : " + data.getStringExtra(SdkConstants.PAYMENT_ID));
                 String paymentId = data.getStringExtra(SdkConstants.PAYMENT_ID);
-                showDialogMessage("Payment Success Id : " + paymentId);
+                //showDialogMessage("Payment Success Id : " + paymentId);
+                status.setVisibility(View.VISIBLE);
+                status.setText("Payment Success");
+                submit.setVisibility(View.VISIBLE);
             } else if (resultCode == RESULT_CANCELED) {
                 Log.i(TAG, "failure");
-                showDialogMessage("cancelled");
+                //showDialogMessage("cancelled");
+
+                status.setVisibility(View.VISIBLE);
+                status.setText("Payment Cancelled");
+                submit.setVisibility(View.VISIBLE);
             } else if (resultCode == PayUmoneySdkInitilizer.RESULT_FAILED) {
                 Log.i("app_activity", "failure");
 
@@ -252,7 +280,11 @@ public class PayuMoneyActivity extends AppCompatActivity {
                     if (data.getStringExtra(SdkConstants.RESULT).equals("cancel")) {
 
                     } else {
-                        showDialogMessage("failure");
+                       // showDialogMessage("failure");
+
+                        status.setVisibility(View.VISIBLE);
+                        status.setText("Payment Failed");
+                        submit.setVisibility(View.VISIBLE);
                     }
                 }
                 //Write your code if there's no result
@@ -315,7 +347,7 @@ public class PayuMoneyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        //super.onBackPressed();
+        //finish();
     }
 }
