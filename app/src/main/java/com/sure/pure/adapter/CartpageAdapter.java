@@ -130,13 +130,13 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         // holder.sellerprice.setText(items.get(position).getSellerprice());
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         String seller = ctx.getResources().getString(R.string.Rupees);
-        String price = global.cartValues.get(position).getOfferprice();
+        String price = global.cartValues.get(position).getSellerprice();
 
         final double totals = global.cartValues.get(position).getQuantity() * Double.parseDouble(price);
         holder.total.setText(seller + String.valueOf(totals));
         holder.productname.setText(global.cartValues.get(position).getProductname());
         holder.description.setText(global.cartValues.get(position).getProductdes());
-        holder.offerprice.setText(global.cartValues.get(position).getOfferprice());
+        holder.offerprice.setText(global.cartValues.get(position).getSellerprice());
 
 
         holder.total.setTypeface(fonts);
@@ -187,7 +187,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
 
                 holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
                 String seller = ctx.getResources().getString(R.string.Rupees);
-                b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getOfferprice());
+                b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
                 global.cartValues.get(position).setTotalprice(String.valueOf(b));
                 holder.total.setText(seller + String.valueOf(b));
                 CartPage.total.setText(String.valueOf(totalvalue()));
@@ -212,7 +212,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
 
                 holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
                 String seller = ctx.getResources().getString(R.string.Rupees);
-                b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getOfferprice());
+                b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
                 global.cartValues.get(position).setTotalprice(String.valueOf(b));
                 holder.total.setText(seller + String.valueOf(b));
                 CartPage.total.setText(String.valueOf(totalvalue()));
@@ -281,7 +281,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         String seller = ctx.getResources().getString(R.string.Rupees);
         double totalValue = 0.0;
         for (int i = 0; i < global.cartValues.size(); i++) {
-            String price = global.cartValues.get(i).getOfferprice();
+            String price = global.cartValues.get(i).getSellerprice();
 
             double value = Double.parseDouble(price) * global.cartValues.get(i).getQuantity();
             totalValue = totalValue + value;

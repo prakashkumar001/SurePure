@@ -421,7 +421,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
                             String productname = object.getString("prd_name");
                             String productid = object.getString("id");
-                            String productretailprice = object.getString("prd_price");
+                            //String productretailprice = object.getString("prd_price");
                             String productsellerprice = object.getString("prd_price");
                             String productimage = object.getString("img_url");
 
@@ -429,7 +429,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                                 productdescription = "No description";
                             }
 
-                            Product p = new Product(productid, productname, productimage, productsellerprice, productretailprice, productdescription,productretailprice);
+                            Product p = new Product(productid, productname, productimage, productsellerprice, "", productdescription,productsellerprice);
 
                             productList.add(p);
                         } catch (JSONException e) {

@@ -151,11 +151,31 @@ public class Signup extends RuntimePermissionActivity {
 
                 if(user.length()>3 && pass.length()>3 && emails.length()> 3 && phoneno.length()>3 && city.length()>3 &&pin.length()>5)
                 {
-                    if(filePath==null)
+                   /* if(filePath==null)
                     {
                         Toast.makeText(Signup.this,"Please select your Profile picture",Toast.LENGTH_SHORT).show();
-                    }else {
-                        registerData();
+                    }else {*/
+
+                    //}
+
+                    if((emails.length())>0)
+                    {
+                        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+
+                        if (emails.matches(emailPattern))
+                        {
+                           // Toast.makeText(getApplicationContext(),"valid email address",Toast.LENGTH_SHORT).show();
+                            // or
+                            registerData();
+                        }
+                        else
+                        {
+                            email.setError("Please Enter Correct Email");                                    //or
+
+                        }
+
+
                     }
 
                 }else
@@ -334,11 +354,12 @@ public class Signup extends RuntimePermissionActivity {
                     String requestURL = "http://sridharchits.com/surepure/index.php/mobile/mobile_registration";
                     FileUploader multipart = new FileUploader(requestURL, charset,Signup.this);
 
+                        if(filePath!=null)
+                        {
+                            File f=new File(filePath);
+                            multipart.addFilePart("uploaded_file", f);
 
-                    File f=new File(filePath);
-
-
-                        multipart.addFilePart("uploaded_file", f);
+                        }
 
 
                         multipart.addFormField("uname", user);

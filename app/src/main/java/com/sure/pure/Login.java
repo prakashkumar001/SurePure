@@ -238,7 +238,7 @@ public class Login extends RuntimePermissionActivity {
 
                     System.out.println("SERVER REPLIED:"+response);
 
-                    dialog.dismiss();
+
 
 
                 } catch (Exception ex) {
@@ -407,7 +407,7 @@ public class Login extends RuntimePermissionActivity {
                     alertDialog.show();
                     e.printStackTrace();
                 }
-
+                dialog.dismiss();
             }
         } new uploadTOserver().execute();
 

@@ -146,12 +146,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
 
         holder.sellerprice.setText(seller + product.get(position).getSellerprice());
-        holder.offerprice.setText(seller + product.get(position).getOfferprice());
+        //holder.offerprice.setText(seller + product.get(position).getOfferprice());
         holder.productname.setText(product.get(position).getProductname());
-        holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+       // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.sellerprice.setTypeface(fonts);
-        holder.offerprice.setTypeface(fonts);
+        //holder.offerprice.setTypeface(fonts);
         holder.productname.setTypeface(bold);
         holder.add.setTypeface(bold);
 
