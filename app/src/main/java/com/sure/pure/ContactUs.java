@@ -1,10 +1,13 @@
 package com.sure.pure;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,26 +41,18 @@ import com.sure.pure.utils.RuntimePermissionActivity;
 
 public class ContactUs extends RuntimePermissionActivity implements
 
-        OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        GoogleMap.OnMarkerDragListener,
-        GoogleMap.OnMapLongClickListener{
+        OnMapReadyCallback
+         {
 
     //Our Map                                                  Caused by: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.support.v7.app.ActionBar.setTitle(java.lang.CharSequence)' on a null object reference
 
     private GoogleMap mMap;
     Toolbar toolbar;
-    LocationRequest mLocationRequest;
     private static final int REQUEST_PERMISSIONS = 20;
-    private GoogleApiClient googleApiClient;
     private static final int NETPERMISSION = 1888;
 
     InternetPermissions internetPermissions;
 
-    //To store longitude and latitude from map
-    private double longitude;
-    private double latitude;
     Marker marker;
     WebView webView;
 
@@ -79,7 +74,6 @@ public class ContactUs extends RuntimePermissionActivity implements
                 , REQUEST_PERMISSIONS);
 
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,58 +81,45 @@ public class ContactUs extends RuntimePermissionActivity implements
                 finish();
             }
         });
-        Intent i=getIntent();
+        Intent i = getIntent();
 
-        String url=i.getStringExtra("url");
-        webView=(WebView)findViewById(R.id.webview);
+        String url = i.getStringExtra("url");
+        webView = (WebView) findViewById(R.id.webview);
 
         webView.loadUrl(url);
-        loadActivity();
+
 
     }
-
-
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
-
-
-    }
-    //Getting current location
-    private void getCurrentLocation(double lat,double lon) {
-        //Creating a location object
-        Log.i("latlong", ""+lat+lon);
-        moveMap(lat,lon);
-
-
-        //moving the map to location
+        moveMap(13.0545,80.2114);
 
 
     }
+
 
     //Function to move the map
-    private void moveMap(double lat,double lon) {
+    private void moveMap(double lat, double lon) {
         //String to display current latitude and longitude
-        String msg = lat + ", "+lon;
+        String msg = lat + ", " + lon;
 
         //Creating a LatLng Object to store Coordinates
         LatLng latLng = new LatLng(lat, lon);
 
-        if(mMap!=null)
-        {
+        if (mMap != null) {
             mMap.clear();
         }
 
 
         //Adding marker to map
-        marker=  mMap.addMarker(new MarkerOptions()
+        marker = mMap.addMarker(new MarkerOptions()
                 .position(latLng) //setting position
                 .draggable(true) //Making the marker draggable
-                .title("Event Location")); //Adding a title
+                .title("Life Water")); //Adding a title
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(lat, lon)).zoom(12).tilt(30).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -152,116 +133,11 @@ public class ContactUs extends RuntimePermissionActivity implements
         //Displaying current coordinates in toast
         // Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
-    @Override
-    protected void onStart() {
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
 
 
-        // Create the LocationRequest object
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-        googleApiClient.connect();
-        // Create the LocationRequest object
-
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        googleApiClient.disconnect();
-        super.onStop();
-    }
 
 
-    @Override
-    public void onConnected(Bundle bundle) {
 
-        internetPermissions=new InternetPermissions(getApplicationContext());
-        if(internetPermissions.isInternetOn())
-        {
-
-            try{
-                getCurrentLocation(13.0545,80.2114);
-
-            }catch (Exception e)
-            {
-
-            }
-
-        }else
-        {
-
-            Snackbar snack= Snackbar.make(findViewById(android.R.id.content), "No Internet Connection",Snackbar.LENGTH_LONG);
-            View vv=snack.getView();
-            TextView textView=(TextView)vv.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setGravity(Gravity.CENTER);
-            snack.show();
-            snack.setAction("Enable", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(internetPermissions.isInternetOn())
-                    {
-                        getCurrentLocation(latitude,longitude);
-                    }else
-                    {
-                        startActivityForResult(new Intent(Settings.ACTION_SETTINGS),NETPERMISSION);
-                    }
-                }
-            });
-
-
-        }
-
-        //getCurrentLocation(latitude,longitude);
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-        //Clearing all the markers
-        mMap.clear();
-
-        //Adding a new marker to the current pressed position
-        mMap.addMarker(new MarkerOptions()
-                .position(latLng)
-                .draggable(true));
-    }
-
-    @Override
-    public void onMarkerDragStart(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDrag(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-        //Getting the coordinates
-        latitude = marker.getPosition().latitude;
-        longitude = marker.getPosition().longitude;
-
-        //Moving the map
-        moveMap(latitude,longitude);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -272,21 +148,6 @@ public class ContactUs extends RuntimePermissionActivity implements
                 if ((grantResults.length > 0) && (grantResults[0] +
                         grantResults[1]) == PackageManager.PERMISSION_GRANTED) {
                     //Call whatever you want
-
-                    googleApiClient = new GoogleApiClient.Builder(this)
-                            .addConnectionCallbacks(this)
-                            .addOnConnectionFailedListener(this)
-                            .addApi(LocationServices.API)
-                            .build();
-
-                    // Create the LocationRequest object
-                    mLocationRequest = LocationRequest.create()
-                            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                            .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                            .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-                    googleApiClient.connect();
-                    // Create the LocationRequest object
-
 
                     loadActivity();
                 } else {
@@ -311,14 +172,10 @@ public class ContactUs extends RuntimePermissionActivity implements
         }
     }
 
-    public void loadActivity()
-    {
+    public void loadActivity() {
 
 
         //Initializing googleapi client
-
-
-
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -326,17 +183,21 @@ public class ContactUs extends RuntimePermissionActivity implements
         mapFragment.getMapAsync(this);
 
 
-
-
-
     }
+
     @Override
     public void onPermissionsGranted(final int requestCode) {
         ///Toast.makeText(this, "Permissions Received.", Toast.LENGTH_LONG).show();
 
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
-        loadActivity();
+                loadActivity();
+            }
+        }, 1000);
+
     }
 
     @Override
@@ -345,4 +206,5 @@ public class ContactUs extends RuntimePermissionActivity implements
 
         finish();
     }
+
 }
