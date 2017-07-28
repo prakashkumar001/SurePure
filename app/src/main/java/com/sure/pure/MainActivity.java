@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.contactus) {
 
-                Intent i = new Intent(MainActivity.this, WebActivity.class);
+                Intent i = new Intent(MainActivity.this, ContactUs.class);
                  i.putExtra("url","file:///android_asset/contactus.html");
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
