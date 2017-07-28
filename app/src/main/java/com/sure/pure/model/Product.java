@@ -117,7 +117,7 @@ public class Product {
         @Override
         public int compare(Product o1, Product o2) {
 
-            return Integer.parseInt(o1.getOfferprice()) > Integer.parseInt(o2.getOfferprice()) ? 1 : (Integer.parseInt(o1.getOfferprice()) < Integer.parseInt(o2.getOfferprice()) ? -1 : 0);
+            return Integer.parseInt(o1.getSellerprice()) > Integer.parseInt(o2.getSellerprice()) ? 1 : (Integer.parseInt(o1.getSellerprice()) < Integer.parseInt(o2.getSellerprice()) ? -1 : 0);
         }
     }
 
@@ -126,8 +126,8 @@ public class Product {
 
         @Override
         public int compare(Product p1, Product p2) {
-            if (Double.parseDouble(p1.getOfferprice()) < Double.parseDouble(p2.getOfferprice())) return -1;
-            if (Double.parseDouble(p1.getOfferprice()) > Double.parseDouble(p2.getOfferprice())) return 1;
+            if (Double.parseDouble(p1.getSellerprice()) < Double.parseDouble(p2.getSellerprice())) return -1;
+            if (Double.parseDouble(p1.getSellerprice()) > Double.parseDouble(p2.getSellerprice())) return 1;
             return 0;
         }
     }

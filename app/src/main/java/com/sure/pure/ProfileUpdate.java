@@ -82,7 +82,7 @@ public class ProfileUpdate extends RuntimePermissionActivity {
         carticon=(ImageView)findViewById(R.id.carticon);
         fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
         bold = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
-        title.setText("Sign Up");
+
         title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()

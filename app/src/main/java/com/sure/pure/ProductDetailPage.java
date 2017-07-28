@@ -87,7 +87,7 @@ public class ProductDetailPage extends AppCompatActivity {
         cartcount.setTypeface(fonts);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
         setSupportActionBar(toolbar);
-        title.setText("Sure Pure");
+        title.setText("Life Water");
         title.setTypeface(bold);
        // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -304,7 +304,7 @@ public class Login extends RuntimePermissionActivity {
 
                         // set dialog message
                         alertDialogBuilder
-                                .setMessage("Welcome to Sure Pure")
+                                .setMessage("Welcome to Life Water")
                                 .setCancelable(false)
                                 .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {

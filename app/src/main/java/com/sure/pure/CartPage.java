@@ -81,7 +81,7 @@ public class CartPage extends AppCompatActivity {
             adapter=new CartpageAdapter(CartPage.this,global.cartValues);
 
             setSupportActionBar(toolbar);
-        title.setText("Sure Pure");
+        title.setText("Life Water");
         title.setTypeface(bold);
             //getSupportActionBar().setIcon(R.drawable.logo);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
