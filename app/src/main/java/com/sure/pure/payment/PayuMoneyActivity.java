@@ -67,8 +67,9 @@ public class PayuMoneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent i=getIntent();
-        Total=i.getStringExtra("Total");
+       // Intent i=getIntent();
+       // Total=i.getStringExtra("Total");
+        Total="1";
 
         databaseHelper=new DatabaseHelper(getApplicationContext());
         user=databaseHelper.getUser();
@@ -80,9 +81,9 @@ public class PayuMoneyActivity extends AppCompatActivity {
     public void makePayment() {
 
         String phone = user.mobile;
-        String productName = "product_name";
+        String productName = "Life Water";
         String firstName = user.name;
-        String txnId = "0nf7" + System.currentTimeMillis();
+        String txnId = "#001" + System.currentTimeMillis();
         String email = user.email;
         String sUrl = "https://test.payumoney.com/mobileapp/payumoney/success.php";
         String fUrl = "https://test.payumoney.com/mobileapp/payumoney/failure.php";
@@ -91,9 +92,9 @@ public class PayuMoneyActivity extends AppCompatActivity {
         String udf3 = "";
         String udf4 = "";
         String udf5 = "";
-        boolean isDebug = true;
-        String key = "7Y51AJ37";
-        String merchantId = "4942591";
+        boolean isDebug = false;
+        String key = "B5nZnZKU";
+        String merchantId = "5552166";
 
         PayUmoneySdkInitilizer.PaymentParam.Builder builder = new PayUmoneySdkInitilizer.PaymentParam.Builder();
 
@@ -166,7 +167,7 @@ public class PayuMoneyActivity extends AppCompatActivity {
     private void calculateServerSideHashAndInitiatePayment(final PayUmoneySdkInitilizer.PaymentParam paymentParam) {
 
         // Replace your server side hash generator API URL
-        String url = "http://192.168.1./payumoney/moneyhash.php";
+        String url = "http://192.168.1.16/payumoney/moneyhash.php";
 
         Toast.makeText(this, "Please wait... Generating hash from server ... ", Toast.LENGTH_LONG).show();
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
