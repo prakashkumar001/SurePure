@@ -131,7 +131,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         // holder.sellerprice.setText(items.get(position).getSellerprice());
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        Collections.sort(global.cartValues,new Product.OrderByAmountdouble());
+        Collections.sort(global.cartValues, Collections.reverseOrder(new Product.OrderByAmountdouble()));
         String seller = ctx.getResources().getString(R.string.Rupees);
         String price = global.cartValues.get(position).getSellerprice();
 

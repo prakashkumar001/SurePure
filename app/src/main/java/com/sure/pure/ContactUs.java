@@ -96,7 +96,7 @@ public class ContactUs extends RuntimePermissionActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        moveMap(13.0545,80.2114);
+        moveMap(13.0557466,80.205309);
 
 
     }
