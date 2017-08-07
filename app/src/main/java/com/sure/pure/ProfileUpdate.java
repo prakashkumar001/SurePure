@@ -80,8 +80,8 @@ public class ProfileUpdate extends RuntimePermissionActivity {
         title=(TextView)findViewById(R.id.title);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
 
         title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()

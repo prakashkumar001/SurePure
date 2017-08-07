@@ -100,8 +100,8 @@ public class Login extends RuntimePermissionActivity {
         databaseHelper=new DatabaseHelper(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
         title=(TextView)findViewById(R.id.title);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         title.setText("Login");
         title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -509,6 +509,7 @@ public class Login extends RuntimePermissionActivity {
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/privacy.html");
+        i.putExtra("name","privacy");
         startActivity(i);
 
     }
@@ -517,6 +518,7 @@ public class Login extends RuntimePermissionActivity {
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/aboutus.html");
+        i.putExtra("name","aboutus");
         startActivity(i);
 
     }

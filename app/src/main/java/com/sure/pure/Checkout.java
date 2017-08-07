@@ -92,8 +92,8 @@ User user;
         title=(TextView)findViewById(R.id.title);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         global=(GlobalClass)getApplicationContext();
         databaseHelper=new DatabaseHelper(getApplicationContext());
         setSupportActionBar(toolbar);
@@ -282,6 +282,7 @@ User user;
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/privacy.html");
+        i.putExtra("name","privacy");
         startActivity(i);
 
     }
@@ -290,6 +291,7 @@ User user;
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/aboutus.html");
+        i.putExtra("name","aboutus");
         startActivity(i);
 
     }

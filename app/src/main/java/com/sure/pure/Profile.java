@@ -63,7 +63,7 @@ public class Profile extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-         font = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
+         font = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
         collapsingToolbarLayout.setTitle(user.name);
 
 
@@ -77,7 +77,7 @@ public class Profile extends AppCompatActivity {
         pinnumber.setTypeface(font);
         address.setTypeface(font);
 
-        Typeface fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        Typeface fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         personal.setTypeface(fonts);
         address_info.setTypeface(fonts);
 
@@ -145,6 +145,7 @@ public class Profile extends AppCompatActivity {
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/privacy.html");
+        i.putExtra("name","privacy");
         startActivity(i);
 
     }
@@ -153,6 +154,7 @@ public class Profile extends AppCompatActivity {
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/aboutus.html");
+        i.putExtra("name","aboutus");
         startActivity(i);
 
     }

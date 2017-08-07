@@ -83,8 +83,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         sort=item;
         Log.i("Log","Log"+listformat);
         loader=ImageLoader.getInstance();
-        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Bd.ttf");
 
     }
 

@@ -53,8 +53,8 @@ public class ChangePassword extends AppCompatActivity {
         newpass=(EditText)findViewById(R.id.newpass);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         globalClass=(GlobalClass)getApplicationContext();
         databaseHelper=new DatabaseHelper(getApplicationContext());
         user=databaseHelper.getUser();

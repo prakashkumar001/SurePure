@@ -59,7 +59,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.MyViewHo
         this.items=items;
         ctx=context;
 
-        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Regular.ttf");
+        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Rg.ttf");
     }
 
     @Override

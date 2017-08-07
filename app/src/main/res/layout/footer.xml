@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:onClick="webData"
-            android:text="Contact Us"
+            android:text="About Us"
             />
 
 

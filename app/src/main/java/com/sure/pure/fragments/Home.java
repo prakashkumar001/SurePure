@@ -68,6 +68,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     public static String item = "A-Z";
     EditText search;
     ImageView list_grid;
+    Typeface fonts,bold;
 
 
     public Home() {
@@ -93,7 +94,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.home, container, false);
         title = "8";
-
+        fonts = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Monitorica_Bd.ttf");
         Log.i("Title", "Title" + title);
         global = (GlobalClass) getActivity().getApplicationContext();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
@@ -108,8 +110,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         StrictMode.setThreadPolicy(policy);
 
         search = (EditText) v.findViewById(R.id.search);
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Comfortaa_Regular.ttf");
-        search.setTypeface(typeface);
+        search.setTypeface(bold);
 
 
         list_grid.setOnClickListener(new View.OnClickListener() {

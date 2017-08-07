@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity
         profile = (ImageView) findViewById(R.id.profile);
         carticon = (ImageView) findViewById(R.id.carticon);
         sorticon = (ImageView) findViewById(R.id.sorticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         setSupportActionBar(toolbar);
         title.setText("Home");
@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity
         Log.i("LLLLLLLLL","LLLLLLLLLL"+databaseHelper.getUser());
 
         if (databaseHelper.getSignup().equalsIgnoreCase("true")) {
+            nav_user.setTypeface(bold);
+            nav_user.setText("Hello User");
             nav_user.setText(databaseHelper.getUser().name);
 
 
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 
         }else
         {
-            userpic.setImageResource(R.drawable.sundar);
+            userpic.setImageResource(R.drawable.users);
         }
 
 
@@ -357,7 +359,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypeface("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
@@ -414,6 +416,7 @@ public class MainActivity extends AppCompatActivity
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/privacy.html");
+        i.putExtra("name","privacy");
         startActivity(i);
 
     }
@@ -422,6 +425,7 @@ public class MainActivity extends AppCompatActivity
     {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
         i.putExtra("url","file:///android_asset/aboutus.html");
+        i.putExtra("name","aboutus");
         startActivity(i);
 
     }

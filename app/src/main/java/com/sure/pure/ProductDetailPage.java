@@ -68,8 +68,8 @@ public class ProductDetailPage extends AppCompatActivity {
         title=(TextView)findViewById(R.id.title);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         loader=ImageLoader.getInstance();
 
         add.setVisibility(View.INVISIBLE);
@@ -163,7 +163,7 @@ public class ProductDetailPage extends AppCompatActivity {
                     value=value+1;
                     quantity.setText(String.valueOf(value));
 
-                   b=value* Double.parseDouble(offerprice);
+                   b=value* Double.parseDouble(sellerprice);
                     //total.setText(String.valueOf(b));
                 tv.setText(String.valueOf(b));
 

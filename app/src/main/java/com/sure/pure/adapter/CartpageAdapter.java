@@ -95,8 +95,8 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         global = (GlobalClass) ctx.getApplicationContext();
         // drawables=new int[]{R.drawable.apple,R.drawable.banana,R.drawable.kiwi,R.drawable.grapes,R.drawable.starwbery,R.drawable.orange,R.drawable.watermelon};
         loader = ImageLoader.getInstance();
-        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Regular.ttf");
-        bold = Typeface.createFromAsset(ctx.getAssets(), "fonts/Comfortaa_Bold.ttf");
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Bd.ttf");
     }
 
     @Override

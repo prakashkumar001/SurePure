@@ -32,7 +32,7 @@ public class Splash extends AwesomeSplash {
         configSplash.setTitleTextSize(25.0f);
         configSplash.setAnimTitleDuration(1000);
         configSplash.setAnimTitleTechnique(Techniques.SlideInUp);
-        configSplash.setTitleFont("fonts/Comfortaa_Bold.ttf");
+        configSplash.setTitleFont("fonts/Monitorica_Bd.ttf");
 
 
     }
