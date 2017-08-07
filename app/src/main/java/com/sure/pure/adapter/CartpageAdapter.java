@@ -33,6 +33,7 @@ import com.sure.pure.payment.PayuMoneyActivity;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 /**
@@ -129,10 +130,13 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         //holder.image.setImageResource(items.get(position).getProductimage());
         // holder.sellerprice.setText(items.get(position).getSellerprice());
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        Collections.sort(global.cartValues,new Product.OrderByAmountdouble());
         String seller = ctx.getResources().getString(R.string.Rupees);
         String price = global.cartValues.get(position).getSellerprice();
 
         final double totals = global.cartValues.get(position).getQuantity() * Double.parseDouble(price);
+
         holder.total.setText(seller + String.valueOf(totals));
         holder.productname.setText(global.cartValues.get(position).getProductname());
         holder.description.setText(global.cartValues.get(position).getProductdes());
