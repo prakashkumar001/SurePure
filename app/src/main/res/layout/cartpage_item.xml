@@ -61,7 +61,7 @@
                         android:id="@+id/product"
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:textSize="16dp"
+                        android:textSize="18dp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:typeface="serif"
@@ -86,13 +86,13 @@
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:text="Price :"/>
                     <TextView
                         android:id="@+id/offerprice"
                         android:layout_width="wrap_content"
                         android:gravity="left"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:layout_height="wrap_content"
                         android:text="70 Rupees"/>
 
@@ -110,7 +110,7 @@
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:text="Qty :"/>
 
                         <ImageView
@@ -126,7 +126,7 @@
                         android:layout_width="0dp"
                         android:layout_weight=".3"
                         android:gravity="center"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:layout_height="20dp"
                         android:text="1"/>
 
@@ -161,13 +161,13 @@
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:text="Total :"/>
                     <TextView
                         android:id="@+id/total"
                         android:layout_width="wrap_content"
                         android:gravity="left"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:layout_height="wrap_content"
                         android:text="70 Rupees"/>
 
@@ -194,7 +194,7 @@
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:gravity="center"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@android:color/black"
                 android:typeface="serif"
@@ -230,7 +230,7 @@
                         android:layout_toRightOf="@id/removeicon"
                         android:layout_centerInParent="true"
                         android:textColor="@android:color/black"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         android:text="Remove"
                         />
                 </RelativeLayout>

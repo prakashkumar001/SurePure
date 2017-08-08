@@ -121,7 +121,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:layout_gravity="center"
-                    android:textSize="16dp"
+                    android:textSize="20dp"
                     android:textColor="@android:color/black"
                     />
                 <TextView
@@ -133,7 +133,7 @@
                     android:layout_marginRight="20dp"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:textColor="@android:color/black"
                     />
             </LinearLayout>
@@ -168,6 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textSize="18dp"
             android:text="0"
             android:textColor="@android:color/black"
             android:layout_gravity="center"
@@ -191,7 +192,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
             android:typeface="serif"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:gravity="left"
             android:text="Description"
             />

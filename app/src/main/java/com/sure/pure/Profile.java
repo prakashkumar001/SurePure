@@ -35,7 +35,7 @@ public class Profile extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     User user;
-    Typeface font;
+    Typeface font,bold;
     GlobalClass global;
     FloatingActionButton fab;
     @Override
@@ -55,6 +55,7 @@ public class Profile extends AppCompatActivity {
         profile_id=(ImageView)findViewById(R.id.profile_id);
         fab=(FloatingActionButton) findViewById(R.id.fab);
 
+
         global=(GlobalClass)getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,7 +65,15 @@ public class Profile extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
          font = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         collapsingToolbarLayout.setTitle(user.name);
+        TextView privacy = (TextView) findViewById(R.id.privacy);
+        TextView aboutus = (TextView) findViewById(R.id.aboutus);
+        TextView copyrights = (TextView) findViewById(R.id.copyrights);
+        copyrights.setTypeface(bold);
+        privacy.setTypeface(bold);
+        aboutus.setTypeface(bold);
+
 
 
         dynamicToolbarColor();

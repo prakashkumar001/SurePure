@@ -1,14 +1,11 @@
 package com.sure.pure;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,32 +14,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
-import com.sure.pure.payment.Payment;
 import com.sure.pure.payment.PayuMoneyActivity;
 import com.sure.pure.utils.WSUtils;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by Creative IT Works on 28-Jun-17.
@@ -56,7 +37,7 @@ public class Checkout extends AppCompatActivity {
     Typeface fonts,bold;
     public static TextView title,cartcount;
     ImageView carticon;
-    String PaymentType;
+    String PaymentType="";
 
 
 
@@ -84,6 +65,8 @@ User user;
         phone=(TextView)findViewById(R.id.phone);
 
 
+
+
         radioGroup=(RadioGroup) findViewById(R.id.myRadioGroup);
         cash=(RadioButton) findViewById(R.id.cash);
         continue_button=(Button)findViewById(R.id.continue_button);
@@ -99,6 +82,12 @@ User user;
         setSupportActionBar(toolbar);
         title.setText("Check Out");
         title.setTypeface(bold);
+        TextView privacy = (TextView) findViewById(R.id.privacy);
+        TextView aboutus = (TextView) findViewById(R.id.aboutus);
+        TextView copyrights = (TextView) findViewById(R.id.copyrights);
+        copyrights.setTypeface(bold);
+        privacy.setTypeface(bold);
+        aboutus.setTypeface(bold);
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

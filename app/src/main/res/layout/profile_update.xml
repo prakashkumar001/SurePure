@@ -224,11 +224,15 @@
                     >
 
                     <TextView
+                        android:id="@+id/privacy"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Privacy policy"
                         />
                     <TextView
+
+                        android:id="@+id/aboutus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -240,6 +244,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/copyrights"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:layout_width="match_parent"

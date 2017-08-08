@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         title.setText("Home");
         title.setTypeface(bold);
 
+
         invalidateOptionsMenu();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

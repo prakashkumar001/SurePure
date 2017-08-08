@@ -2,6 +2,7 @@ package com.sure.pure.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,13 @@ public class SortAdapter extends BaseAdapter {
    public static ArrayList<String> data;
     Context context;
     int selectedPosition;
+    Typeface fonts,bold;
     public SortAdapter(Context context, ArrayList<String> data)
     {
         this.data=data;
         this.context=context;
+        fonts = Typeface.createFromAsset(context.getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold= Typeface.createFromAsset(context.getAssets(), "fonts/Monitorica_Bd.ttf");
 
     }
 
@@ -70,6 +74,8 @@ public class SortAdapter extends BaseAdapter {
 
 
         holder.text.setText(data.get(position));
+        holder.text.setTypeface(bold);
+
 
         convertView.setOnClickListener(new OnItemClickListener(position));
 

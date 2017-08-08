@@ -17,11 +17,13 @@ public class CustomTypeface extends TypefaceSpan {
 
     @Override
     public void updateDrawState(TextPaint ds) {
+        ds.setTextSize(50f);
         applyCustomTypeFace(ds, newType);
     }
 
     @Override
     public void updateMeasureState(TextPaint paint) {
+        paint.setTextSize(50f);
         applyCustomTypeFace(paint, newType);
     }
 

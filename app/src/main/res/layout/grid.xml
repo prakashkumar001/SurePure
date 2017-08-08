@@ -31,7 +31,7 @@
                 android:id="@+id/product"
                 android:layout_width="wrap_content"
                 android:gravity="center"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:textColor="@android:color/black"
@@ -44,13 +44,13 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 android:text="sellerprice"/>
             <TextView
                 android:id="@+id/offerprice"
                 android:layout_width="wrap_content"
                 android:gravity="left"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:text=""/>
@@ -69,7 +69,7 @@
                     android:textColor="@color/colorPrimary"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:text="Add To Cart"
                     />
             </RelativeLayout>

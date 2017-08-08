@@ -99,6 +99,14 @@ public class ProfileUpdate extends RuntimePermissionActivity {
 
         title.setText("Profile Update");
         title.setTypeface(bold);
+        TextView privacy = (TextView) findViewById(R.id.privacy);
+        TextView aboutus = (TextView) findViewById(R.id.aboutus);
+        TextView copyrights = (TextView) findViewById(R.id.copyrights);
+        copyrights.setTypeface(bold);
+        privacy.setTypeface(bold);
+        aboutus.setTypeface(bold);
+
+
 
         detail=databaseHelper.getUser();
 

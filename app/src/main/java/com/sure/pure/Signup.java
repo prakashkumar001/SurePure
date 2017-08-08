@@ -93,6 +93,14 @@ public class Signup extends RuntimePermissionActivity {
         bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         title.setText("Sign Up");
         title.setTypeface(bold);
+        TextView privacy = (TextView) findViewById(R.id.privacy);
+        TextView aboutus = (TextView) findViewById(R.id.aboutus);
+        TextView copyrights = (TextView) findViewById(R.id.copyrights);
+        copyrights.setTypeface(bold);
+        privacy.setTypeface(bold);
+        aboutus.setTypeface(bold);
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()

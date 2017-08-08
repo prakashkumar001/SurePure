@@ -281,7 +281,9 @@ public class PayuMoneyActivity extends AppCompatActivity {
 
                 if (data != null) {
                     if (data.getStringExtra(SdkConstants.RESULT).equals("cancel")) {
-
+                        status.setVisibility(View.VISIBLE);
+                        status.setText("Payment Failed");
+                        submit.setVisibility(View.VISIBLE);
                     } else {
                        // showDialogMessage("failure");
 
@@ -293,27 +295,34 @@ public class PayuMoneyActivity extends AppCompatActivity {
                 //Write your code if there's no result
             } else if (resultCode == PayUmoneySdkInitilizer.RESULT_BACK) {
                 Log.i(TAG, "User returned without login");
+                status.setVisibility(View.VISIBLE);
+                status.setText("Payment Cancelled");
+                submit.setVisibility(View.VISIBLE);
                 showDialogMessage("User returned without login");
             }
         }
     }
 
-    private void showDialogMessage(String message) {
+    private void showDialogMessage(final String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(TAG);
+        builder.setCancelable(false);
         builder.setMessage(message);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
 
-                if(TAG.equalsIgnoreCase("success"))
+                if(message.equalsIgnoreCase("success"))
                 {
                     Intent i=new Intent(PayuMoneyActivity.this, MainActivity.class);
                     startActivity(i);
                     ActivityCompat.finishAffinity(PayuMoneyActivity.this);
 
-                }else {
+                }else if(message.equalsIgnoreCase("User returned without login")){
+                    Intent i=new Intent(PayuMoneyActivity.this, Checkout.class);
+                    startActivity(i);
+                    ActivityCompat.finishAffinity(PayuMoneyActivity.this);
 
                 }
 

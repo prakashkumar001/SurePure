@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -100,6 +101,12 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         global = (GlobalClass) getActivity().getApplicationContext();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         list_grid = (ImageView) v.findViewById(R.id.list_grid);
+        TextView privacy = (TextView) v.findViewById(R.id.privacy);
+        TextView aboutus = (TextView) v.findViewById(R.id.aboutus);
+        TextView copyrights = (TextView) v.findViewById(R.id.copyrights);
+        copyrights.setTypeface(bold);
+        privacy.setTypeface(bold);
+        aboutus.setTypeface(bold);
 
         a = getActivity();
         global.listmodel = "grid";
@@ -111,6 +118,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
         search = (EditText) v.findViewById(R.id.search);
         search.setTypeface(bold);
+
 
 
         list_grid.setOnClickListener(new View.OnClickListener() {
