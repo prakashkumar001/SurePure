@@ -38,6 +38,7 @@ public class Checkout extends AppCompatActivity {
     public static TextView title,cartcount;
     ImageView carticon;
     String PaymentType="";
+    TextView shipping,paymentdetails,nametext,phonetext,emailtext,addresstext;
 
 
 
@@ -63,6 +64,15 @@ User user;
         email=(TextView)findViewById(R.id.email);
         address=(TextView)findViewById(R.id.address);
         phone=(TextView)findViewById(R.id.phone);
+
+
+        nametext=(TextView)findViewById(R.id.nametext);
+        phonetext=(TextView)findViewById(R.id.emailtext);
+        emailtext=(TextView)findViewById(R.id.addresstext);
+        addresstext=(TextView)findViewById(R.id.phonetext);
+        paymentdetails=(TextView)findViewById(R.id.paymentdetails);
+        shipping=(TextView)findViewById(R.id.shipping);
+
 
 
 
@@ -99,6 +109,22 @@ User user;
         phone.setText(user.mobile);
         address.setText(user.address+"\n"+user.pincode);
 
+        name.setTypeface(bold);
+        email.setTypeface(bold);
+        phone.setTypeface(bold);
+        address.setTypeface(bold);
+
+        nametext.setTypeface(bold);
+        emailtext.setTypeface(bold);
+        phonetext.setTypeface(bold);
+        addresstext.setTypeface(bold);
+
+        paymentdetails.setTypeface(bold);
+        cash.setTypeface(bold);
+        shipping.setTypeface(bold);
+        continue_button.setTypeface(bold);
+
+
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -128,7 +154,7 @@ User user;
         }
 
 
-        addToOrders();
+
         carticon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +207,7 @@ User user;
                 }else
 
                 {
-
+                    addToOrders();
                 }
 
 
