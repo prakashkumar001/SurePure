@@ -12,11 +12,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -46,19 +49,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.google.android.gms.common.api.Api;
+import com.sure.pure.adapter.DrawerAdapter;
 import com.sure.pure.common.CustomTypeface;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
 import com.sure.pure.fragments.Home;
 import com.sure.pure.model.Product;
+import com.sure.pure.retrofit.APIInterface;
+import com.sure.pure.utils.DrawerItem;
+import com.sure.pure.utils.FileUploader;
 import com.sure.pure.utils.ProfilePicture;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.sure.pure.fragments.Delivered.adapter;
+import static com.sure.pure.fragments.Home.layoutchange1;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    ArrayList<DrawerItem> drawerList;
 
     public static LayerDrawable icon;
     GlobalClass global;
@@ -68,12 +96,15 @@ public class MainActivity extends AppCompatActivity
     DatabaseHelper databaseHelper;
     int backPressedCount = 0;
     Typeface fonts, bold;
+    RecyclerView drawer;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (RecyclerView) findViewById(R.id.drawer);
         title = (TextView) findViewById(R.id.title);
         cartcount = (TextView) findViewById(R.id.cartcount);
         profile = (ImageView) findViewById(R.id.profile);
@@ -83,9 +114,6 @@ public class MainActivity extends AppCompatActivity
         bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         setSupportActionBar(toolbar);
-        title.setText("Home");
-        title.setTypeface(bold);
-
 
         invalidateOptionsMenu();
 
@@ -95,41 +123,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        Menu m = navigationView.getMenu();
-        for (int i = 0; i < m.size(); i++) {
-            MenuItem mi = m.getItem(i);
-
-
-            //the method we have create in activity
-            applyFontToMenuItem(mi);
-        }
-        View hView = navigationView.getHeaderView(0);
-        TextView nav_user = (TextView) hView.findViewById(R.id.name);
-        ImageView userpic = (ImageView) hView.findViewById(R.id.profile);
-
-
-        Log.i("LLLLLLLLL","LLLLLLLLLL"+databaseHelper.getUser());
-
-        if (databaseHelper.getSignup().equalsIgnoreCase("true")) {
-            nav_user.setTypeface(bold);
-            nav_user.setText("Hello User");
-            nav_user.setText(databaseHelper.getUser().name);
-
-
-
-                global.profile=new ProfilePicture(getApplicationContext(),databaseHelper.getUser().image).bitmap;
-                userpic.setImageBitmap(global.profile);
-
-        }else
-        {
-            userpic.setImageResource(R.drawable.users);
-        }
-
-
-        navigationView.setNavigationItemSelectedListener(this);
 
         selectFirstItemAsDefault();
+
+
+        getAllCategory();
 
 
         if (global.cartValues.size() > 0) {
@@ -161,11 +159,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                if(databaseHelper.getSignup().equalsIgnoreCase("true"))
-                {
+                if (databaseHelper.getSignup().equalsIgnoreCase("true")) {
                     onPopupButtonClickProfile(view);
 
-                }else {
+                } else {
                     onPopupButtonClick(view);
                 }
             }
@@ -220,16 +217,14 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        if(id==R.id.changepass)
-        {
-            if(databaseHelper.getSignup()=="false")
-            {
+        if (id == R.id.changepass) {
+            if (databaseHelper.getSignup() == "false") {
                 Intent i = new Intent(MainActivity.this, Login.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
 
 
-            }else {
+            } else {
                 Intent i = new Intent(MainActivity.this, ChangePassword.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
@@ -287,14 +282,13 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.contactus) {
 
-                Intent i = new Intent(MainActivity.this, ContactUs.class);
-                 i.putExtra("url","file:///android_asset/contactus.html");
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+            Intent i = new Intent(MainActivity.this, ContactUs.class);
+            i.putExtra("url", "file:///android_asset/contactus.html");
+            startActivity(i);
+            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
 
 
-            }
-
+        }
 
 
         return true;
@@ -326,30 +320,25 @@ public class MainActivity extends AppCompatActivity
         popup.getMenuInflater().inflate(R.menu.main, popup.getMenu());
 
         MenuItem shareItem = popup.getMenu().findItem(R.id.profile);
-        if(shareItem.getItemId()==R.id.profile)
-        {
+        if (shareItem.getItemId() == R.id.profile) {
             shareItem.setVisible(false);
         }
-
-
 
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
 
 
-                    int id = item.getItemId();
+                int id = item.getItemId();
 
 
-                    if (id == R.id.signup) {
-                        Intent i = new Intent(getApplicationContext(), Signup.class);
-                        startActivity(i);
-                    } else if (id == R.id.login) {
-                        Intent i = new Intent(getApplicationContext(), Login.class);
-                        startActivity(i);
-                    }
-
-
+                if (id == R.id.signup) {
+                    Intent i = new Intent(getApplicationContext(), Signup.class);
+                    startActivity(i);
+                } else if (id == R.id.login) {
+                    Intent i = new Intent(getApplicationContext(), Login.class);
+                    startActivity(i);
+                }
 
 
                 return true;
@@ -373,13 +362,11 @@ public class MainActivity extends AppCompatActivity
 
         MenuItem signup = popup.getMenu().findItem(R.id.signup);
         MenuItem login = popup.getMenu().findItem(R.id.login);
-        if(signup.getItemId()==R.id.signup)
-        {
+        if (signup.getItemId() == R.id.signup) {
             signup.setVisible(false);
         }
 
-        if(login.getItemId()==R.id.login)
-        {
+        if (login.getItemId() == R.id.login) {
             login.setVisible(false);
         }
 
@@ -395,7 +382,6 @@ public class MainActivity extends AppCompatActivity
                 }
 
 
-
                 return true;
             }
         });
@@ -403,31 +389,59 @@ public class MainActivity extends AppCompatActivity
         popup.show();
     }
 
-    public byte[] sundarprofile()
-    {
-        Bitmap b= BitmapFactory.decodeResource(getResources(),R.drawable.sundar);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.PNG, 50, stream);
-        byte[] byteArray = stream.toByteArray();
 
-        return byteArray;
-    }
-
-    public void privacyData(View view)
-    {
+    public void privacyData(View view) {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url","file:///android_asset/privacy.html");
-        i.putExtra("name","privacy");
+        i.putExtra("url", "file:///android_asset/privacy.html");
+        i.putExtra("name", "privacy");
         startActivity(i);
 
     }
 
-    public void webData(View view)
-    {
+    public void webData(View view) {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url","file:///android_asset/aboutus.html");
-        i.putExtra("name","aboutus");
+        i.putExtra("url", "file:///android_asset/aboutus.html");
+        i.putExtra("name", "aboutus");
         startActivity(i);
 
     }
+
+    public void getAllCategory() {
+
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<DrawerItem>> call = api.getCategoryList();
+        call.enqueue(new Callback<List<DrawerItem>>() {
+
+
+            @Override
+            public void onResponse(Call<List<DrawerItem>> call, retrofit2.Response<List<DrawerItem>> response) {
+                List<DrawerItem> categoryList = response.body();
+
+                Log.i("RESPONSE","RESPONSE"+categoryList);
+                DrawerAdapter adapter = new DrawerAdapter(categoryList);
+                drawer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                drawer.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<DrawerItem>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+            }
+
+
+
 }

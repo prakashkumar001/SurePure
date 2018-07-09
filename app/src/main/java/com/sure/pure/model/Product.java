@@ -13,6 +13,16 @@ public class Product {
     String productimage;
     String sellerprice;
     String offerprice;
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    String Category;
      String totalprice;
    // int drawables[];
 
@@ -45,8 +55,9 @@ public class Product {
         this.totalprice = totalprice;
     }
 
-    public Product(String product_id, String productname, String productimage, String sellerprice, String offerprice, String productdes, String totalprice)
+    public Product(String Category,String product_id, String productname, String productimage, String sellerprice, String offerprice, String productdes, String totalprice)
     {
+        this.Category=Category;
         this.productname=productname;
         this.productimage=productimage;
         this.sellerprice=sellerprice;

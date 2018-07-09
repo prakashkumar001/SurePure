@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,9 +37,12 @@ import com.android.volley.toolbox.Volley;
 import com.sure.pure.Login;
 import com.sure.pure.MainActivity;
 import com.sure.pure.R;
+import com.sure.pure.adapter.DrawerAdapter;
 import com.sure.pure.adapter.ProductListAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.retrofit.APIInterface;
+import com.sure.pure.utils.DrawerItem;
 import com.sure.pure.utils.FileUploader;
 
 import org.json.JSONArray;
@@ -49,6 +53,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import static com.android.volley.VolleyLog.TAG;
 
 /**
@@ -58,7 +67,7 @@ import static com.android.volley.VolleyLog.TAG;
 public class Home extends Fragment implements Spinner.OnItemSelectedListener,SearchView.OnQueryTextListener {
 
     private static final String KEY_MOVIE_TITLE = "key_title";
-    public static ArrayList<Product> productList = new ArrayList<>();
+    public static List<Product> productList = new ArrayList<>();
 
     public static RecyclerView recyclerView;
     public static ProductListAdapter mAdapter;
@@ -237,70 +246,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
     }
 
-    void productDetails() {
-        String tag_json_arry = "json_array_req";
 
-        String url = "http://sridharchits.com/market/index.php/mobile/getProductById";
-
-        final ProgressDialog pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Loading...");
-        pDialog.show();
-
-        StringRequest req = new StringRequest(Request.Method.GET, url + "?cat_id=" + title,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response", response.toString());
-                        pDialog.hide();
-                        productList.clear();
-                        JSONArray arr=null;
-                        try {
-                            arr = new JSONArray(response);
-                        }catch (Exception e)
-                        {
-
-                        }
-
-                        for (int i = 0; i < arr.length(); i++) {
-                            try {
-                                JSONObject object = arr.getJSONObject(i);
-                                String productname = object.getString("product_name");
-                                String productid = object.getString("p_id");
-                                String productdescription = object.getString("prd_description");
-                                String productretailprice = object.getString("retails_price");
-                                String productsellerprice = object.getString("selling_price");
-                                //String productimage = object.getString("prd_image");
-
-                                if(productdescription.equals("null"))
-                                {
-                                    productdescription= "No description";
-                                }
-
-                                Product p = new Product(productid, productname, null, productsellerprice, productretailprice, productdescription,productretailprice);
-
-                                productList.add(p);
-
-                                layoutchange1();
-
-                            } catch (Exception e) {
-
-                            }
-
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                pDialog.hide();
-            }
-        });
-
-// Adding request to request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(req);
-    }
 
 
 
@@ -394,80 +340,47 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
     }
 
-    public void getAlldata()
-    {
-        class uploadTOserver extends AsyncTask<String, Void, String> {
-            ProgressDialog dialog;
-            String response=null;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                dialog=new ProgressDialog(getActivity());
-                dialog.setMessage("Loading..");
-                dialog.show();
-            }
-            @Override
-            protected String doInBackground(String[] params) {
-                try {
-                    String charset = "UTF-8";
-                    String requestURL = "http://sridharchits.com/surepure/index.php/mobile/get_products";
-                    FileUploader multipart = new FileUploader(requestURL, charset,getActivity());
 
-                    String response = multipart.finish();
+        public void getAlldata() {
 
-                    System.out.println("SERVER REPLIED:"+response);
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
 
-                    productList.clear();
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
 
-                    JSONArray arr=new JSONArray(response);
-                    for(int i=0;i<arr.length();i++) {
-
-                        try {
-                            JSONObject object = arr.getJSONObject(i);
-                            String productdescription = null;
-
-                            productdescription = object.getString("description");
-
-                            String productname = object.getString("prd_name");
-                            String productid = object.getString("id");
-                            //String productretailprice = object.getString("prd_price");
-                            String productsellerprice = object.getString("prd_price");
-                            String productimage = object.getString("img_url");
-
-                            if (productdescription.equals("null")) {
-                                productdescription = "No description";
-                            }
-
-                            Product p = new Product(productid, productname, productimage, productsellerprice, "", productdescription,productsellerprice);
-
-                            productList.add(p);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-
-
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                return response;
-            }
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getAllProductList();
+        call.enqueue(new Callback<List<Product>>() {
 
 
             @Override
-            protected void onPostExecute(String o) {
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+               productList = response.body();
 
-                dialog.dismiss();
+
+
+
+
                 layoutchange1();
-            }
-        } new uploadTOserver().execute();
 
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
+
+
+
+
 
 }

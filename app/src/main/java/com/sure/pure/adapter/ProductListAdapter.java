@@ -38,9 +38,9 @@ import java.util.Map;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.MyViewHolder> {
 
 
-    ArrayList<String> products=new ArrayList<>();
-    ArrayList<Product> product=new ArrayList<>();
-    ArrayList<Product> filterlist=new ArrayList<>();
+    List<String> products=new ArrayList<>();
+    List<Product> product=new ArrayList<>();
+    List<Product> filterlist=new ArrayList<>();
     Map<String,String> hashmap=new HashMap<>();
     Context ctx;
     String listformat;
@@ -71,7 +71,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     }
 
 
-    public ProductListAdapter(Context context, ArrayList<Product> productlist, String item, String listformat) {
+    public ProductListAdapter(Context context, List<Product> productlist, String item, String listformat) {
 
 
         this.listformat=listformat;
@@ -127,7 +127,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             Collections.sort(product, new Comparator<Product>() {
                 @Override
                 public int compare(Product lhs, Product rhs) {
-                    return lhs.getProductname().compareTo(rhs.getProductname());
+                    return lhs.getCategory().compareTo(rhs.getCategory());
                 }
             });
 
@@ -147,7 +147,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         holder.sellerprice.setText(seller + product.get(position).getSellerprice());
         //holder.offerprice.setText(seller + product.get(position).getOfferprice());
-        holder.productname.setText(product.get(position).getProductname());
+        holder.productname.setText(product.get(position).getCategory());
        // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.sellerprice.setTypeface(fonts);
