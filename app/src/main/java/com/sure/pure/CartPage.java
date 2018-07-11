@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 public class CartPage extends AppCompatActivity {
     public static RecyclerView recyclerView;
-    public static TextView total, sub;
+    public static TextView total, sub,gstamount;
     public static LayerDrawable icon;
     public static MenuItem itemCart;
     public static TextView title, cartcount;
@@ -77,7 +77,7 @@ public class CartPage extends AppCompatActivity {
         adapter = new CartpageAdapter(CartPage.this, global.cartValues);
 
         setSupportActionBar(toolbar);
-        title.setText("Life Water");
+        title.setText("HTC Furniture");
         title.setTypeface(bold);
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,6 +111,7 @@ public class CartPage extends AppCompatActivity {
         back = (Button) findViewById(R.id.back);
         sub = (TextView) findViewById(R.id.sub);
         total = (TextView) findViewById(R.id.total);
+        gstamount= (TextView) findViewById(R.id.gstamount);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -122,9 +123,9 @@ public class CartPage extends AppCompatActivity {
         sub.setTypeface(bold);
         placeorder.setTypeface(bold);
         back.setTypeface(bold);
-        sub.setText(String.valueOf(adapter.totalvalue()));
-        total.setText(String.valueOf(adapter.totalvalue()));
-
+        sub.setText(String.format ("%.2f",adapter.totalvalue()));
+        total.setText(String.format ("%.2f",getTotal()));
+        gstamount.setText(String.format("%.2f",getgst()));
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,12 +142,12 @@ public class CartPage extends AppCompatActivity {
 // How to retrieve your Java object back from the string
 
                 if (databaseHelper.getSignup() == "false") {
-                    Intent mainIntent = new Intent(
+                    /*Intent mainIntent = new Intent(
                             CartPage.this,
                             Login.class);
 
                     CartPage.this.startActivity(mainIntent);
-
+*/
 
                 } else {
 
@@ -229,5 +230,22 @@ public class CartPage extends AppCompatActivity {
         startActivity(i);
         finish();
 */
+    }
+
+    public double getTotal()
+    {
+        double gst =adapter.totalvalue()*18/100;
+        gstamount.setText(String.format("%.2f",gst));
+        double total=adapter.totalvalue()+gst;
+
+        return total;
+    }
+
+    public double getgst()
+    {
+        double gst =adapter.totalvalue()*18/100;
+        gstamount.setText(String.format("%.2f",gst));
+
+        return gst;
     }
 }

@@ -24,12 +24,15 @@ import com.sure.pure.R;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.support.v7.recyclerview.R.styleable.RecyclerView;
 
 /**
  * Created by v-62 on 10/19/2016.
@@ -55,7 +58,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView offerprice,productname,sellerprice;
+        public TextView offerprice,productname,sellerprice,outofstock;
         public ImageView image;
         public TextView add;
 
@@ -66,6 +69,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             image = (ImageView) view.findViewById(R.id.image);
             add=(TextView)view.findViewById(R.id.addtocart);
             productname= (TextView) view.findViewById(R.id.product);
+            outofstock= (TextView) view.findViewById(R.id.outofstock);
 
         }
     }
@@ -147,8 +151,19 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         holder.sellerprice.setText(seller + product.get(position).getSellerprice());
         //holder.offerprice.setText(seller + product.get(position).getOfferprice());
-        holder.productname.setText(product.get(position).getCategory());
+        if(product.get(position).getSellerprice().equals("0"))
+        {
+            holder.outofstock.setText("Out of Stock");
+            holder.sellerprice.setVisibility(View.GONE);
+            holder.add.setVisibility(View.GONE);
+
+        }else
+        {
+            holder.outofstock.setVisibility(View.GONE);
+
+        }
        // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.productname.setText(product.get(position).getProductname());
 
         holder.sellerprice.setTypeface(fonts);
         //holder.offerprice.setTypeface(fonts);
@@ -162,7 +177,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         try
         {
-            loader.displayImage("http://sridharchits.com/surepure/uploads/products/"+product.get(position).getProductimage(),holder.image,options);
+            loader.displayImage("http://www.boolfox.com/rest"+product.get(position).getProductimage(),holder.image,options);
 
         }catch (Exception e)
         {
@@ -179,7 +194,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 i.putExtra("offerprice",product.get(position).getOfferprice());
                 i.putExtra("description",product.get(position).getProductdes());
                 i.putExtra("image",product.get(position).getProductimage());*/
-              i.putExtra("product",product.get(position));
+               i.putExtra("product",product.get(position));
+                i.putExtra("position",position);
+                i.putExtra("productList", (Serializable) product);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 ctx.startActivity(i);

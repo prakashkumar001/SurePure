@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -56,10 +58,16 @@ public class ProductDetailPage extends AppCompatActivity {
     ImageView carticon;
     Product p;
     Typeface fonts,bold;
+    Button next,previous;
+    List<Product> productList;
+    int position=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_details_page);
+        next=(Button) findViewById(R.id.next);
+        previous=(Button)findViewById(R.id.previous);
+
         productname=(TextView)findViewById(R.id.productname);
         price=(TextView)findViewById(R.id.price);
         quantity=(TextView)findViewById(R.id.quantity);
@@ -83,7 +91,6 @@ public class ProductDetailPage extends AppCompatActivity {
 
 
 
-
         add.setVisibility(View.INVISIBLE);
 
         add.setTypeface(fonts);
@@ -99,7 +106,7 @@ public class ProductDetailPage extends AppCompatActivity {
         cartcount.setTypeface(fonts);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
         setSupportActionBar(toolbar);
-        title.setText("Life Water");
+        title.setText("HTC Furniture");
         title.setTypeface(bold);
        // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,8 +152,28 @@ public class ProductDetailPage extends AppCompatActivity {
             images=i.getStringExtra("image");
             product_id=i.getStringExtra("id");*/
              p=(Product)i.getSerializableExtra("product");
+             position=i.getIntExtra("position",1);
+             productList=(((List<Product>) getIntent().getExtras().getSerializable("productList")));
            // image.setImageResource(images);
-            loader.displayImage("http://sridharchits.com/surepure/uploads/products/"+p.getProductimage(),image);
+
+            if(position==0)
+            {
+                previous.setVisibility(View.INVISIBLE);
+            }else
+            {
+                previous.setVisibility(View.VISIBLE);
+
+            }
+
+            if(position==productList.size()-1)
+            {
+                next.setVisibility(View.INVISIBLE);
+            }else
+            {
+                next.setVisibility(View.VISIBLE);
+
+            }
+
             productname.setText(p.getProductname());
             String seller = getApplicationContext().getResources().getString(R.string.Rupees);
             price.setText(seller + p.getSellerprice());
@@ -164,6 +191,33 @@ public class ProductDetailPage extends AppCompatActivity {
 
         }
 
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ProductDetailPage.class);
+                i.putExtra("product",productList.get(position+1));
+                i.putExtra("position",position+1);
+                i.putExtra("productList", (Serializable) productList);
+
+                startActivity(i);
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                finish();
+            }
+        });
+
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ProductDetailPage.class);
+                i.putExtra("product",productList.get(position-1));
+                i.putExtra("position",position-1);
+                i.putExtra("productList", (Serializable) productList);
+
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+            }
+        });
 
 
         plus.setOnClickListener(new View.OnClickListener() {
@@ -172,13 +226,17 @@ public class ProductDetailPage extends AppCompatActivity {
 
                // global.cartValues.get(position).setQuantity(value+1);
                 value= Integer.parseInt(quantity.getText().toString());
-                add.setVisibility(View.VISIBLE);
+                if(!p.getSellerprice().equals("0"))
+                {
+                    add.setVisibility(View.VISIBLE);
+
+                }
                     value=value+1;
                     quantity.setText(String.valueOf(value));
 
                    b=value* Double.parseDouble(p.getSellerprice());
                     //total.setText(String.valueOf(b));
-                tv.setText(String.valueOf(b));
+                tv.setText(String.format("%.2f",b));
 
                 tv.setTypeface(fonts);
 
@@ -201,13 +259,16 @@ public class ProductDetailPage extends AppCompatActivity {
 
 
                      b=value* Double.parseDouble(p.getSellerprice());
-                    tv.setText(String.valueOf(b));
+                    tv.setText(String.format("%.2f",b));
                     //total.setText(String.valueOf(b));
 
                 }else
                 {
-                    add.setVisibility(View.VISIBLE);
-                    value=value-1;
+                    if(!p.getSellerprice().equals("0"))
+                    {
+                        add.setVisibility(View.VISIBLE);
+
+                    }                    value=value-1;
                     if(value==0)
                     {
                         add.setVisibility(View.INVISIBLE);
@@ -215,7 +276,7 @@ public class ProductDetailPage extends AppCompatActivity {
                     quantity.setText(String.valueOf(value));
 
                      b=value* Double.parseDouble(p.getSellerprice());
-                    tv.setText(String.valueOf(b));
+                    tv.setText(String.format("%.2f",b));
 
                     //total.setText(String.valueOf(b));
 
@@ -297,7 +358,7 @@ public class ProductDetailPage extends AppCompatActivity {
 
 
          tv = new TextView(this);
-        tv.setText(String.valueOf(b));
+        tv.setText(String.format("%.2f",b));
         tv.setTextColor(getResources().getColor(android.R.color.white));
         tv.setPadding(5, 0, 5, 0);
         tv.setTypeface(null, Typeface.BOLD);
@@ -338,24 +399,26 @@ public class ProductDetailPage extends AppCompatActivity {
         Intent i=new Intent(ProductDetailPage.this,MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
+        ActivityCompat.finishAffinity(ProductDetailPage.this);
         finish();
     }
 
     public class CustomPagerAdapter extends PagerAdapter {
 
         private Context mContext;
-        int[] drawables;
+        String[]   drawables=new String[]{p.getProductimage(),p.getProductimage(),p.getProductimage()};
         public CustomPagerAdapter(Context context) {
             mContext = context;
         }
 
         @Override
         public Object instantiateItem(ViewGroup collection, int position) {
-             drawables=new int[]{R.drawable.logo};
+
             LayoutInflater inflater = LayoutInflater.from(mContext);
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
             ImageView imageView=(ImageView)layout.findViewById(R.id.image);
-            imageView.setImageResource(drawables[position]);
+            //imageView.setImageResource(drawables[position]);
+            loader.displayImage("http://www.boolfox.com/rest"+drawables[position],imageView);
             collection.addView(layout);
             return layout;
         }

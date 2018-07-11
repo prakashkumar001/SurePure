@@ -13,13 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Navigation Drawer-->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/drawer"
+    <LinearLayout
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:orientation="vertical"
+
+        >
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/furniture"
+            />
+
+    <!-- Navigation Drawer-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
         android:background="#ffffff">
+
     </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+
 
 </android.support.v4.widget.DrawerLayout>
