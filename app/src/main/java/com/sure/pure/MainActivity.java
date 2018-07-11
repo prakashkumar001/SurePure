@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
     public static LayerDrawable icon;
     GlobalClass global;
     public static TextView title, cartcount, text;
-    ImageView carticon, sorticon, profile;
+    ImageView carticon, sorticon;
     Point p;
     DatabaseHelper databaseHelper;
     int backPressedCount = 0;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         drawer = (RecyclerView) findViewById(R.id.drawer);
         title = (TextView) findViewById(R.id.title);
         cartcount = (TextView) findViewById(R.id.cartcount);
-        profile = (ImageView) findViewById(R.id.profile);
+        //profile = (ImageView) findViewById(R.id.profile);
         carticon = (ImageView) findViewById(R.id.carticon);
         sorticon = (ImageView) findViewById(R.id.sorticon);
         fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
@@ -155,18 +155,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if (databaseHelper.getSignup().equalsIgnoreCase("true")) {
-                    onPopupButtonClickProfile(view);
-
-                } else {
-                    onPopupButtonClick(view);
-                }
-            }
-        });
 
 
     }
@@ -392,7 +381,9 @@ public class MainActivity extends AppCompatActivity
 
     public void privacyData(View view) {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url", "file:///android_asset/privacy.html");
+        //i.putExtra("url", "file:///android_asset/privacy.html");
+        i.putExtra("url", "https://termsfeed.com/blog/privacy-policy-url-facebook-app/");
+
         i.putExtra("name", "privacy");
         startActivity(i);
 
@@ -400,7 +391,9 @@ public class MainActivity extends AppCompatActivity
 
     public void webData(View view) {
         Intent i = new Intent(getApplicationContext(), WebActivity.class);
-        i.putExtra("url", "file:///android_asset/aboutus.html");
+        //i.putExtra("url", "file:///android_asset/aboutus.html");
+        i.putExtra("url", "https://www.facebook.com/pg/facebook/about/");
+
         i.putExtra("name", "aboutus");
         startActivity(i);
 

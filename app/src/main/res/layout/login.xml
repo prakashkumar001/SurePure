@@ -55,7 +55,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/supermarket"
+            android:src="@drawable/furniture"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             />
