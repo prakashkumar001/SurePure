@@ -1,12 +1,13 @@
 package com.sure.pure.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Created by v-62 on 10/19/2016.
  */
 
-public class Product {
+public class Product implements Serializable{
     String product_id;
     String productdes;
     String productname;
