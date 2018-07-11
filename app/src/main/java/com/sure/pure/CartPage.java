@@ -77,7 +77,7 @@ public class CartPage extends AppCompatActivity {
         adapter = new CartpageAdapter(CartPage.this, global.cartValues);
 
         setSupportActionBar(toolbar);
-        title.setText("Life Water");
+        title.setText("Super Market");
         title.setTypeface(bold);
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -122,8 +122,8 @@ public class CartPage extends AppCompatActivity {
         sub.setTypeface(bold);
         placeorder.setTypeface(bold);
         back.setTypeface(bold);
-        sub.setText(String.valueOf(adapter.totalvalue()));
-        total.setText(String.valueOf(adapter.totalvalue()));
+        sub.setText(String.format ("%.2f",adapter.totalvalue()));
+        total.setText(String.format ("%.2f",adapter.totalvalue()));
 
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,12 +141,12 @@ public class CartPage extends AppCompatActivity {
 // How to retrieve your Java object back from the string
 
                 if (databaseHelper.getSignup() == "false") {
-                    Intent mainIntent = new Intent(
+                    /*Intent mainIntent = new Intent(
                             CartPage.this,
                             Login.class);
 
                     CartPage.this.startActivity(mainIntent);
-
+*/
 
                 } else {
 

@@ -10,7 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
+
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;

@@ -7,11 +7,11 @@ import java.util.Comparator;
  */
 
 public class Product {
-    String product_id;
-    String productdes;
-    String productname;
+    String id;
+    String Description;
+    String Name;
     String productimage;
-    String sellerprice;
+    String Price;
     String offerprice;
 
     public String getCategory() {
@@ -32,19 +32,19 @@ public class Product {
     }
 
     public String getProduct_id() {
-        return product_id;
+        return id;
     }
 
     public void setProduct_id(String product_id) {
-        this.product_id = product_id;
+        this.id = product_id;
     }
 
     public String getProductdes() {
-        return productdes;
+        return Description;
     }
 
     public void setProductdes(String productdes) {
-        this.productdes = productdes;
+        this.Description = productdes;
     }
 
     public String getTotalprice() {
@@ -55,15 +55,15 @@ public class Product {
         this.totalprice = totalprice;
     }
 
-    public Product(String Category,String product_id, String productname, String productimage, String sellerprice, String offerprice, String productdes, String totalprice)
+    public Product(String Category,String id, String Name, String productimage, String Price, String offerprice, String Description, String totalprice)
     {
         this.Category=Category;
-        this.productname=productname;
+        this.Name=Name;
         this.productimage=productimage;
-        this.sellerprice=sellerprice;
+        this.Price=Price;
         this.offerprice=offerprice;
-        this.product_id=product_id;
-        this.productdes=productdes;
+        this.id=id;
+        this.Description=Description;
 
         this.totalprice=totalprice;
 
@@ -96,11 +96,11 @@ public class Product {
 
 
     public String getProductname() {
-        return productname;
+        return Name;
     }
 
     public void setProductname(String productname) {
-        this.productname = productname;
+        this.Name = productname;
     }
 
     public String getProductimage() {
@@ -112,11 +112,11 @@ public class Product {
     }
 
     public String getSellerprice() {
-        return sellerprice;
+        return Price;
     }
 
     public void setSellerprice(String sellerprice) {
-        this.sellerprice = sellerprice;
+        this.Price = sellerprice;
     }
 
 
