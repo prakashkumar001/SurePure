@@ -38,6 +38,18 @@
                 android:typeface="serif"
                 android:layout_height="wrap_content"
                 android:text="Product"/>
+            <TextView
+                android:id="@+id/outofstock"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"
+                android:typeface="serif"
+                android:layout_height="wrap_content"
+                android:text="Out of Stock"/>
+
 
             <TextView
                 android:id="@+id/sellerprice"

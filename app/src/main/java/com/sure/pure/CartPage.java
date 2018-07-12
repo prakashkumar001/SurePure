@@ -123,7 +123,7 @@ public class CartPage extends AppCompatActivity {
         placeorder.setTypeface(bold);
         back.setTypeface(bold);
         sub.setText(String.format ("%.2f",adapter.totalvalue()));
-        total.setText(String.format ("%.2f",adapter.totalvalue()));
+        total.setText(String.format ("%.2f",getTotal()));
 
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,5 +229,13 @@ public class CartPage extends AppCompatActivity {
         startActivity(i);
         finish();
 */
+    }
+
+    public double getTotal()
+    {
+        double gst =adapter.totalvalue()*18/100;
+        double total=adapter.totalvalue()+gst;
+
+        return total;
     }
 }

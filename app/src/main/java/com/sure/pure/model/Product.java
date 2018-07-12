@@ -10,7 +10,7 @@ public class Product {
     String id;
     String Description;
     String Name;
-    String productimage;
+    String prd_img;
     String Price;
     String offerprice;
 
@@ -55,11 +55,11 @@ public class Product {
         this.totalprice = totalprice;
     }
 
-    public Product(String Category,String id, String Name, String productimage, String Price, String offerprice, String Description, String totalprice)
+    public Product(String Category,String id, String Name, String prd_img, String Price, String offerprice, String Description, String totalprice)
     {
         this.Category=Category;
         this.Name=Name;
-        this.productimage=productimage;
+        this.prd_img=prd_img;
         this.Price=Price;
         this.offerprice=offerprice;
         this.id=id;
@@ -104,11 +104,11 @@ public class Product {
     }
 
     public String getProductimage() {
-        return productimage;
+        return prd_img;
     }
 
-    public void setProductimage(String productimage) {
-        this.productimage = productimage;
+    public void setProductimage(String prd_img) {
+        this.prd_img = prd_img;
     }
 
     public String getSellerprice() {

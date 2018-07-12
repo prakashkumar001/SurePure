@@ -8,6 +8,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface APIInterface {
     String BASE_URL = "http://www.boolfox.com";
@@ -18,7 +19,9 @@ public interface APIInterface {
     @GET("/rest/index.php/htc/")
     Call<List<Product>> getAllProductList();
 
-   /* @POST("/api/users")
+    @GET("/rest/index.php/htc/product_list/{input}")
+    Call<List<Product>> getSelectedCategoryList(@Path("input") String input);
+    /* @POST("/api/users")
     Call<User> createUser(@Body User user);
 
     @GET("/api/users?")

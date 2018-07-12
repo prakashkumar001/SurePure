@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
     Typeface fonts, bold;
     RecyclerView drawer;
     private ProgressDialog pDialog;
-
+    public static DrawerLayout drawerlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity
 
         invalidateOptionsMenu();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerlayout.setDrawerListener(toggle);
         toggle.syncState();
 
 
@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity
                 List<DrawerItem> categoryList = response.body();
 
                 Log.i("RESPONSE","RESPONSE"+categoryList);
-                DrawerAdapter adapter = new DrawerAdapter(categoryList);
+                DrawerAdapter adapter = new DrawerAdapter(MainActivity.this,categoryList);
                 drawer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 drawer.setAdapter(adapter);
 
@@ -434,6 +434,46 @@ public class MainActivity extends AppCompatActivity
         });
 
             }
+
+
+    public void getSelectCategory(String categoryname) {
+
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getSelectedCategoryList(categoryname);
+        call.enqueue(new Callback<List<Product>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+
+                Home.productList = response.body();
+
+
+
+
+
+                layoutchange1();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 

@@ -133,10 +133,10 @@ public class ProductDetailPage extends AppCompatActivity {
             images=i.getStringExtra("image");
             product_id=i.getStringExtra("id");
            // image.setImageResource(images);
-            loader.displayImage("http://sridharchits.com/surepure/uploads/products/"+images,image);
+            loader.displayImage("http://www.boolfox.com/rest"+images,image);
             productname.setText(name);
             String seller = getApplicationContext().getResources().getString(R.string.Rupees);
-            price.setText(seller + offerprice);
+            price.setText(seller + sellerprice);
             productdescription.setText(description);
 
             productname.setTypeface(fonts);
@@ -159,7 +159,11 @@ public class ProductDetailPage extends AppCompatActivity {
 
                // global.cartValues.get(position).setQuantity(value+1);
                 value= Integer.parseInt(quantity.getText().toString());
-                add.setVisibility(View.VISIBLE);
+                if(!sellerprice.equals("0"))
+                {
+                    add.setVisibility(View.VISIBLE);
+
+                }
                     value=value+1;
                     quantity.setText(String.valueOf(value));
 
@@ -193,8 +197,11 @@ public class ProductDetailPage extends AppCompatActivity {
 
                 }else
                 {
-                    add.setVisibility(View.VISIBLE);
-                    value=value-1;
+                    if(!sellerprice.equals("0"))
+                    {
+                        add.setVisibility(View.VISIBLE);
+
+                    }                    value=value-1;
                     if(value==0)
                     {
                         add.setVisibility(View.INVISIBLE);
