@@ -24,13 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:orientation="vertical"
             >
             <LinearLayout
@@ -67,12 +71,6 @@
                     android:layout_height="30dp" />
             </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/images"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="250dp">
-
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
@@ -81,11 +79,11 @@
 
         </android.support.v4.view.ViewPager>
 
-    </RelativeLayout>
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/images"
+                android:layout_height="0dp"
+                android:layout_weight=".5"
                 android:background="#FFDDDDDD"
                 android:layout_gravity="bottom"
                 android:weightSum="3"
@@ -126,8 +124,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:layout_marginTop="10dp"
         android:weightSum="3"
         android:background="@android:color/white"
         android:orientation="horizontal"
@@ -187,9 +186,8 @@
             android:layout_marginBottom="30dp"
             android:visibility="invisible"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:background="@drawable/round_button"/>
     </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
