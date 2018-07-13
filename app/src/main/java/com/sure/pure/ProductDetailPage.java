@@ -320,7 +320,7 @@ public class ProductDetailPage extends AppCompatActivity {
                       products.setProductname(p.getProductname());
                       products.setSellerprice(p.getSellerprice());
                       products.setOfferprice(p.getOfferprice());
-                      products.setProductimage(images);
+                      products.setProductimage(p.getProductimage());
                       products.setQuantity(Integer.parseInt(quantity.getText().toString()));
                       products.setTotalprice(String.valueOf(b));
                       global.cartValues.add(products);
