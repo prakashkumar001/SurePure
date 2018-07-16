@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,12 +62,16 @@ public class ProductDetailPage extends AppCompatActivity {
     Button next,previous;
     List<Product> productList;
     int position=0;
+    private LinearLayout pager_indicator;
+    private int dotsCount;
+    private ImageView[] dots;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_details_page);
         next=(Button) findViewById(R.id.next);
         previous=(Button)findViewById(R.id.previous);
+        pager_indicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
 
         productname=(TextView)findViewById(R.id.productname);
         price=(TextView)findViewById(R.id.price);
@@ -177,13 +182,29 @@ public class ProductDetailPage extends AppCompatActivity {
             productname.setText(p.getProductname());
             String seller = getApplicationContext().getResources().getString(R.string.Rupees);
             price.setText(seller + p.getSellerprice());
-            productdescription.setText(p.getProductdes());
+            productdescription.setText(p.getQuantity());
 
             productname.setTypeface(fonts);
             price.setTypeface(fonts);
             productdescription.setTypeface(fonts);
 
 
+
+            if(global.productIDS.contains(p.getProduct_id()))
+            {
+                for(int ii=0;ii<global.cartValues.size();ii++)
+                {
+                    if(global.cartValues.get(ii).getProduct_id().equalsIgnoreCase(p.getProduct_id()))
+                    {
+
+                        quantity.setText(String.valueOf(global.cartValues.get(ii).getQuantity()));
+                        add.setVisibility(View.VISIBLE);
+
+                    }
+                }
+
+
+            }
             // productdescription.setText(description);
 
         }catch (Exception e)
@@ -200,7 +221,8 @@ public class ProductDetailPage extends AppCompatActivity {
                 i.putExtra("productList", (Serializable) productList);
 
                 startActivity(i);
-                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+
                 finish();
             }
         });
@@ -214,7 +236,8 @@ public class ProductDetailPage extends AppCompatActivity {
                 i.putExtra("productList", (Serializable) productList);
 
                 startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+
                 finish();
             }
         });
@@ -349,6 +372,29 @@ public class ProductDetailPage extends AppCompatActivity {
         });
 
         viewPager.setAdapter(new CustomPagerAdapter(this));
+        setUiPageViewController();
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < dotsCount; i++) {
+                    dots[i].setImageDrawable(getResources().getDrawable(R.drawable.unselected_dot));
+                }
+
+                dots[position].setImageDrawable(getResources().getDrawable(R.drawable.selected_dot));
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
     @Override
@@ -439,5 +485,27 @@ public class ProductDetailPage extends AppCompatActivity {
         }
 
 
+    }
+
+    private void setUiPageViewController() {
+
+        dotsCount = 3;
+        dots = new ImageView[dotsCount];
+
+        for (int i = 0; i < dotsCount; i++) {
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(getResources().getDrawable(R.drawable.unselected_dot));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            params.setMargins(4, 0, 4, 0);
+
+            pager_indicator.addView(dots[i], params);
+        }
+
+        dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selected_dot));
     }
 }

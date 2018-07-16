@@ -48,8 +48,8 @@ public class SortActivity extends AppCompatActivity {
 
             }
         });*/
-        data.add("A-Z");
-        data.add("Z-A");
+        data.add("Quantity High-Low");
+        data.add("Quantity Low-High");
         data.add("Price Low-High");
         data.add("Price High-Low");
         list=(ListView)findViewById(R.id.list);

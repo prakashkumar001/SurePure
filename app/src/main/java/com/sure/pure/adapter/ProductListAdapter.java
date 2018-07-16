@@ -123,24 +123,27 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         //Product product = moviesList[position];
 
-        if(sort.equalsIgnoreCase("A-Z"))
+        if(sort.equalsIgnoreCase("Quantity High-Low"))
         {
 
 
 
-            Collections.sort(product, new Comparator<Product>() {
-                @Override
-                public int compare(Product lhs, Product rhs) {
-                    return lhs.getCategory().compareTo(rhs.getCategory());
-                }
-            });
+//            Collections.sort(product, new Comparator<Product>() {
+//                @Override
+//                public int compare(Product lhs, Product rhs) {
+//                    return lhs.getCategory().compareTo(rhs.getCategory());
+//                }
+//            });
+
+            Collections.sort(product,new Product.OrderByQuantityHigh());
+
 
         }else if(sort.equalsIgnoreCase("Price Low-High"))
         {
             Collections.sort(product,new Product.OrderByAmountdouble());
-        }else if(sort.equalsIgnoreCase("Z-A"))
+        }else if(sort.equalsIgnoreCase("Quantity Low-High"))
         {
-            Collections.sort(product, Collections.reverseOrder(new Product.OrderByCustomer()));
+            Collections.sort(product, Collections.reverseOrder(new Product.OrderByQuantityHigh()));
         }else if(sort.equalsIgnoreCase("Price High-Low"))
         {
             Collections.sort(product, Collections.reverseOrder(new Product.OrderByAmountdouble()));
@@ -212,7 +215,18 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
                 if(global.productIDS.contains(product.get(position).getProduct_id()))
                 {
-                    Toast.makeText(ctx,"Already added in the cart", Toast.LENGTH_SHORT).show();
+
+                            for(int i=0;i<global.cartValues.size();i++)
+                            {
+                                if(global.cartValues.get(i).getProduct_id().equalsIgnoreCase(product.get(position).getProduct_id()))
+                                {
+                                    Product p=global.cartValues.get(i);
+                                    p.setQuantity(p.getQuantity()+1);
+                                }
+
+
+                            }
+                 //   Toast.makeText(ctx,"Already added in the cart", Toast.LENGTH_SHORT).show();
 
                 }else
                 {

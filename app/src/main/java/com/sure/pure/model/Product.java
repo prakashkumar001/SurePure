@@ -145,6 +145,27 @@ public class Product implements Serializable{
         }
     }
 
+
+    public static class OrderByQuantityHigh implements Comparator<Product> {
+
+        @Override
+        public int compare(Product p1, Product p2) {
+            if (p1.getQuantity() < p2.getQuantity()) return -1;
+            if (p1.getQuantity() > p2.getQuantity()) return 1;
+            return 0;
+        }
+    }
+
+    public static class OrderByQuantityLow implements Comparator<Product> {
+
+        @Override
+        public int compare(Product p1, Product p2) {
+            if (p1.getQuantity() < p2.getQuantity()) return -1;
+            if (p1.getQuantity() > p2.getQuantity()) return 1;
+            return 0;
+        }
+    }
+
     /*public static class OrderByDescending implements Comparator<Product> {
 
         @Override
