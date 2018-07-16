@@ -413,11 +413,22 @@ public class MainActivity extends AppCompatActivity
         //now making the call object
         //Here we are using the api method that we created inside the api interface
         Call<List<DrawerItem>> call = api.getCategoryList();
+        // Set up progress before call
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(MainActivity.this);
+        progressDoalog.setMax(100);
+        progressDoalog.setTitle("Loading...Please wait");
+        progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // show it
+        progressDoalog.show();
+
         call.enqueue(new Callback<List<DrawerItem>>() {
 
 
             @Override
             public void onResponse(Call<List<DrawerItem>> call, retrofit2.Response<List<DrawerItem>> response) {
+                progressDoalog.dismiss();
+
                 List<DrawerItem> categoryList = response.body();
 
                 Log.i("RESPONSE","RESPONSE"+categoryList);
@@ -429,6 +440,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<List<DrawerItem>> call, Throwable t) {
+                progressDoalog.dismiss();
+
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

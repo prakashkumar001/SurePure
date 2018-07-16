@@ -355,12 +355,19 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         //now making the call object
         //Here we are using the api method that we created inside the api interface
         Call<List<Product>> call = api.getAllProductList();
+
+            final ProgressDialog progressDoalog;
+            progressDoalog = new ProgressDialog(getActivity());
+            progressDoalog.setTitle("Loading...Please wait");
+            // show it
+            progressDoalog.show();
         call.enqueue(new Callback<List<Product>>() {
 
 
             @Override
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
                productList = response.body();
+                progressDoalog.dismiss();
 
 
 
@@ -374,6 +381,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDoalog.dismiss();
+
             }
         });
 

@@ -20,10 +20,7 @@
     </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,38 +36,28 @@
             >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".5"
+                android:background="#FFDDDDDD"
+                android:layout_gravity="bottom"
                 android:weightSum="3"
-                android:padding="10dp"
                 android:orientation="horizontal"
                 >
 
-
-                <Button
-                    android:id="@+id/previous"
-                    android:text="Previous"
+                <TextView
+                    android:id="@+id/productname"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Sprite"
+                    android:gravity="center"
+                    android:maxLines="1"
                     android:layout_gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/round_button"
-                    android:layout_height="30dp" />
+                    android:textSize="20dp"
+                    android:textColor="@android:color/black"
+                    />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/next"
-                    android:text="Next"
-                    android:layout_gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/round_button"
-                    android:layout_height="30dp" />
             </LinearLayout>
-
 
 
         <android.support.v4.view.ViewPager
@@ -101,18 +88,38 @@
                 android:orientation="horizontal"
                 >
 
-                <TextView
-                    android:id="@+id/productname"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/stock"
                     android:layout_height="wrap_content"
-                    android:text="Sprite"
+                    android:layout_width="wrap_content"
+                    android:text="Quantity :"
                     android:gravity="center"
+                    android:paddingLeft="10dp"
                     android:maxLines="1"
                     android:layout_gravity="center"
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:textColor="@android:color/black"
                     />
+
+                    <TextView
+                        android:id="@+id/stockquants"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text=""
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:maxLines="1"
+                        android:layout_gravity="center"
+                        android:textSize="16dp"
+                        android:textColor="@android:color/black"
+                        />
+                </LinearLayout>
                 <TextView
                     android:id="@+id/price"
                     android:layout_width="0dp"
@@ -131,6 +138,17 @@
        <!-- </FrameLayout>
 -->
 
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:typeface="serif"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:gravity="left"
+            android:text="Description"
+            />
 
 
     <LinearLayout
@@ -176,16 +194,6 @@
            />
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
-            android:typeface="serif"
-            android:textSize="16dp"
-            android:gravity="left"
-            android:text="Stock"
-            />
 
         <Button
             android:id="@+id/cart"
@@ -194,11 +202,44 @@
             android:text="Add To Cart"
             android:textColor="@android:color/white"
             android:layout_marginLeft="30dp"
-            android:layout_marginBottom="30dp"
-            android:visibility="invisible"
             android:layout_marginRight="30dp"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:background="@drawable/round_button"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            >
+
+
+            <Button
+                android:id="@+id/previous"
+                android:text="Previous"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:background="@drawable/round_button"
+                android:layout_height="30dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/next"
+                android:text="Next"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:background="@drawable/round_button"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
     </LinearLayout>
     </LinearLayout>

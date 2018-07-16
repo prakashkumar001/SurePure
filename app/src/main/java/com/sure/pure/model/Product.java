@@ -9,12 +9,35 @@ import java.util.Comparator;
 
 
 public class Product implements Serializable{
+    public Product(String id, String description, String name, String prd_img, String price, String offerprice, String stock, String category, String totalprice, int quantity) {
+        this.id = id;
+        Description = description;
+        Name = name;
+        this.prd_img = prd_img;
+        Price = price;
+        this.offerprice = offerprice;
+        this.stock = stock;
+        Category = category;
+        this.totalprice = totalprice;
+        this.quantity = quantity;
+    }
+
     String id;
     String Description;
     String Name;
     String prd_img;
     String Price;
     String offerprice;
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    String stock;
 
     public String getCategory() {
         return Category;

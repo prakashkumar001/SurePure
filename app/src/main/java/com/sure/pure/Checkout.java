@@ -15,15 +15,29 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
+import com.sure.pure.fragments.Home;
+import com.sure.pure.model.Product;
 import com.sure.pure.payment.PayuMoneyActivity;
+import com.sure.pure.pojo.CheckoutResponse;
+import com.sure.pure.retrofit.APIInterface;
 import com.sure.pure.utils.WSUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.sure.pure.fragments.Home.layoutchange1;
 
 /**
  * Created by Creative IT Works on 28-Jun-17.
@@ -207,7 +221,6 @@ User user;
                 }else
 
                 {
-                    addToOrders();
                 }
 
 
@@ -216,7 +229,7 @@ User user;
 
     }
 
-    public void addToOrders() {
+   /* public void addToOrders() {
         class uploadTOserver extends AsyncTask<String, String, String> {
             ProgressDialog dialog;
             String response = "";
@@ -236,33 +249,6 @@ User user;
                     String charset = "UTF-8";
 
 
-                    JSONObject object;
-                    global.jsonArraydetails=new JSONArray();
-
-                    for(int i=0;i<global.cartValues.size();i++)
-                    {
-                        object=new JSONObject();
-                        try{
-                            object.put("product_id",global.cartValues.get(i).getProduct_id());
-                            object.put("product_price",global.cartValues.get(i).getOfferprice());
-                            object.put("product_quantity",global.cartValues.get(i).getQuantity());
-                            object.put("product_total",global.cartValues.get(i).getTotalprice());
-                            object.put("product_name",global.cartValues.get(i).getProductname());
-                            global.jsonArraydetails.put(object);
-
-                        }catch (Exception e)
-                        {
-
-                        }
-                    }
-
-                    JSONObject arr=new JSONObject();
-                    try {
-                        arr.put(databaseHelper.getUser().id,global.jsonArraydetails);
-                    }catch (Exception e)
-                    {
-
-                    }
 
 
                     Log.i("JSSSSSSSSSSOOOO","JSSSSSSSSSSSOOO"+arr.toString());
@@ -291,7 +277,7 @@ User user;
         new uploadTOserver().execute();
 
     }
-
+*/
 
     public void privacyData(View view)
     {
@@ -310,4 +296,6 @@ User user;
         startActivity(i);
 
     }
+
+
 }

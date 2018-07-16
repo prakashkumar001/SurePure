@@ -17,13 +17,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sure.pure.adapter.CartpageAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
+import com.sure.pure.pojo.CheckoutResponse;
+import com.sure.pure.retrofit.APIInterface;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -129,63 +137,13 @@ public class CartPage extends AppCompatActivity {
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  /*  Intent i=new Intent(CartPage.this,ShippingAddress.class);
-                    startActivity(i);
-                    finish();
-                    Gson gson = new Gson();
-// This can be any object. Does not have to be an arraylist.
-                    String json = gson.toJson(global.cartValues);
-
-                    Log.i("GSON","GSON"+json);
-*/
-
-// How to retrieve your Java object back from the string
-
-                if (databaseHelper.getSignup() == "false") {
-                    /*Intent mainIntent = new Intent(
-                            CartPage.this,
-                            Login.class);
-
-                    CartPage.this.startActivity(mainIntent);
-*/
-
-                } else {
-
-                    JSONObject object;
-                    global.jsonArraydetails = new JSONArray();
-
-                    for (int i = 0; i < global.cartValues.size(); i++) {
-                        object = new JSONObject();
-                        try {
-                            object.put("product_id", global.cartValues.get(i).getProduct_id());
-                            object.put("product_price", global.cartValues.get(i).getOfferprice());
-                            object.put("product_quantity", global.cartValues.get(i).getQuantity());
-                            object.put("product_total", global.cartValues.get(i).getTotalprice());
-                            object.put("product_name", global.cartValues.get(i).getProductname());
-                            global.jsonArraydetails.put(object);
-
-                        } catch (Exception e) {
-
-                        }
-                    }
-
-                    JSONObject arr = new JSONObject();
-                    try {
-                        arr.put("booking_orders", global.jsonArraydetails);
-                    } catch (Exception e) {
-
-                    }
-
-                    Log.i("JJJJJJJJJJJJJJJ", "JJJJJJJJJJJJJ" + arr);
-                    Intent mainIntent = new Intent(
-                            CartPage.this,
-                            Checkout.class);
-                    mainIntent.putExtra("Total", total.getText().toString());
-
-                    CartPage.this.startActivity(mainIntent);
 
 
-                }
+
+
+                  addToOrders();
+
+
 
 
             }
@@ -247,5 +205,75 @@ public class CartPage extends AppCompatActivity {
         gstamount.setText(String.format("%.2f",gst));
 
         return gst;
+    }
+
+    public void addToOrders() {
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        JSONObject object;
+        global.jsonArraydetails=new JSONArray();
+
+        for(int i=0;i<global.cartValues.size();i++)
+        {
+            object=new JSONObject();
+            try{
+                object.put("product_id",global.cartValues.get(i).getProduct_id());
+                object.put("product_price",global.cartValues.get(i).getSellerprice());
+                object.put("product_quantity",global.cartValues.get(i).getQuantity());
+                object.put("product_total",global.cartValues.get(i).getTotalprice());
+                object.put("product_name",global.cartValues.get(i).getProductname());
+                global.jsonArraydetails.put(object);
+
+            }catch (Exception e)
+            {
+
+            }
+        }
+
+        JSONObject arr=new JSONObject();
+        try {
+            arr.put("checkout",global.jsonArraydetails);
+            arr.put("mobilenumber","9962526526");
+        }catch (Exception e)
+        {
+
+        }
+
+
+        Log.d("addToOrders", "addToOrders: "+arr.toString());
+        Log.d("addToOrders", "addToOrders: "+arr.toString());
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<CheckoutResponse> call = api.checkout(arr);
+        call.enqueue(new Callback<CheckoutResponse>() {
+
+
+            @Override
+            public void onResponse(Call<CheckoutResponse> call, retrofit2.Response<CheckoutResponse> response) {
+
+
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
