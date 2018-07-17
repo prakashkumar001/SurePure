@@ -82,6 +82,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.sure.pure.fragments.Delivered.adapter;
+import static com.sure.pure.fragments.Home.layoutchange;
 import static com.sure.pure.fragments.Home.layoutchange1;
 
 public class MainActivity extends AppCompatActivity
@@ -414,33 +415,26 @@ public class MainActivity extends AppCompatActivity
         //Here we are using the api method that we created inside the api interface
         Call<List<DrawerItem>> call = api.getCategoryList();
         // Set up progress before call
-        final ProgressDialog progressDoalog;
-        progressDoalog = new ProgressDialog(MainActivity.this);
-        progressDoalog.setMax(100);
-        progressDoalog.setTitle("Loading...Please wait");
-        progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // show it
-        progressDoalog.show();
 
         call.enqueue(new Callback<List<DrawerItem>>() {
 
 
             @Override
             public void onResponse(Call<List<DrawerItem>> call, retrofit2.Response<List<DrawerItem>> response) {
-                progressDoalog.dismiss();
 
                 List<DrawerItem> categoryList = response.body();
+                Home home=new Home();
 
                 Log.i("RESPONSE","RESPONSE"+categoryList);
-                DrawerAdapter adapter = new DrawerAdapter(MainActivity.this,categoryList);
+                DrawerAdapter adapter = new DrawerAdapter(MainActivity.this,categoryList,home);
                 drawer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 drawer.setAdapter(adapter);
+
 
             }
 
             @Override
             public void onFailure(Call<List<DrawerItem>> call, Throwable t) {
-                progressDoalog.dismiss();
 
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -449,44 +443,7 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-    public void getSelectCategory(String categoryname) {
 
-        //Creating a retrofit object
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
-                .build();
-
-        //creating the api interface
-        APIInterface api = retrofit.create(APIInterface.class);
-
-        //now making the call object
-        //Here we are using the api method that we created inside the api interface
-        Call<List<Product>> call = api.getSelectedCategoryList(categoryname);
-        call.enqueue(new Callback<List<Product>>() {
-
-
-            @Override
-            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
-
-                Home.productList = response.body();
-
-
-
-
-
-                layoutchange1();
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 
 
 

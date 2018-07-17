@@ -101,6 +101,10 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        String categoryValue = this.getArguments().getString("category");
+
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.home, container, false);
         title = "8";
@@ -152,7 +156,15 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         });
         addTextListener();
 
-        getAlldata();
+        if(categoryValue!=null)
+        {
+            getSelectCategory(categoryValue);
+        }else
+        {
+            getAlldata();
+        }
+
+
 
 
         return v;
@@ -229,13 +241,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(a, 2);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.VERTICAL));
-            //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.HORIZONTAL));
-
-            recyclerView.setAdapter(mAdapter);
+              recyclerView.setAdapter(mAdapter);
             recyclerView.setNestedScrollingEnabled(false);
             mAdapter.notifyDataSetChanged();
-            //setupSearchView();
 
 
 
@@ -356,24 +364,15 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         //Here we are using the api method that we created inside the api interface
         Call<List<Product>> call = api.getAllProductList();
 
-            final ProgressDialog progressDoalog;
-            progressDoalog = new ProgressDialog(getActivity());
-            progressDoalog.setTitle("Loading...Please wait");
-            // show it
-            progressDoalog.show();
+
         call.enqueue(new Callback<List<Product>>() {
 
 
             @Override
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
                productList = response.body();
-                progressDoalog.dismiss();
 
-
-
-
-
-                layoutchange1();
+                layoutchange();
 
 
             }
@@ -381,7 +380,6 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDoalog.dismiss();
 
             }
         });
@@ -390,6 +388,36 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
 
 
+    public void getSelectCategory(String categoryname) {
 
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getSelectedCategoryList(categoryname);
+        call.enqueue(new Callback<List<Product>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+
+                productList = response.body();
+                layoutchange();
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+
+    }
 
 }
