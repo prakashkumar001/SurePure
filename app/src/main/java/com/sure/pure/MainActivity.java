@@ -82,11 +82,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.sure.pure.fragments.Delivered.adapter;
-import static com.sure.pure.fragments.Home.layoutchange;
-import static com.sure.pure.fragments.Home.layoutchange1;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        {
     ArrayList<DrawerItem> drawerList;
 
     public static LayerDrawable icon;
@@ -199,90 +197,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        if (id == R.id.changepass) {
-            if (databaseHelper.getSignup() == "false") {
-                Intent i = new Intent(MainActivity.this, Login.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-
-
-            } else {
-                Intent i = new Intent(MainActivity.this, ChangePassword.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
-
-            }
-        }
-
-        if (id == R.id.history) {
-
-            if (databaseHelper.getSignup() == "false") {
-                Intent i = new Intent(MainActivity.this, Login.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-
-
-            } else {
-
-                Intent i = new Intent(MainActivity.this, Order_History.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
-
-            }
-
-
-        }
-
-        if (id == R.id.logout) {
-
-            databaseHelper.removeLogin();
-            Intent i = new Intent(MainActivity.this, Login.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-            finish();
-        }
-
-        if (id == R.id.profile) {
-            if (databaseHelper.getSignup() == "false") {
-                Intent i = new Intent(MainActivity.this, Login.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-
-
-            } else {
-
-                Intent i = new Intent(MainActivity.this, Profile.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
-
-            }
-
-        }
-
-        if (id == R.id.contactus) {
-
-            Intent i = new Intent(MainActivity.this, ContactUs.class);
-            i.putExtra("url", "file:///android_asset/contactus.html");
-            startActivity(i);
-            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-
-
-        }
-
-
-        return true;
-    }
 
     private void selectFirstItemAsDefault() {
 
@@ -441,10 +356,6 @@ public class MainActivity extends AppCompatActivity
         });
 
             }
-
-
-
-
 
 
 }

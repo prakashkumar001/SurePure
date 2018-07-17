@@ -66,13 +66,15 @@ public class SortActivity extends AppCompatActivity {
                 if(HolderClass.optionSelected>-1)
                 {
 
-                        Home.item= SortActivity.data.get(HolderClass.optionSelected);
+                    Home home=new Home();
+
+                    home.item= SortActivity.data.get(HolderClass.optionSelected);
                         if(global.listmodel.equalsIgnoreCase("list"))
                         {
-                            Home.layoutchange();
+                            home.layoutchange();
                         }else
                         {
-                            Home.layoutchange1();
+                            home.layoutchange1();
                         }
                     finish();
 

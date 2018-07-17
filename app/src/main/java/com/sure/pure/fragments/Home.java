@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,12 +40,14 @@ import com.sure.pure.Login;
 import com.sure.pure.MainActivity;
 import com.sure.pure.R;
 import com.sure.pure.adapter.DrawerAdapter;
+import com.sure.pure.adapter.PaginationAdapter;
 import com.sure.pure.adapter.ProductListAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
 import com.sure.pure.retrofit.APIInterface;
 import com.sure.pure.utils.DrawerItem;
 import com.sure.pure.utils.FileUploader;
+import com.sure.pure.utils.PaginationScrollListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +63,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.android.volley.VolleyLog.TAG;
+import static com.sure.pure.fragments.Delivered.adapter;
 
 /**
  * Created by Creative IT Works on 09-Jun-17.
@@ -80,6 +85,16 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     ImageView list_grid;
     Typeface fonts,bold;
 
+    public PaginationAdapter paginationAdapter;
+    LinearLayoutManager linearLayoutManager;
+
+    ProgressBar progressBar;
+
+    private static final int PAGE_START = 0;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    private int TOTAL_PAGES = 3;
+    private int currentPage = PAGE_START;
 
     public Home() {
         // Required empty public constructor
@@ -116,18 +131,16 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         list_grid = (ImageView) v.findViewById(R.id.list_grid);
         TextView privacy = (TextView) v.findViewById(R.id.privacy);
         TextView aboutus = (TextView) v.findViewById(R.id.aboutus);
+        progressBar = (ProgressBar)  v.findViewById(R.id.main_progress);
+
         TextView copyrights = (TextView) v.findViewById(R.id.copyrights);
         copyrights.setTypeface(bold);
         privacy.setTypeface(bold);
         aboutus.setTypeface(bold);
 
         a = getActivity();
-        global.listmodel = "grid";
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build();
-        StrictMode.setThreadPolicy(policy);
+        global.listmodel = "list";
+
 
         search = (EditText) v.findViewById(R.id.search);
         search.setTypeface(bold);
@@ -155,15 +168,38 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             }
         });
         addTextListener();
+        layoutchange();
+        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
 
-        if(categoryValue!=null)
-        {
-            getSelectCategory(categoryValue);
-        }else
-        {
-            getAlldata();
-        }
+                // mocking network delay for API call
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNextPage();
+                    }
+                }, 1000);
+            }
 
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+        loadFirstPage();
 
 
 
@@ -195,7 +231,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        layoutchange1();
+        layoutchange();
 
 
     }
@@ -203,19 +239,21 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
 
 
-    public static void layoutchange() {
+    public  void layoutchange() {
 
         try {
 
 
             String list = "list";
             global.listmodel = list;
-            mAdapter = new ProductListAdapter(a.getApplicationContext(), productList, item, list);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(a);
-            recyclerView.setLayoutManager(mLayoutManager);
+           // mAdapter = new ProductListAdapter(a.getApplicationContext(), productList, item, list);
+            paginationAdapter=new PaginationAdapter(getActivity());
+            linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+            //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(a);
+            recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.VERTICAL));
-            recyclerView.setAdapter(mAdapter);
+            recyclerView.setAdapter(paginationAdapter);
             recyclerView.setNestedScrollingEnabled(false);
 
             mAdapter.notifyDataSetChanged();
@@ -419,5 +457,78 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         });
 
     }
+
+    private void loadFirstPage() {
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getAllProductList();
+        call.enqueue(new Callback<List<Product>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+
+                productList = response.body();
+                progressBar.setVisibility(View.GONE);
+                paginationAdapter.addAll(productList);
+
+                if (currentPage <= TOTAL_PAGES) paginationAdapter.addLoadingFooter();
+                else isLastPage = true;
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+
+    }
+
+    private void loadNextPage() {
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getAllProductList();
+        call.enqueue(new Callback<List<Product>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+
+                productList = response.body();
+                paginationAdapter.removeLoadingFooter();
+                isLoading = false;
+
+                paginationAdapter.addAll(productList);
+
+                if (currentPage != TOTAL_PAGES) paginationAdapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+
+    }
+
+
 
 }
