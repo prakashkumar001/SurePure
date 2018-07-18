@@ -88,7 +88,6 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     public PaginationAdapter paginationAdapter;
     LinearLayoutManager linearLayoutManager;
 
-    ProgressBar progressBar;
 
     private static final int PAGE_START = 0;
     private boolean isLoading = false;
@@ -117,7 +116,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String categoryValue = this.getArguments().getString("category");
+        final String categoryValue = this.getArguments().getString("category");
 
 
         // Inflate the layout for this fragment
@@ -131,7 +130,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         list_grid = (ImageView) v.findViewById(R.id.list_grid);
         TextView privacy = (TextView) v.findViewById(R.id.privacy);
         TextView aboutus = (TextView) v.findViewById(R.id.aboutus);
-        progressBar = (ProgressBar)  v.findViewById(R.id.main_progress);
+       // progressBar = (ProgressBar)  v.findViewById(R.id.main_progress);
 
         TextView copyrights = (TextView) v.findViewById(R.id.copyrights);
         copyrights.setTypeface(bold);
@@ -153,14 +152,31 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                 if (global.listmodel.equals("grid")) {
                     list_grid.setImageResource(R.drawable.list_icon);
                     global.listmodel = "list";
+                    if(categoryValue!=null)
+                    {
+                        layoutchange();
+                        getSelectCategory(categoryValue);
 
-                    layoutchange();
+                    }else
+                    {
+                        layoutchange();
+                        loadNextPage();
+                    }
+
 
                 } else {
                     list_grid.setImageResource(R.drawable.grid_icon);
                     global.listmodel = "grid";
+                    if(categoryValue!=null)
+                    {
+                        layoutchange1();
+                        getSelectCategory(categoryValue);
 
-                    layoutchange1();
+                    }else
+                    {
+                        layoutchange1();
+                        loadNextPage();
+                    }
 
 
                 }
@@ -179,7 +195,14 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadNextPage();
+                        if(categoryValue!=null)
+                        {
+
+                        }else
+                        {
+                            loadNextPage();
+                        }
+
                     }
                 }, 1000);
             }
@@ -248,16 +271,16 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             String list = "list";
             global.listmodel = list;
            // mAdapter = new ProductListAdapter(a.getApplicationContext(), productList, item, list);
-            paginationAdapter=new PaginationAdapter(getActivity());
+            paginationAdapter=new PaginationAdapter(getActivity(),item,list);
             linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
             //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(a);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.VERTICAL));
+          //  paginationAdapter.addAll(productList);
             recyclerView.setAdapter(paginationAdapter);
             recyclerView.setNestedScrollingEnabled(false);
 
-            mAdapter.notifyDataSetChanged();
 
 
         } catch (Exception e) {
@@ -269,20 +292,19 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     }
 
 
-    public static void layoutchange1() {
+    public  void layoutchange1() {
 
 
         try {
 
             String list = "grid";
             global.listmodel = list;
-            mAdapter = new ProductListAdapter(a.getApplicationContext(), productList, item, list);
+            paginationAdapter = new PaginationAdapter(a.getApplicationContext(), item, list);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(a, 2);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-              recyclerView.setAdapter(mAdapter);
+              recyclerView.setAdapter(paginationAdapter);
             recyclerView.setNestedScrollingEnabled(false);
-            mAdapter.notifyDataSetChanged();
 
 
 
@@ -353,30 +375,31 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                 {
 
                     String list = "grid";
-                    mAdapter = new ProductListAdapter(a.getApplicationContext(), filteredList, item, list);
+                    paginationAdapter = new PaginationAdapter(a.getApplicationContext(), item, list);
                     RecyclerView.LayoutManager layoutManager = new GridLayoutManager(a, 2);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.VERTICAL));
                     //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.HORIZONTAL));
 
-                    recyclerView.setAdapter(mAdapter);
+                    recyclerView.setAdapter(paginationAdapter);
+                    paginationAdapter.addAll(filteredList);
                     recyclerView.setNestedScrollingEnabled(false);
-                    mAdapter.notifyDataSetChanged();
+                    paginationAdapter.notifyDataSetChanged();
                 }else
                 {
                     String list = "list";
-                    mAdapter = new ProductListAdapter(a.getApplicationContext(), filteredList, item, list);
+                    paginationAdapter = new PaginationAdapter(a.getApplicationContext(), item, list);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(a);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.VERTICAL));
                     //recyclerView.addItemDecoration(new DividerItemDecoration(a, LinearLayoutManager.HORIZONTAL));
 
-                    recyclerView.setAdapter(mAdapter);
+                    recyclerView.setAdapter(paginationAdapter);
+                    paginationAdapter.addAll(filteredList);
                     recyclerView.setNestedScrollingEnabled(false);
-                    mAdapter.notifyDataSetChanged();              }
-                mAdapter.notifyDataSetChanged();  // data set changed
+                    paginationAdapter.notifyDataSetChanged();              }
             }
         });
     }
@@ -388,43 +411,6 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
     }
 
 
-        public void getAlldata() {
-
-        //Creating a retrofit object
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
-                .build();
-
-        //creating the api interface
-        APIInterface api = retrofit.create(APIInterface.class);
-
-        //now making the call object
-        //Here we are using the api method that we created inside the api interface\
-            String page=APIInterface.BASE_URL+"/rest/index.php/htc/?p_id/"+currentPage;
-        Call<List<Product>> call = api.getAllProductList(page);
-
-
-        call.enqueue(new Callback<List<Product>>() {
-
-
-            @Override
-            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
-               productList = response.body();
-
-                layoutchange();
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-    }
 
 
 
@@ -449,6 +435,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             @Override
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
 
+                productList=new ArrayList<Product>();
                 productList = response.body();
                 paginationAdapter.addAll(productList);
 
@@ -482,12 +469,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
 
                 productList = response.body();
-                progressBar.setVisibility(View.GONE);
                 paginationAdapter.addAll(productList);
                 recyclerView.setNestedScrollingEnabled(false);
 
-                if (currentPage <= 100) paginationAdapter.addLoadingFooter();
-                else isLastPage = true;
 
             }
 
@@ -519,13 +503,11 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
 
                 productList = response.body();
-                paginationAdapter.removeLoadingFooter();
                 isLoading = false;
 
                 paginationAdapter.addAll(productList);
 
-                if (currentPage != 100) paginationAdapter.addLoadingFooter();
-                else isLastPage = true;
+
             }
 
             @Override

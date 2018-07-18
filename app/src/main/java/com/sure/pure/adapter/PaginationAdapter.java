@@ -43,7 +43,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private boolean isLoadingAdded = false;
     List<Product> product=new ArrayList<>();
     Context ctx;
-    String listformat="list";
+    String listformat;
     String title;
     int count=0;
     GlobalClass global;
@@ -51,9 +51,12 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     ImageLoader loader;
 
     Typeface fonts,bold;
-    public PaginationAdapter(Context context) {
+    public PaginationAdapter(Context context,String sort,String listformat) {
         this.ctx = context;
+        this.sort=sort;
+        this.listformat=listformat;
         product = new ArrayList<>();
+        loader=ImageLoader.getInstance();
     }
 
     public List<Product> getMovies() {
@@ -113,9 +116,9 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 MovieVH movieVH = (MovieVH) holder;
 
                 DisplayImageOptions options = new DisplayImageOptions.Builder()
-                        .showImageOnLoading(R.drawable.cart_image) // resource or drawable
-                        .showImageForEmptyUri(R.drawable.cart_image) // resource or drawable
-                        .showImageOnFail(R.drawable.cart_image) // resource or drawable
+                        .showImageOnLoading(R.drawable.logo) // resource or drawable
+                        .showImageForEmptyUri(R.drawable.logo) // resource or drawable
+                        .showImageOnFail(R.drawable.logo) // resource or drawable
                         .resetViewBeforeLoading(false)  // default
                         .delayBeforeLoading(100)
                         .cacheInMemory(true) // default

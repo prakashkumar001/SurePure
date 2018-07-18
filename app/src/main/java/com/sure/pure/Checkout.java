@@ -37,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.sure.pure.fragments.Home.layoutchange1;
+
 
 /**
  * Created by Creative IT Works on 28-Jun-17.
