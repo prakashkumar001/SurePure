@@ -15,6 +15,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 public interface APIInterface {
     String BASE_URL = "http://www.boolfox.com";
@@ -22,8 +23,8 @@ public interface APIInterface {
     @GET("/rest/index.php/htc/product_category")
     Call<List<DrawerItem>> getCategoryList();
 
-    @GET("/rest/index.php/htc/")
-    Call<List<Product>> getAllProductList();
+    @GET
+    Call<List<Product>> getAllProductList(@Url String url);
 
     @GET("/rest/index.php/htc/product_list/{input}")
     Call<List<Product>> getSelectedCategoryList(@Path("input") String input);

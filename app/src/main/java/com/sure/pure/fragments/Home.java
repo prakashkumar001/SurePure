@@ -199,7 +199,16 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                 return isLoading;
             }
         });
-        loadFirstPage();
+
+        if(categoryValue!=null)
+        {
+            getSelectCategory(categoryValue);
+
+        }else
+        {
+            loadFirstPage();
+        }
+
 
 
 
@@ -226,15 +235,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         // TODO Auto-generated method stub
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
 
-        layoutchange();
-
-
-    }
 
 
 
@@ -399,8 +400,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
         APIInterface api = retrofit.create(APIInterface.class);
 
         //now making the call object
-        //Here we are using the api method that we created inside the api interface
-        Call<List<Product>> call = api.getAllProductList();
+        //Here we are using the api method that we created inside the api interface\
+            String page=APIInterface.BASE_URL+"/rest/index.php/htc/?p_id/"+currentPage;
+        Call<List<Product>> call = api.getAllProductList(page);
 
 
         call.enqueue(new Callback<List<Product>>() {
@@ -428,6 +430,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
     public void getSelectCategory(String categoryname) {
 
+
         //Creating a retrofit object
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIInterface.BASE_URL)
@@ -447,7 +450,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
 
                 productList = response.body();
-                layoutchange();
+                paginationAdapter.addAll(productList);
 
             }
 
@@ -470,7 +473,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
         //now making the call object
         //Here we are using the api method that we created inside the api interface
-        Call<List<Product>> call = api.getAllProductList();
+        String page=APIInterface.BASE_URL+"/rest/index.php/htc?p_id="+currentPage;
+        Call<List<Product>> call = api.getAllProductList(page);
         call.enqueue(new Callback<List<Product>>() {
 
 
@@ -480,8 +484,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
                 productList = response.body();
                 progressBar.setVisibility(View.GONE);
                 paginationAdapter.addAll(productList);
+                recyclerView.setNestedScrollingEnabled(false);
 
-                if (currentPage <= TOTAL_PAGES) paginationAdapter.addLoadingFooter();
+                if (currentPage <= 100) paginationAdapter.addLoadingFooter();
                 else isLastPage = true;
 
             }
@@ -505,7 +510,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
         //now making the call object
         //Here we are using the api method that we created inside the api interface
-        Call<List<Product>> call = api.getAllProductList();
+        String page=APIInterface.BASE_URL+"/rest/index.php/htc?p_id="+currentPage;
+        Call<List<Product>> call = api.getAllProductList(page);
         call.enqueue(new Callback<List<Product>>() {
 
 
@@ -518,7 +524,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener,Sea
 
                 paginationAdapter.addAll(productList);
 
-                if (currentPage != TOTAL_PAGES) paginationAdapter.addLoadingFooter();
+                if (currentPage != 100) paginationAdapter.addLoadingFooter();
                 else isLastPage = true;
             }
 

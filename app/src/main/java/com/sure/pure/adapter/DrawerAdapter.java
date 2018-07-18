@@ -3,6 +3,7 @@ package com.sure.pure.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,7 +53,16 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerView
                if(context instanceof MainActivity){
                    MainActivity.drawerlayout.closeDrawers();
                    //((MainActivity)context).getSelectCategory(drawerMenuList.get(position).getCategory());
-                   home.getSelectCategory(drawerMenuList.get(position).getCategory());
+                  // home.getSelectCategory(drawerMenuList.get(position).getCategory());
+                   Bundle b=new Bundle();
+                   b.putString("category",drawerMenuList.get(position).getCategory());
+                   home=new Home();
+                   home.setArguments(b);
+
+                   FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
+                   fragmentManager.beginTransaction()
+                           .replace(R.id.container, home)
+                           .commit();
                }
 
            }

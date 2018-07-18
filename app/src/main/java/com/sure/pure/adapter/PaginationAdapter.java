@@ -43,7 +43,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private boolean isLoadingAdded = false;
     List<Product> product=new ArrayList<>();
     Context ctx;
-    String listformat;
+    String listformat="list";
     String title;
     int count=0;
     GlobalClass global;
@@ -83,9 +83,23 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
-        RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.item_list, parent, false);
-        viewHolder = new MovieVH(v1);
+         RecyclerView.ViewHolder viewHolder=null;;
+
+
+
+        View itemView=null;
+        if(listformat.equalsIgnoreCase("list"))
+        {
+             itemView = inflater.inflate(R.layout.product_list_item, parent, false);
+            viewHolder = new MovieVH(itemView);
+
+        }else if(listformat.equalsIgnoreCase("grid"))
+        {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.grid, parent, false);
+            viewHolder = new MovieVH(itemView);
+
+        }
         return viewHolder;
     }
 
@@ -153,10 +167,6 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 movieVH.productname.setTypeface(bold);
                 movieVH.add.setTypeface(bold);
 
-                //String images=String.valueOf(drawables[position]);
-                //loader.displayImage(images,movieVH.image,options);
-                //movieVH.image.setImageResource(product.get(position).getProductimage());
-                // movieVH.image.setImageResource(product.get(position).getProductimage());
 
                 try
                 {
