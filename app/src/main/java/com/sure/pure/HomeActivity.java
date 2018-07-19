@@ -1,11 +1,11 @@
-package com.sure.pure.fragments;
+package com.sure.pure;
 
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +13,7 @@ import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,9 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.sure.pure.R;
 import com.sure.pure.adapter.PaginationAdapter;
-import com.sure.pure.adapter.ProductListAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
 import com.sure.pure.retrofit.APIInterface;
@@ -40,12 +36,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Creative IT Works on 09-Jun-17.
+ * Created by Bairavi on 7/19/2018.
  */
 
-public class Home extends Fragment implements Spinner.OnItemSelectedListener, SearchView.OnQueryTextListener {
-
-    public  List<Product> productList;
+public class HomeActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener, SearchView.OnQueryTextListener {
+    public List<Product> productList;
 
     public RecyclerView recyclerView;
     public static Activity a;
@@ -61,56 +56,38 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
 
     private int currentPage = 0;
-
-    public Home() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment.
-     *
-     * @return A new instance of fragment ProductList.
-     */
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.home);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        final String categoryValue = this.getArguments().getString("category");
+        final String categoryValue = this.getIntent().getStringExtra("category");
 
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.home, container, false);
         title = "8";
-        fonts = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(HomeActivity.this.getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(HomeActivity.this.getAssets(), "fonts/Monitorica_Bd.ttf");
         Log.i("Title", "Title" + title);
-        global = (GlobalClass) getActivity().getApplicationContext();
-        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        list_grid = (ImageView) v.findViewById(R.id.list_grid);
-        TextView privacy = (TextView) v.findViewById(R.id.privacy);
-        TextView aboutus = (TextView) v.findViewById(R.id.aboutus);
-        progressBar = (ProgressBar) v.findViewById(R.id.item_progress_bar);
+        global = (GlobalClass) HomeActivity.this.getApplicationContext();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        list_grid = (ImageView) findViewById(R.id.list_grid);
+        TextView privacy = (TextView) findViewById(R.id.privacy);
+        TextView aboutus = (TextView) findViewById(R.id.aboutus);
+        progressBar = (ProgressBar) findViewById(R.id.item_progress_bar);
 
-        TextView copyrights = (TextView) v.findViewById(R.id.copyrights);
+        TextView copyrights = (TextView) findViewById(R.id.copyrights);
         copyrights.setTypeface(bold);
         privacy.setTypeface(bold);
         aboutus.setTypeface(bold);
 
-        a = getActivity();
+        a = HomeActivity.this;
         global.listmodel = "list";
 
-        productList = new ArrayList<>();
 
 
-        search = (EditText) v.findViewById(R.id.search);
+
+        search = (EditText) findViewById(R.id.search);
         search.setTypeface(bold);
 
 
@@ -145,8 +122,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         });
         addTextListener();
 
-
-        adapter=new PaginationAdapter(getActivity(),productList);
+        productList = new ArrayList<>();
+        adapter=new PaginationAdapter(HomeActivity.this,productList);
         linearLayout();
         if (categoryValue != null) {
             getSelectCategory(categoryValue);
@@ -155,7 +132,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             addDataToList();
         }
         recyclerView.setAdapter(adapter);
-        recyclerView.setNestedScrollingEnabled(false);
+       // recyclerView.setNestedScrollingEnabled(false);
 
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
@@ -172,9 +149,6 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
 
 
-
-
-        return v;
     }
 
     @Override
@@ -197,7 +171,6 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         // TODO Auto-generated method stub
     }
 
-
     public void linearLayout() {
 
         try {
@@ -205,10 +178,10 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
             String list = "list";
             global.listmodel = list;
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeActivity.this);
             recyclerView.setLayoutManager(linearLayoutManager);
-            adapter=new PaginationAdapter(getActivity(),productList);
-            recyclerView.setAdapter(adapter);
+           // adapter=new PaginationAdapter(HomeActivity.this,productList);
+            //recyclerView.setAdapter(adapter);
 
 
         } catch (Exception e) {
@@ -226,11 +199,11 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
             String list = "grid";
             global.listmodel = list;
-            GridLayoutManager linearLayoutManager = new GridLayoutManager(getActivity(), 2);
+            GridLayoutManager linearLayoutManager = new GridLayoutManager(HomeActivity.this, 2);
             //linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(linearLayoutManager);
-            adapter=new PaginationAdapter(getActivity(),productList);
-            recyclerView.setAdapter(adapter);
+           // adapter=new PaginationAdapter(HomeActivity.this,productList);
+           // recyclerView.setAdapter(adapter);
 
 
         } catch (Exception e) {

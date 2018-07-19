@@ -19,14 +19,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.sure.pure.adapter.CartpageAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.db.DatabaseHelper;
+import com.sure.pure.model.Product;
 import com.sure.pure.pojo.CheckoutResponse;
+import com.sure.pure.pojo.ProductData;
+import com.sure.pure.pojo.ProductList;
 import com.sure.pure.retrofit.APIInterface;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.io.StringReader;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -240,26 +249,34 @@ public class CartPage extends AppCompatActivity {
         JSONObject arr=new JSONObject();
         try {
             arr.put("checkout",global.jsonArraydetails);
-            arr.put("mobilenumber","9962526526");
+            arr.put("emailid","akshav00@gmail.com");
         }catch (Exception e)
         {
 
         }
 
-
+        Gson gson=new Gson();
+        ProductList people = null;
+        try {
+             people= gson.fromJson(arr.getJSONObject("checkout").toString(), ProductList.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Log.d("addToOrders", "addToOrders: "+arr.toString());
         Log.d("addToOrders", "addToOrders: "+arr.toString());
 
         //now making the call object
         //Here we are using the api method that we created inside the api interface
-        Call<CheckoutResponse> call = api.checkout(arr);
-        call.enqueue(new Callback<CheckoutResponse>() {
+
+        Call<String> call = api.checkout(people);
+        call.enqueue(new Callback<String>() {
 
 
             @Override
-            public void onResponse(Call<CheckoutResponse> call, retrofit2.Response<CheckoutResponse> response) {
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
 
 
+                String p=response.body();
 
 
 
@@ -270,7 +287,7 @@ public class CartPage extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

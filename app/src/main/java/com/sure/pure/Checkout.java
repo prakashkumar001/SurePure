@@ -237,7 +237,7 @@ User user;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                dialog = new ProgressDialog(Checkout.this);
+                dialog = new ProgressDialog(ProductData.this);
                 dialog.setMessage("Loading..");
                 dialog.show();
             }

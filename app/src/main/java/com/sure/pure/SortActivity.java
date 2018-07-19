@@ -71,10 +71,10 @@ public class SortActivity extends AppCompatActivity {
                     home.item= SortActivity.data.get(HolderClass.optionSelected);
                         if(global.listmodel.equalsIgnoreCase("list"))
                         {
-                            home.layoutchange();
+                            home.linearLayout();
                         }else
                         {
-                            home.layoutchange1();
+                            home.gridLayout();
                         }
                     finish();
 

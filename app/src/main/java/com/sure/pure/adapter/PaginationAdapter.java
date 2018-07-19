@@ -26,77 +26,230 @@ import com.sure.pure.model.Product;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-/**
- * Created by Suleiman on 19/10/16.
- */
 
 public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int ITEM = 0;
-    private static final int LOADING = 1;
 
 
-    private boolean isLoadingAdded = false;
-    List<Product> product=new ArrayList<>();
+
+    List<Product> product;
     Context ctx;
-    String listformat;
-    String title;
-    int count=0;
-    GlobalClass global;
-    String sort="Price Low-High";
-    ImageLoader loader;
-
+    String sort="";
     Typeface fonts,bold;
-    public PaginationAdapter(Context context,String sort,String listformat) {
+    int count=0;
+    ImageLoader loader;
+    GlobalClass global;
+
+
+    /*
+    * isLoading - to set the remote loading and complete status to fix back to back load more call
+    * isMoreDataAvailable - to set whether more data from server available or not.
+    * It will prevent useless load more request even after all the server data loaded
+    * */
+
+
+    public PaginationAdapter(Context context, List<Product> movies) {
         this.ctx = context;
-        this.sort=sort;
-        this.listformat=listformat;
-        product = new ArrayList<>();
+        this.product = movies;
         loader=ImageLoader.getInstance();
-    }
-
-    public List<Product> getMovies() {
-        return product;
-    }
-
-    public void setMovies(List<Product> product) {
-        this.product = product;
+        global=(GlobalClass)ctx.getApplicationContext();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         RecyclerView.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        switch (viewType) {
-            case ITEM:
-                viewHolder = getViewHolder(parent, inflater);
-                break;
-            case LOADING:
-                View v2 = inflater.inflate(R.layout.item_progress, parent, false);
-                viewHolder = new LoadingVH(v2);
-                break;
-        }
+
+
+        viewHolder = getViewHolder(parent, inflater);
+
+
         return viewHolder;
     }
 
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder recyclerHolder,final int position) {
+        MovieVH holder=(MovieVH)recyclerHolder;
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.cart_image) // resource or drawable
+                .showImageForEmptyUri(R.drawable.cart_image) // resource or drawable
+                .showImageOnFail(R.drawable.cart_image) // resource or drawable
+                .resetViewBeforeLoading(false)  // default
+                .delayBeforeLoading(100)
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
+
+        //Product product = moviesList[position];
+
+        /*if(sort.equalsIgnoreCase("Quantity High-Low"))
+        {
+
+
+
+//            Collections.sort(product, new Comparator<Product>() {
+//                @Override
+//                public int compare(Product lhs, Product rhs) {
+//                    return lhs.getCategory().compareTo(rhs.getCategory());
+//                }
+//            });
+
+            Collections.sort(product,new Product.OrderByQuantityHigh());
+
+
+        }else if(sort.equalsIgnoreCase("Price Low-High"))
+        {
+            Collections.sort(product,new Product.OrderByAmountdouble());
+        }else if(sort.equalsIgnoreCase("Quantity Low-High"))
+        {
+            Collections.sort(product, Collections.reverseOrder(new Product.OrderByQuantityHigh()));
+        }else if(sort.equalsIgnoreCase("Price High-Low"))
+        {
+            Collections.sort(product, Collections.reverseOrder(new Product.OrderByAmountdouble()));
+        }*/
+        String seller = ctx.getResources().getString(R.string.Rupees);
+        //String offer = ctx.getResources().getString(R.string.seventyrupees);
+
+
+        holder.sellerprice.setText(seller + product.get(position).getSellerprice());
+        //holder.offerprice.setText(seller + product.get(position).getOfferprice());
+        if(product.get(position).getSellerprice().equals("0"))
+        {
+            holder.outofstock.setText("Out of Stock");
+            holder.sellerprice.setVisibility(View.GONE);
+            holder.add.setVisibility(View.GONE);
+
+        }else
+        {
+            holder.outofstock.setVisibility(View.GONE);
+
+        }
+        // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.productname.setText(product.get(position).getProductname());
+
+        holder.sellerprice.setTypeface(fonts);
+        //holder.offerprice.setTypeface(fonts);
+        holder.productname.setTypeface(bold);
+        holder.add.setTypeface(bold);
+
+        //String images=String.valueOf(drawables[position]);
+        //loader.displayImage(images,holder.image,options);
+        //holder.image.setImageResource(product.get(position).getProductimage());
+        // holder.image.setImageResource(product.get(position).getProductimage());
+
+        try
+        {
+            loader.displayImage("http://www.boolfox.com/rest"+product.get(position).getProductimage(),holder.image,options);
+
+        }catch (Exception e)
+        {
+
+        }
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(ctx,ProductDetailPage.class);
+              /*  i.putExtra("name",product.get(position).getProductname());
+                i.putExtra("id",product.get(position).getProduct_id());
+                i.putExtra("sellerprice",product.get(position).getSellerprice());
+                i.putExtra("offerprice",product.get(position).getOfferprice());
+                i.putExtra("description",product.get(position).getProductdes());
+                i.putExtra("image",product.get(position).getProductimage());*/
+                i.putExtra("product",product.get(position));
+                i.putExtra("position",position);
+                i.putExtra("productList", (Serializable) product);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                ctx.startActivity(i);
+
+            }
+        });
+        holder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toast.makeText(ctx,"DGSGDFSDFF",Toast.LENGTH_SHORT).show();
+                String seller = ctx.getResources().getString(R.string.Rupees);
+                //String offer = ctx.getResources().getString(R.string.seventyrupees);
+
+                if(global.productIDS.contains(product.get(position).getProduct_id()))
+                {
+
+                    for(int i=0;i<global.cartValues.size();i++)
+                    {
+                        if(global.cartValues.get(i).getProduct_id().equalsIgnoreCase(product.get(position).getProduct_id()))
+                        {
+                            Product p=global.cartValues.get(i);
+                            p.setQuantity(p.getQuantity()+1);
+                        }
+
+
+                    }
+                    //   Toast.makeText(ctx,"Already added in the cart", Toast.LENGTH_SHORT).show();
+
+                }else
+                {
+                    Product products=new Product();
+                    products.setProduct_id(product.get(position).getProduct_id());
+                    products.setProductimage(product.get(position).getProductimage());
+                    products.setSellerprice(product.get(position).getSellerprice());
+                    products.setProductdes(product.get(position).getProductdes());
+                    products.setOfferprice(product.get(position).getOfferprice());
+                    products.setProductname(product.get(position).getProductname());
+                    products.setTotalprice(product.get(position).getOfferprice());
+                    products.setQuantity(1);
+                    global.productIDS.add(product.get(position).getProduct_id());
+                    global.cartValues.add(products);
+                    count=global.cartValues.size();
+                    String value= String.valueOf(count);
+                    Log.i("Count","Count"+ product.get(position).getProductname());
+                    global.BadgeCount=value;
+
+                   /* MainActivity.setBadgeCount(ctx, MainActivity.icon,value);
+                    global.BadgeCount=value;
+                   */ Toast.makeText(ctx,product.get(position).getProductname()+" "+"Added in the cart", Toast.LENGTH_SHORT).show();
+                    // notifyDataSetChanged();
+
+                    MainActivity.cartcount.setVisibility(View.VISIBLE);
+                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx,R.animator.flip);
+                    set.setTarget(MainActivity.cartcount);
+                    MainActivity.cartcount.setText(global.BadgeCount);
+                    set.start();
+
+
+                }
+
+
+
+
+
+            }
+        });
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return product.size();
+    }
+
+
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
-         RecyclerView.ViewHolder viewHolder=null;;
+        RecyclerView.ViewHolder viewHolder=null;;
 
 
 
         View itemView=null;
-        if(listformat.equalsIgnoreCase("list"))
+        if(global.listmodel.equalsIgnoreCase("list"))
         {
-             itemView = inflater.inflate(R.layout.product_list_item, parent, false);
+            itemView = inflater.inflate(R.layout.product_list_item, parent, false);
             viewHolder = new MovieVH(itemView);
 
-        }else if(listformat.equalsIgnoreCase("grid"))
+        }else if(global.listmodel.equalsIgnoreCase("grid"))
         {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.grid, parent, false);
@@ -105,234 +258,6 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         return viewHolder;
     }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-
-
-
-        switch (getItemViewType(position)) {
-            case ITEM:
-                MovieVH movieVH = (MovieVH) holder;
-
-                DisplayImageOptions options = new DisplayImageOptions.Builder()
-                        .showImageOnLoading(R.drawable.logo) // resource or drawable
-                        .showImageForEmptyUri(R.drawable.logo) // resource or drawable
-                        .showImageOnFail(R.drawable.logo) // resource or drawable
-                        .resetViewBeforeLoading(false)  // default
-                        .delayBeforeLoading(100)
-                        .cacheInMemory(true) // default
-                        .cacheOnDisk(true) // default
-                        .build();
-
-                //Product product = moviesList[position];
-
-               /* if(sort.equalsIgnoreCase("Quantity High-Low"))
-                {
-
-
-
-                    Collections.sort(product,new Product.OrderByQuantityHigh());
-
-
-                }else if(sort.equalsIgnoreCase("Price Low-High"))
-                {
-                    Collections.sort(product,new Product.OrderByAmountdouble());
-                }else if(sort.equalsIgnoreCase("Quantity Low-High"))
-                {
-                    Collections.sort(product, Collections.reverseOrder(new Product.OrderByQuantityHigh()));
-                }else if(sort.equalsIgnoreCase("Price High-Low"))
-                {
-                    Collections.sort(product, Collections.reverseOrder(new Product.OrderByAmountdouble()));
-                }*/
-                String seller = ctx.getResources().getString(R.string.Rupees);
-                //String offer = ctx.getResources().getString(R.string.seventyrupees);
-
-
-                movieVH.sellerprice.setText(seller + product.get(position).getSellerprice());
-                //movieVH.offerprice.setText(seller + product.get(position).getOfferprice());
-                if(product.get(position).getSellerprice().equals("0"))
-                {
-                    movieVH.outofstock.setText("Out of Stock");
-                    movieVH.sellerprice.setVisibility(View.GONE);
-                    movieVH.add.setVisibility(View.GONE);
-
-                }else
-                {
-                    movieVH.outofstock.setVisibility(View.GONE);
-
-                }
-                // movieVH.sellerprice.setPaintFlags(movieVH.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                movieVH.productname.setText(product.get(position).getProductname());
-
-                movieVH.sellerprice.setTypeface(fonts);
-                //movieVH.offerprice.setTypeface(fonts);
-                movieVH.productname.setTypeface(bold);
-                movieVH.add.setTypeface(bold);
-
-
-                try
-                {
-                    loader.displayImage("http://www.boolfox.com/rest"+product.get(position).getProductimage(),movieVH.image,options);
-
-                }catch (Exception e)
-                {
-
-                }
-
-                movieVH.image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i=new Intent(ctx,ProductDetailPage.class);
-                       i.putExtra("product",product.get(position));
-                        i.putExtra("position",position);
-                        i.putExtra("productList", (Serializable) product);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        ctx.startActivity(i);
-
-                    }
-                });
-                movieVH.add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Toast.makeText(ctx,"DGSGDFSDFF",Toast.LENGTH_SHORT).show();
-                        String seller = ctx.getResources().getString(R.string.Rupees);
-                        //String offer = ctx.getResources().getString(R.string.seventyrupees);
-
-                        if(global.productIDS.contains(product.get(position).getProduct_id()))
-                        {
-
-                            for(int i=0;i<global.cartValues.size();i++)
-                            {
-                                if(global.cartValues.get(i).getProduct_id().equalsIgnoreCase(product.get(position).getProduct_id()))
-                                {
-                                    Product p=global.cartValues.get(i);
-                                    p.setQuantity(p.getQuantity()+1);
-                                }
-
-
-                            }
-                            //   Toast.makeText(ctx,"Already added in the cart", Toast.LENGTH_SHORT).show();
-
-                        }else
-                        {
-                            Product products=new Product();
-                            products.setProduct_id(product.get(position).getProduct_id());
-                            products.setProductimage(product.get(position).getProductimage());
-                            products.setSellerprice(product.get(position).getSellerprice());
-                            products.setProductdes(product.get(position).getProductdes());
-                            products.setOfferprice(product.get(position).getOfferprice());
-                            products.setProductname(product.get(position).getProductname());
-                            products.setTotalprice(product.get(position).getOfferprice());
-                            products.setQuantity(1);
-                            global.productIDS.add(product.get(position).getProduct_id());
-                            global.cartValues.add(products);
-                            count=global.cartValues.size();
-                            String value= String.valueOf(count);
-                            Log.i("Count","Count"+ product.get(position).getProductname());
-                            global.BadgeCount=value;
-
-                   /* MainActivity.setBadgeCount(ctx, MainActivity.icon,value);
-                    global.BadgeCount=value;
-                   */ Toast.makeText(ctx,product.get(position).getProductname()+" "+"Added in the cart", Toast.LENGTH_SHORT).show();
-                            // notifyDataSetChanged();
-
-                            MainActivity.cartcount.setVisibility(View.VISIBLE);
-                            AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx,R.animator.flip);
-                            set.setTarget(MainActivity.cartcount);
-                            MainActivity.cartcount.setText(global.BadgeCount);
-                            set.start();
-
-
-                        }
-
-
-
-
-
-                    }
-                });
-
-                break;
-            case LOADING:
-//                Do nothing
-                break;
-        }
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return product == null ? 0 : product.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return (position == product.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
-    }
-
-    /*
-   Helpers
-   _________________________________________________________________________________________________
-    */
-
-    public void add(Product mc) {
-        product.add(mc);
-        notifyItemInserted(product.size() - 1);
-    }
-
-    public void addAll(List<Product> mcList) {
-        for (Product mc : mcList) {
-            add(mc);
-        }
-    }
-
-    public void remove(Product city) {
-        int position = product.indexOf(city);
-        if (position > -1) {
-            product.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
-
-
-
-    public boolean isEmpty() {
-        return getItemCount() == 0;
-    }
-
-
-    public void addLoadingFooter() {
-        isLoadingAdded = true;
-        add(new Product());
-    }
-
-    public void removeLoadingFooter() {
-        isLoadingAdded = false;
-
-        int position = product.size() - 1;
-        Product item = getItem(position);
-
-        if (item != null) {
-            product.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
-
-    public Product getItem(int position) {
-        return product.get(position);
-    }
-
-
-   /*
-   View Holders
-   _________________________________________________________________________________________________
-    */
-
-    /**
-     * Main list's content ViewHolder
-     */
     protected class MovieVH extends RecyclerView.ViewHolder {
         public TextView offerprice,productname,sellerprice,outofstock;
         public ImageView image;
@@ -348,15 +273,23 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             productname= (TextView) view.findViewById(R.id.product);
             outofstock= (TextView) view.findViewById(R.id.outofstock);
         }
+
+
+
     }
 
+    public void setFilter(List<Product> countryModels){
+        product = new ArrayList<>();
+        product.addAll(countryModels);
+        notifyDataSetChanged();
 
-    protected class LoadingVH extends RecyclerView.ViewHolder {
-
-        public LoadingVH(View itemView) {
-            super(itemView);
-        }
     }
-
 
 }
+
+
+
+
+
+
+
