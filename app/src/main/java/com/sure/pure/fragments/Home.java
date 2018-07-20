@@ -1,6 +1,7 @@
 package com.sure.pure.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,9 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.sure.pure.CartPage;
 import com.sure.pure.R;
 import com.sure.pure.adapter.PaginationAdapter;
-import com.sure.pure.adapter.ProductListAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
 import com.sure.pure.retrofit.APIInterface;
@@ -51,11 +52,11 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     public static Activity a;
     static GlobalClass global;
     static String title;
-    public static String item = "A-Z";
+    public static String item = "Price High-Low";
     EditText search;
     ImageView list_grid;
     Typeface fonts, bold;
-    PaginationAdapter adapter;
+    public PaginationAdapter adapter;
     LinearLayoutManager linearLayoutManager;
     ProgressBar progressBar;
 
@@ -105,7 +106,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         aboutus.setTypeface(bold);
 
         a = getActivity();
-        global.listmodel = "list";
+        global.listmodel = "grid";
 
         productList = new ArrayList<>();
 
@@ -146,9 +147,10 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         addTextListener();
 
 
-        adapter=new PaginationAdapter(getActivity(),productList);
-        linearLayout();
+        adapter=new PaginationAdapter(getActivity(),productList,item);
+        gridLayout();
         if (categoryValue != null) {
+            currentPage=0;
             getSelectCategory(categoryValue);
 
         } else {
@@ -207,7 +209,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             global.listmodel = list;
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(linearLayoutManager);
-            adapter=new PaginationAdapter(getActivity(),productList);
+            adapter=new PaginationAdapter(getActivity(),productList,item);
             recyclerView.setAdapter(adapter);
 
 
@@ -229,7 +231,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             GridLayoutManager linearLayoutManager = new GridLayoutManager(getActivity(), 2);
             //linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(linearLayoutManager);
-            adapter=new PaginationAdapter(getActivity(),productList);
+            adapter=new PaginationAdapter(getActivity(),productList,item);
             recyclerView.setAdapter(adapter);
 
 
@@ -297,13 +299,14 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
                     String list = "grid";
 
-                    productList.addAll(filteredList);
-                    adapter.notifyDataSetChanged();
+                   // productList=new ArrayList<>();
+                    //productList.addAll(filteredList);
+                    adapter=new PaginationAdapter(getActivity(),filteredList,item);
+                    recyclerView.setAdapter(adapter);
                 } else {
                     String list = "list";
-
-                    productList.addAll(filteredList);
-                    adapter.notifyDataSetChanged();
+                    adapter=new PaginationAdapter(getActivity(),filteredList,item);
+                    recyclerView.setAdapter(adapter);
 
                 }
             }
@@ -318,7 +321,12 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
 
     public void getSelectCategory(String categoryname) {
-
+        // Set up progress before call
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
+        // show it
+        dialog.show();
 
         //Creating a retrofit object
         Retrofit retrofit = new Retrofit.Builder()
@@ -338,14 +346,26 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             @Override
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
 
-                productList = new ArrayList<Product>();
+                productList=new ArrayList<>();
                 productList.addAll(response.body());
-                adapter.notifyDataSetChanged();
+                adapter=new PaginationAdapter(getActivity(),productList,item);
+                linearLayout();
+                recyclerView.setAdapter(adapter);
 
+                currentPage = currentPage + 1;
+
+                dialog.dismiss();
+                /*recyclerView.removeOnScrollListener(new EndlessRecyclerOnScrollListener() {
+                    @Override
+                    public void onLoadMore() {
+
+                    }
+                });*/
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                dialog.dismiss();
             }
         });
 
@@ -353,6 +373,12 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
 
     private void load() {
+        // Set up progress before call
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
+        // show it
+        dialog.show();
         //Creating a retrofit object
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIInterface.BASE_URL)
@@ -380,8 +406,10 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
                     currentPage = currentPage + 1;
 
+                    dialog.dismiss();
 
                 } else {
+                    dialog.dismiss();
                     Log.e(" Response Error ", " Response Error " + String.valueOf(response.code()));
                 }
 
@@ -391,6 +419,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                dialog.dismiss();
                 Log.e("Response Error ", " Response Error " + t.getMessage());
             }
         });
@@ -411,4 +440,5 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         }, 1500);
 
     }
+
 }

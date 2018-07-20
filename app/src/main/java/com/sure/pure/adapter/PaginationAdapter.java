@@ -31,29 +31,28 @@ import java.util.List;
 public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-
-
     List<Product> product;
     Context ctx;
-    String sort="";
-    Typeface fonts,bold;
-    int count=0;
+    String sort = "";
+    Typeface fonts, bold;
+    int count = 0;
     ImageLoader loader;
     GlobalClass global;
 
 
     /*
-    * isLoading - to set the remote loading and complete status to fix back to back load more call
-    * isMoreDataAvailable - to set whether more data from server available or not.
-    * It will prevent useless load more request even after all the server data loaded
-    * */
+     * isLoading - to set the remote loading and complete status to fix back to back load more call
+     * isMoreDataAvailable - to set whether more data from server available or not.
+     * It will prevent useless load more request even after all the server data loaded
+     * */
 
 
-    public PaginationAdapter(Context context, List<Product> movies) {
+    public PaginationAdapter(Context context, List<Product> movies,String sort) {
         this.ctx = context;
         this.product = movies;
-        loader=ImageLoader.getInstance();
-        global=(GlobalClass)ctx.getApplicationContext();
+        loader = ImageLoader.getInstance();
+        global = (GlobalClass) ctx.getApplicationContext();
+        this.sort=sort;
     }
 
     @Override
@@ -63,7 +62,6 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
 
-
         viewHolder = getViewHolder(parent, inflater);
 
 
@@ -71,8 +69,8 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder recyclerHolder,final int position) {
-        MovieVH holder=(MovieVH)recyclerHolder;
+    public void onBindViewHolder(RecyclerView.ViewHolder recyclerHolder, final int position) {
+        MovieVH holder = (MovieVH) recyclerHolder;
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.cart_image) // resource or drawable
                 .showImageForEmptyUri(R.drawable.cart_image) // resource or drawable
@@ -84,46 +82,29 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .build();
 
         //Product product = moviesList[position];
+        if (sort.equalsIgnoreCase("Quantity Low-High")) {
+            Collections.sort(product, new Product.lowToHighQuantity());
+        } else if (sort.equalsIgnoreCase("Quantity High-Low")) {
 
-        /*if(sort.equalsIgnoreCase("Quantity High-Low"))
-        {
+            Collections.sort(product, Collections.reverseOrder(new Product.lowToHighQuantity()));
 
-
-
-//            Collections.sort(product, new Comparator<Product>() {
-//                @Override
-//                public int compare(Product lhs, Product rhs) {
-//                    return lhs.getCategory().compareTo(rhs.getCategory());
-//                }
-//            });
-
-            Collections.sort(product,new Product.OrderByQuantityHigh());
-
-
-        }else if(sort.equalsIgnoreCase("Price Low-High"))
-        {
-            Collections.sort(product,new Product.OrderByAmountdouble());
-        }else if(sort.equalsIgnoreCase("Quantity Low-High"))
-        {
-            Collections.sort(product, Collections.reverseOrder(new Product.OrderByQuantityHigh()));
-        }else if(sort.equalsIgnoreCase("Price High-Low"))
-        {
-            Collections.sort(product, Collections.reverseOrder(new Product.OrderByAmountdouble()));
-        }*/
+        } else if (sort.equalsIgnoreCase("Price Low-High")) {
+            Collections.sort(product, new Product.lowToHighPrice());
+        } else if (sort.equalsIgnoreCase("Price High-Low")) {
+            Collections.sort(product, Collections.reverseOrder(new Product.lowToHighPrice()));
+        }
         String seller = ctx.getResources().getString(R.string.Rupees);
         //String offer = ctx.getResources().getString(R.string.seventyrupees);
 
 
         holder.sellerprice.setText(seller + product.get(position).getSellerprice());
         //holder.offerprice.setText(seller + product.get(position).getOfferprice());
-        if(product.get(position).getSellerprice().equals("0"))
-        {
+        if (product.get(position).getSellerprice().equals("0")) {
             holder.outofstock.setText("Out of Stock");
             holder.sellerprice.setVisibility(View.GONE);
             holder.add.setVisibility(View.GONE);
 
-        }else
-        {
+        } else {
             holder.outofstock.setVisibility(View.GONE);
 
         }
@@ -140,27 +121,25 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         //holder.image.setImageResource(product.get(position).getProductimage());
         // holder.image.setImageResource(product.get(position).getProductimage());
 
-        try
-        {
-            loader.displayImage("http://www.boolfox.com/rest"+product.get(position).getProductimage(),holder.image,options);
+        try {
+            loader.displayImage("http://www.boolfox.com/rest" + product.get(position).getProductimage(), holder.image, options);
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(ctx,ProductDetailPage.class);
+                Intent i = new Intent(ctx, ProductDetailPage.class);
               /*  i.putExtra("name",product.get(position).getProductname());
                 i.putExtra("id",product.get(position).getProduct_id());
                 i.putExtra("sellerprice",product.get(position).getSellerprice());
                 i.putExtra("offerprice",product.get(position).getOfferprice());
                 i.putExtra("description",product.get(position).getProductdes());
                 i.putExtra("image",product.get(position).getProductimage());*/
-                i.putExtra("product",product.get(position));
-                i.putExtra("position",position);
+                i.putExtra("product", product.get(position));
+                i.putExtra("position", position);
                 i.putExtra("productList", (Serializable) product);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -175,24 +154,20 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 String seller = ctx.getResources().getString(R.string.Rupees);
                 //String offer = ctx.getResources().getString(R.string.seventyrupees);
 
-                if(global.productIDS.contains(product.get(position).getProduct_id()))
-                {
+                if (global.productIDS.contains(product.get(position).getProduct_id())) {
 
-                    for(int i=0;i<global.cartValues.size();i++)
-                    {
-                        if(global.cartValues.get(i).getProduct_id().equalsIgnoreCase(product.get(position).getProduct_id()))
-                        {
-                            Product p=global.cartValues.get(i);
-                            p.setQuantity(p.getQuantity()+1);
+                    for (int i = 0; i < global.cartValues.size(); i++) {
+                        if (global.cartValues.get(i).getProduct_id().equalsIgnoreCase(product.get(position).getProduct_id())) {
+                            Product p = global.cartValues.get(i);
+                            p.setQuantity(p.getQuantity() + 1);
                         }
 
 
                     }
                     //   Toast.makeText(ctx,"Already added in the cart", Toast.LENGTH_SHORT).show();
 
-                }else
-                {
-                    Product products=new Product();
+                } else {
+                    Product products = new Product();
                     products.setProduct_id(product.get(position).getProduct_id());
                     products.setProductimage(product.get(position).getProductimage());
                     products.setSellerprice(product.get(position).getSellerprice());
@@ -203,27 +178,25 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     products.setQuantity(1);
                     global.productIDS.add(product.get(position).getProduct_id());
                     global.cartValues.add(products);
-                    count=global.cartValues.size();
-                    String value= String.valueOf(count);
-                    Log.i("Count","Count"+ product.get(position).getProductname());
-                    global.BadgeCount=value;
+                    count = global.cartValues.size();
+                    String value = String.valueOf(count);
+                    Log.i("Count", "Count" + product.get(position).getProductname());
+                    global.BadgeCount = value;
 
                    /* MainActivity.setBadgeCount(ctx, MainActivity.icon,value);
                     global.BadgeCount=value;
-                   */ Toast.makeText(ctx,product.get(position).getProductname()+" "+"Added in the cart", Toast.LENGTH_SHORT).show();
+                   */
+                    Toast.makeText(ctx, product.get(position).getProductname() + " " + "Added in the cart", Toast.LENGTH_SHORT).show();
                     // notifyDataSetChanged();
 
                     MainActivity.cartcount.setVisibility(View.VISIBLE);
-                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx,R.animator.flip);
+                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx, R.animator.flip);
                     set.setTarget(MainActivity.cartcount);
                     MainActivity.cartcount.setText(global.BadgeCount);
                     set.start();
 
 
                 }
-
-
-
 
 
             }
@@ -239,18 +212,16 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
-        RecyclerView.ViewHolder viewHolder=null;;
+        RecyclerView.ViewHolder viewHolder = null;
+        ;
 
 
-
-        View itemView=null;
-        if(global.listmodel.equalsIgnoreCase("list"))
-        {
+        View itemView = null;
+        if (global.listmodel.equalsIgnoreCase("list")) {
             itemView = inflater.inflate(R.layout.product_list_item, parent, false);
             viewHolder = new MovieVH(itemView);
 
-        }else if(global.listmodel.equalsIgnoreCase("grid"))
-        {
+        } else if (global.listmodel.equalsIgnoreCase("grid")) {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.grid, parent, false);
             viewHolder = new MovieVH(itemView);
@@ -258,8 +229,21 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         return viewHolder;
     }
+
+    public void setFilter(List<Product> countryModels) {
+        product = new ArrayList<>();
+        product.addAll(countryModels);
+        notifyDataSetChanged();
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     protected class MovieVH extends RecyclerView.ViewHolder {
-        public TextView offerprice,productname,sellerprice,outofstock;
+        public TextView offerprice, productname, sellerprice, outofstock;
         public ImageView image;
         public TextView add;
 
@@ -269,22 +253,13 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             sellerprice = (TextView) view.findViewById(R.id.sellerprice);
             offerprice = (TextView) view.findViewById(R.id.offerprice);
             image = (ImageView) view.findViewById(R.id.image);
-            add=(TextView)view.findViewById(R.id.addtocart);
-            productname= (TextView) view.findViewById(R.id.product);
-            outofstock= (TextView) view.findViewById(R.id.outofstock);
+            add = (TextView) view.findViewById(R.id.addtocart);
+            productname = (TextView) view.findViewById(R.id.product);
+            outofstock = (TextView) view.findViewById(R.id.outofstock);
         }
 
 
-
     }
-
-    public void setFilter(List<Product> countryModels){
-        product = new ArrayList<>();
-        product.addAll(countryModels);
-        notifyDataSetChanged();
-
-    }
-
 }
 
 

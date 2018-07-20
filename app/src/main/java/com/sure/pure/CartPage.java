@@ -1,5 +1,6 @@
 package com.sure.pure;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -140,9 +142,13 @@ public class CartPage extends AppCompatActivity {
         sub.setTypeface(bold);
         placeorder.setTypeface(bold);
         back.setTypeface(bold);
-        sub.setText(String.format ("%.2f",adapter.totalvalue()));
-        total.setText(String.format ("%.2f",getTotal()));
-        gstamount.setText(String.format("%.2f",getgst()));
+        double roundoffsubtotal=Math.round(adapter.totalvalue());
+        sub.setText(String.format ("%.2f",roundoffsubtotal));
+
+        double roundofftotal=Math.round(getTotal());
+        total.setText(String.format ("%.2f",roundofftotal));
+        double roundoffgstamount=Math.round(getgst());
+        gstamount.setText(String.format("%.2f",roundoffgstamount));
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,8 +167,8 @@ public class CartPage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
+             /*   Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);*/
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
                 finish();
             }
@@ -217,6 +223,13 @@ public class CartPage extends AppCompatActivity {
     }
 
     public void addToOrders() {
+
+        // Set up progress before call
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(CartPage.this);
+        dialog.setMessage("Loading...");
+        // show it
+        dialog.show();
         //Creating a retrofit object
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIInterface.BASE_URL)
@@ -229,54 +242,48 @@ public class CartPage extends AppCompatActivity {
         JSONObject object;
         global.jsonArraydetails=new JSONArray();
 
+        ArrayList<ProductData> productData=new ArrayList<>();
         for(int i=0;i<global.cartValues.size();i++)
         {
-            object=new JSONObject();
-            try{
-                object.put("product_id",global.cartValues.get(i).getProduct_id());
-                object.put("product_price",global.cartValues.get(i).getSellerprice());
-                object.put("product_quantity",global.cartValues.get(i).getQuantity());
-                object.put("product_total",global.cartValues.get(i).getTotalprice());
-                object.put("product_name",global.cartValues.get(i).getProductname());
-                global.jsonArraydetails.put(object);
 
-            }catch (Exception e)
-            {
-
-            }
-        }
-
-        JSONObject arr=new JSONObject();
-        try {
-            arr.put("checkout",global.jsonArraydetails);
-            arr.put("emailid","akshav00@gmail.com");
-        }catch (Exception e)
-        {
+            productData.add(new ProductData(global.cartValues.get(i).getProduct_id(),global.cartValues.get(i).getSellerprice(),global.cartValues.get(i).getQuantity(),global.cartValues.get(i).getTotalprice(),global.cartValues.get(i).getProductname()));
 
         }
+        ProductList productList=new ProductList();
+        productList.setEmailid("akshav00@gmail.com");
+        productList.setProductData(productData);
 
-        Gson gson=new Gson();
-        ProductList people = null;
-        try {
-             people= gson.fromJson(arr.getJSONObject("checkout").toString(), ProductList.class);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d("addToOrders", "addToOrders: "+arr.toString());
-        Log.d("addToOrders", "addToOrders: "+arr.toString());
+
+
+
+
+        Gson gson = new Gson();
+        String product=gson.toJson(productList);
+        ProductList data = gson.fromJson(product, ProductList.class);
+
+
+
+        Log.d("addToOrders", "addToOrders: "+data);
+        Log.d("addToOrders", "addToOrders: "+data);
 
         //now making the call object
         //Here we are using the api method that we created inside the api interface
 
-        Call<String> call = api.checkout(people);
-        call.enqueue(new Callback<String>() {
+        Call<CheckoutResponse> call = api.checkout(data);
+        call.enqueue(new Callback<CheckoutResponse>() {
 
 
             @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+            public void onResponse(Call<CheckoutResponse> call, retrofit2.Response<CheckoutResponse> response) {
 
-
-                String p=response.body();
+                dialog.dismiss();
+                CheckoutResponse result=response.body();
+                if(result.getStatus().equals("200"))
+                {
+                    Intent i=new Intent(CartPage.this,Checkout.class);
+                    startActivity(i);
+                    finish();
+                }
 
 
 
@@ -287,7 +294,8 @@ public class CartPage extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

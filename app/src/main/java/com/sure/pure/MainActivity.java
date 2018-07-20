@@ -49,10 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.google.android.gms.common.api.Api;
 import com.sure.pure.adapter.DrawerAdapter;
 import com.sure.pure.common.CustomTypeface;
@@ -142,7 +139,7 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(getApplicationContext(), CartPage.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
+                //finish();
             }
         });
 

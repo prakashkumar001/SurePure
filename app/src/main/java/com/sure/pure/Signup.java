@@ -27,13 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.common.User;
 import com.sure.pure.db.DatabaseHelper;
@@ -258,7 +252,7 @@ public class Signup extends RuntimePermissionActivity {
 
     }
 
-    public void signup() {
+   /* public void signup() {
 
         String tag_json_obj = "json_obj_req";
 
@@ -312,7 +306,7 @@ public class Signup extends RuntimePermissionActivity {
         // Adding request to request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
-    }
+    }*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

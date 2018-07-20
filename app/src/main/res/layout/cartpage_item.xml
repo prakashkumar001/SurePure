@@ -114,23 +114,6 @@
                         android:text="Qty :"/>
 
                         <ImageView
-                            android:id="@+id/add"
-                            android:layout_width="0dp"
-                            android:layout_weight=".4"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_add_black_24dp"
-                            />
-                    <TextView
-                        android:id="@+id/quantity"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
-                        android:gravity="center"
-                        android:textSize="16dp"
-                        android:layout_height="20dp"
-                        android:text="1"/>
-
-                        <ImageView
                             android:id="@+id/minus"
                             android:layout_width="0dp"
                             android:layout_weight=".4"
@@ -139,6 +122,24 @@
                             android:src="@drawable/ic_remove_black_24dp"
 
                             />
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="0dp"
+                        android:layout_weight=".3"
+                        android:gravity="center"
+                        android:textSize="16dp"
+                        android:layout_gravity="center"
+                        android:layout_height="20dp"
+                        android:text="1"/>
+                        <ImageView
+                            android:id="@+id/add"
+                            android:layout_width="0dp"
+                            android:layout_weight=".4"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_add_black_24dp"
+                            />
+
 
                     </LinearLayout>
 

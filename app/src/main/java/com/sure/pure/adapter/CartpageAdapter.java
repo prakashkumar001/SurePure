@@ -28,7 +28,7 @@ import com.sure.pure.ProductDetailPage;
 import com.sure.pure.R;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
-import com.sure.pure.payment.PayuMoneyActivity;
+
 
 import org.json.JSONArray;
 
@@ -131,7 +131,6 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         // holder.sellerprice.setText(items.get(position).getSellerprice());
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        Collections.sort(global.cartValues, Collections.reverseOrder(new Product.OrderByAmountdouble()));
         String seller = ctx.getResources().getString(R.string.Rupees);
         String price = global.cartValues.get(position).getSellerprice();
 

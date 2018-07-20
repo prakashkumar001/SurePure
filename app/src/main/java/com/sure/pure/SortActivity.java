@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.sure.pure.adapter.PaginationAdapter;
 import com.sure.pure.adapter.SortAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.fragments.Home;
@@ -48,8 +49,8 @@ public class SortActivity extends AppCompatActivity {
 
             }
         });*/
-        data.add("Quantity High-Low");
         data.add("Quantity Low-High");
+        data.add("Quantity High-Low");
         data.add("Price Low-High");
         data.add("Price High-Low");
         list=(ListView)findViewById(R.id.list);
@@ -75,6 +76,7 @@ public class SortActivity extends AppCompatActivity {
                         }else
                         {
                             home.gridLayout();
+
                         }
                     finish();
 

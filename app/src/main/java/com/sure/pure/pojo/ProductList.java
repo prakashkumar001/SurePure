@@ -1,9 +1,12 @@
 package com.sure.pure.pojo;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class ProductList
 {
+  @SerializedName("checkout")
   private ArrayList<ProductData> productData;
 
   public ArrayList<ProductData> getProductData() { return this.productData; }

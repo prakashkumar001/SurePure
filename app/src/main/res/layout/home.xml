@@ -4,12 +4,7 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
   >
-    <android.support.v4.widget.NestedScrollView
-        android:fillViewport="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
 
-        >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -95,6 +90,5 @@
             layout="@layout/footer"/>
         </LinearLayout>
     </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
 

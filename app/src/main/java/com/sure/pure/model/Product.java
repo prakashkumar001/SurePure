@@ -158,7 +158,7 @@ public class Product implements Serializable{
     }
 
 
-    public static class OrderByAmountdouble implements Comparator<Product> {
+    public static class lowToHighPrice implements Comparator<Product> {
 
         @Override
         public int compare(Product p1, Product p2) {
@@ -169,7 +169,7 @@ public class Product implements Serializable{
     }
 
 
-    public static class OrderByQuantityHigh implements Comparator<Product> {
+    public static class lowToHighQuantity implements Comparator<Product> {
 
         @Override
         public int compare(Product p1, Product p2) {

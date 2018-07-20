@@ -30,6 +30,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.utils.TouchImageView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -78,7 +79,7 @@ public class ProductDetailPage extends AppCompatActivity {
         quantity=(TextView)findViewById(R.id.quantity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         viewPager=(ViewPager)findViewById(R.id.viewpager);
-        stock=(TextView)findViewById(R.id.stock);
+        stock=(TextView)findViewById(R.id.stockquants);
         productdescription=(TextView)findViewById(R.id.description);
         image=(ImageView)findViewById(R.id.image);
         plus=(ImageView)findViewById(R.id.plus);
@@ -254,14 +255,23 @@ public class ProductDetailPage extends AppCompatActivity {
                     add.setVisibility(View.VISIBLE);
 
                 }
+
+                if(value<Integer.parseInt(p.getStock()))
+                {
                     value=value+1;
                     quantity.setText(String.valueOf(value));
 
-                   b=value* Double.parseDouble(p.getSellerprice());
+                    b=value* Double.parseDouble(p.getSellerprice());
                     //total.setText(String.valueOf(b));
-                tv.setText(String.format("%.2f",b));
+                    tv.setText(String.format("%.2f",b));
 
-                tv.setTypeface(fonts);
+                    tv.setTypeface(fonts);
+
+                }else
+                {
+                    Toast.makeText(ProductDetailPage.this,"Stock Not available",Toast.LENGTH_SHORT).show();
+
+                }
 
 
 
@@ -442,10 +452,10 @@ public class ProductDetailPage extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent i=new Intent(ProductDetailPage.this,MainActivity.class);
+       /* Intent i=new Intent(ProductDetailPage.this,MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
-        ActivityCompat.finishAffinity(ProductDetailPage.this);
+        ActivityCompat.finishAffinity(ProductDetailPage.this);*/
         finish();
     }
 
@@ -462,7 +472,7 @@ public class ProductDetailPage extends AppCompatActivity {
 
             LayoutInflater inflater = LayoutInflater.from(mContext);
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
-            ImageView imageView=(ImageView)layout.findViewById(R.id.image);
+            TouchImageView imageView=(TouchImageView)layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
             loader.displayImage("http://www.boolfox.com/rest"+drawables[position],imageView);
             collection.addView(layout);
