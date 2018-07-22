@@ -349,7 +349,15 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                 productList=new ArrayList<>();
                 productList.addAll(response.body());
                 adapter=new PaginationAdapter(getActivity(),productList,item);
-                linearLayout();
+
+                if(global.listmodel.equalsIgnoreCase("list"))
+                {
+                    linearLayout();
+                }else
+                {
+                    gridLayout();
+                }
+
                 recyclerView.setAdapter(adapter);
 
                 currentPage = currentPage + 1;

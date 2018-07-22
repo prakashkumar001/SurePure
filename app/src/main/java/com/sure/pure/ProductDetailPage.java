@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -26,6 +27,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import com.sure.pure.common.GlobalClass;
@@ -40,72 +45,74 @@ import java.util.List;
  */
 
 public class ProductDetailPage extends AppCompatActivity {
-   // String name,sellerprice,offerprice,description,product_id;
+    // String name,sellerprice,offerprice,description,product_id;
     String images;
-    TextView productname,price,productdescription,quantity,stock;
+    TextView productname, price, productdescription, quantity, stock;
     ViewPager viewPager;
-    ImageView image,plus,minus;
+    ImageView image, plus, minus;
     Button add;
-   // Toolbar toolbar;
+    // Toolbar toolbar;
     public static LayerDrawable icon;
     public static MenuItem itemCart;
     GlobalClass global;
     ImageLoader loader;
-    int count=0;
+    int count = 0;
     int value;
     double b;
     TextView tv;
     Toolbar toolbar;
-    public static TextView title,cartcount;
+    public static TextView title, cartcount;
     ImageView carticon;
     Product p;
-    Typeface fonts,bold;
-    Button next,previous;
+    Typeface fonts, bold;
+    Button next, previous;
     List<Product> productList;
-    int position=0;
+    int position = 0;
     private LinearLayout pager_indicator;
     private int dotsCount;
     private ImageView[] dots;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_details_page);
-        next=(Button) findViewById(R.id.next);
-        previous=(Button)findViewById(R.id.previous);
-        pager_indicator = (LinearLayout)findViewById(R.id.viewPagerCountDots);
+        next = (Button) findViewById(R.id.next);
+        previous = (Button) findViewById(R.id.previous);
+        pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
 
-        productname=(TextView)findViewById(R.id.productname);
-        price=(TextView)findViewById(R.id.price);
-        quantity=(TextView)findViewById(R.id.quantity);
+        productname = (TextView) findViewById(R.id.productname);
+        price = (TextView) findViewById(R.id.price);
+        quantity = (TextView) findViewById(R.id.quantity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        viewPager=(ViewPager)findViewById(R.id.viewpager);
-        stock=(TextView)findViewById(R.id.stockquants);
-        productdescription=(TextView)findViewById(R.id.description);
-        image=(ImageView)findViewById(R.id.image);
-        plus=(ImageView)findViewById(R.id.plus);
-        minus=(ImageView)findViewById(R.id.minus);
-        add=(Button)findViewById(R.id.cart);
-        global=(GlobalClass)getApplicationContext();
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        stock = (TextView) findViewById(R.id.stockquants);
+        productdescription = (TextView) findViewById(R.id.description);
+        image = (ImageView) findViewById(R.id.image);
+        plus = (ImageView) findViewById(R.id.plus);
+        minus = (ImageView) findViewById(R.id.minus);
+        add = (Button) findViewById(R.id.cart);
+        global = (GlobalClass) getApplicationContext();
 
-        title=(TextView)findViewById(R.id.title);
-        cartcount=(TextView)findViewById(R.id.cartcount);
-        carticon=(ImageView)findViewById(R.id.carticon);
+        title = (TextView) findViewById(R.id.title);
+        cartcount = (TextView) findViewById(R.id.cartcount);
+        carticon = (ImageView) findViewById(R.id.carticon);
         fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
-        loader=ImageLoader.getInstance();
-
-
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+        loader = ImageLoader.getInstance();
 
 
         add.setVisibility(View.INVISIBLE);
 
         add.setTypeface(fonts);
 
-        if(global.cartValues.size()>0)
-        {
+        if (global.cartValues.size() > 0) {
             cartcount.setVisibility(View.VISIBLE);
             cartcount.setText(String.valueOf(global.cartValues.size()));
-        }else {
+        } else {
             cartcount.setVisibility(View.GONE);
         }
 
@@ -114,7 +121,7 @@ public class ProductDetailPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
         title.setText("HTC Furniture");
         title.setTypeface(bold);
-       // getSupportActionBar().setIcon(R.drawable.surelogo);
+        // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -143,39 +150,35 @@ public class ProductDetailPage extends AppCompatActivity {
                             .replace(R.id.container, comedy, comedy.getClass().getSimpleName()).commit();
 */
 
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
             }
         });
-        try{
-            Intent i=getIntent();
+        try {
+            Intent i = getIntent();
           /*  name=i.getStringExtra("name");
             sellerprice=i.getStringExtra("sellerprice");
             offerprice=i.getStringExtra("offerprice");
             description=i.getStringExtra("description");
             images=i.getStringExtra("image");
             product_id=i.getStringExtra("id");*/
-             p=(Product)i.getSerializableExtra("product");
-             position=i.getIntExtra("position",1);
-             productList=(((List<Product>) getIntent().getExtras().getSerializable("productList")));
-           // image.setImageResource(images);
+            p = (Product) i.getSerializableExtra("product");
+            position = i.getIntExtra("position", 1);
+            productList = (((List<Product>) getIntent().getExtras().getSerializable("productList")));
+            // image.setImageResource(images);
 
-            if(position==0)
-            {
+            if (position == 0) {
                 previous.setVisibility(View.INVISIBLE);
-            }else
-            {
+            } else {
                 previous.setVisibility(View.VISIBLE);
 
             }
 
-            if(position==productList.size()-1)
-            {
+            if (position == productList.size() - 1) {
                 next.setVisibility(View.INVISIBLE);
-            }else
-            {
+            } else {
                 next.setVisibility(View.VISIBLE);
 
             }
@@ -190,13 +193,9 @@ public class ProductDetailPage extends AppCompatActivity {
             productdescription.setTypeface(fonts);
 
 
-
-            if(global.productIDS.contains(p.getProduct_id()))
-            {
-                for(int ii=0;ii<global.cartValues.size();ii++)
-                {
-                    if(global.cartValues.get(ii).getProduct_id().equalsIgnoreCase(p.getProduct_id()))
-                    {
+            if (global.productIDS.contains(p.getProduct_id())) {
+                for (int ii = 0; ii < global.cartValues.size(); ii++) {
+                    if (global.cartValues.get(ii).getProduct_id().equalsIgnoreCase(p.getProduct_id())) {
 
                         quantity.setText(String.valueOf(global.cartValues.get(ii).getQuantity()));
                         add.setVisibility(View.VISIBLE);
@@ -208,8 +207,7 @@ public class ProductDetailPage extends AppCompatActivity {
             }
             // productdescription.setText(description);
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
@@ -217,8 +215,8 @@ public class ProductDetailPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ProductDetailPage.class);
-                i.putExtra("product",productList.get(position+1));
-                i.putExtra("position",position+1);
+                i.putExtra("product", productList.get(position + 1));
+                i.putExtra("position", position + 1);
                 i.putExtra("productList", (Serializable) productList);
 
                 startActivity(i);
@@ -232,8 +230,8 @@ public class ProductDetailPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ProductDetailPage.class);
-                i.putExtra("product",productList.get(position-1));
-                i.putExtra("position",position-1);
+                i.putExtra("product", productList.get(position - 1));
+                i.putExtra("position", position - 1);
                 i.putExtra("productList", (Serializable) productList);
 
                 startActivity(i);
@@ -248,31 +246,27 @@ public class ProductDetailPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               // global.cartValues.get(position).setQuantity(value+1);
-                value= Integer.parseInt(quantity.getText().toString());
-                if(!p.getSellerprice().equals("0"))
-                {
+                // global.cartValues.get(position).setQuantity(value+1);
+                value = Integer.parseInt(quantity.getText().toString());
+                if (!p.getSellerprice().equals("0")) {
                     add.setVisibility(View.VISIBLE);
 
                 }
 
-                if(value<Integer.parseInt(p.getStock()))
-                {
-                    value=value+1;
+                if (value < Integer.parseInt(p.getStock())) {
+                    value = value + 1;
                     quantity.setText(String.valueOf(value));
 
-                    b=value* Double.parseDouble(p.getSellerprice());
+                    b = value * Double.parseDouble(p.getSellerprice());
                     //total.setText(String.valueOf(b));
-                    tv.setText(String.format("%.2f",b));
+                    tv.setText(String.format("%.2f", b));
 
                     tv.setTypeface(fonts);
 
-                }else
-                {
-                    Toast.makeText(ProductDetailPage.this,"Stock Not available",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProductDetailPage.this, "Stock Not available", Toast.LENGTH_SHORT).show();
 
                 }
-
 
 
             }
@@ -281,35 +275,30 @@ public class ProductDetailPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // global.cartValues.get(position).setQuantity(value+1);
-                value= Integer.parseInt(quantity.getText().toString());
-                if(value<=0)
-                {
-                    value=0;
+                value = Integer.parseInt(quantity.getText().toString());
+                if (value <= 0) {
+                    value = 0;
                     add.setVisibility(View.INVISIBLE);
                     quantity.setText(String.valueOf(value));
 
 
-
-
-                     b=value* Double.parseDouble(p.getSellerprice());
-                    tv.setText(String.format("%.2f",b));
+                    b = value * Double.parseDouble(p.getSellerprice());
+                    tv.setText(String.format("%.2f", b));
                     //total.setText(String.valueOf(b));
 
-                }else
-                {
-                    if(!p.getSellerprice().equals("0"))
-                    {
+                } else {
+                    if (!p.getSellerprice().equals("0")) {
                         add.setVisibility(View.VISIBLE);
 
-                    }                    value=value-1;
-                    if(value==0)
-                    {
+                    }
+                    value = value - 1;
+                    if (value == 0) {
                         add.setVisibility(View.INVISIBLE);
                     }
                     quantity.setText(String.valueOf(value));
 
-                     b=value* Double.parseDouble(p.getSellerprice());
-                    tv.setText(String.format("%.2f",b));
+                    b = value * Double.parseDouble(p.getSellerprice());
+                    tv.setText(String.format("%.2f", b));
 
                     //total.setText(String.valueOf(b));
 
@@ -325,57 +314,46 @@ public class ProductDetailPage extends AppCompatActivity {
                 String seller = getApplication().getResources().getString(R.string.Rupees);
                 //String offer = ctx.getResources().getString(R.string.seventyrupees);
 
-                Log.i("ProductID","ProductId"+p.getProduct_id());
-                Log.i("Gloabal","Gloabal"+global.cartValues);
+                Log.i("ProductID", "ProductId" + p.getProduct_id());
+                Log.i("Gloabal", "Gloabal" + global.cartValues);
 
 
+                if (global.productIDS.contains(p.getProduct_id())) {
+                    Toast.makeText(getApplicationContext(), "Product Added in Cart", Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < global.cartValues.size(); i++) {
+                        if (global.cartValues.get(i).getProduct_id().equalsIgnoreCase(p.getProduct_id())) {
+                            global.cartValues.get(i).setQuantity(Integer.parseInt(quantity.getText().toString()));
+
+                        }
+                    }
 
 
-
-                  if(global.productIDS.contains(p.getProduct_id()))
-                  {
-                      Toast.makeText(getApplicationContext(),"Product Added in Cart", Toast.LENGTH_SHORT).show();
-                     for(int i=0;i<global.cartValues.size();i++)
-                     {
-                         if(global.cartValues.get(i).getProduct_id().equalsIgnoreCase(p.getProduct_id()))
-                         {
-                             global.cartValues.get(i).setQuantity(Integer.parseInt(quantity.getText().toString()));
-
-                         }
-                     }
-
-
-                  }else
-                  {
-                      Product products=new Product();
-                      products.setProduct_id(p.getProduct_id());
-                      //products.setProductimage(images);
-                      products.setProductname(p.getProductname());
-                      products.setSellerprice(p.getSellerprice());
-                      products.setOfferprice(p.getOfferprice());
-                      products.setProductimage(p.getProductimage());
-                      products.setQuantity(Integer.parseInt(quantity.getText().toString()));
-                      products.setTotalprice(String.valueOf(b));
-                      global.cartValues.add(products);
-                      global.productIDS.add(p.getProduct_id());
-                      count=global.cartValues.size();
-                      String value= String.valueOf(count);
-                      Log.i("Count","Count"+value);
+                } else {
+                    Product products = new Product();
+                    products.setProduct_id(p.getProduct_id());
+                    //products.setProductimage(images);
+                    products.setProductname(p.getProductname());
+                    products.setSellerprice(p.getSellerprice());
+                    products.setOfferprice(p.getOfferprice());
+                    products.setProductimage(p.getProductimage());
+                    products.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                    products.setTotalprice(String.valueOf(b));
+                    global.cartValues.add(products);
+                    global.productIDS.add(p.getProduct_id());
+                    count = global.cartValues.size();
+                    String value = String.valueOf(count);
+                    Log.i("Count", "Count" + value);
                      /* MainActivity.setBadgeCount(getApplicationContext(),MainActivity.icon,value);
                       global.BadgeCount=value;
                       setBadgeCount(getApplicationContext(),icon,global.BadgeCount);
 */
 
-                      cartcount.setVisibility(View.VISIBLE);
-                      AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ProductDetailPage.this,R.animator.flip);
-                      set.setTarget(cartcount);
-                      cartcount.setText(String.valueOf(global.cartValues.size()));
-                      set.start();
-                  }
-
-
-
-
+                    cartcount.setVisibility(View.VISIBLE);
+                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ProductDetailPage.this, R.animator.flip);
+                    set.setTarget(cartcount);
+                    cartcount.setText(String.valueOf(global.cartValues.size()));
+                    set.start();
+                }
 
 
             }
@@ -406,15 +384,16 @@ public class ProductDetailPage extends AppCompatActivity {
             }
         });
 
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
 
-
-         tv = new TextView(this);
-        tv.setText(String.format("%.2f",b));
+        tv = new TextView(this);
+        tv.setText(String.format("%.2f", b));
         tv.setTextColor(getResources().getColor(android.R.color.white));
         tv.setPadding(5, 0, 5, 0);
         tv.setTypeface(null, Typeface.BOLD);
@@ -459,10 +438,47 @@ public class ProductDetailPage extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("ProductDetailPage Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
+
     public class CustomPagerAdapter extends PagerAdapter {
 
         private Context mContext;
-        String[]   drawables=new String[]{p.getProductimage(),p.getProductimage(),p.getProductimage()};
+        String[] drawables = new String[]{p.getProductimage(), p.getProductimage(), p.getProductimage()};
+
         public CustomPagerAdapter(Context context) {
             mContext = context;
         }
@@ -472,9 +488,18 @@ public class ProductDetailPage extends AppCompatActivity {
 
             LayoutInflater inflater = LayoutInflater.from(mContext);
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
-            TouchImageView imageView=(TouchImageView)layout.findViewById(R.id.image);
+            TouchImageView imageView = (TouchImageView) layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
-            loader.displayImage("http://www.boolfox.com/rest"+drawables[position],imageView);
+            loader.displayImage("http://www.boolfox.com/rest" + drawables[position], imageView);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ProductDetailPage.this, FullImage.class);
+                    i.putExtra("product", p);
+                    startActivity(i);
+                }
+            });
             collection.addView(layout);
             return layout;
         }

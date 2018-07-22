@@ -105,7 +105,8 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.add.setVisibility(View.GONE);
 
         } else {
-            holder.outofstock.setVisibility(View.GONE);
+            holder.outofstock.setText("Stock : "+product.get(position).getStock());
+
 
         }
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
