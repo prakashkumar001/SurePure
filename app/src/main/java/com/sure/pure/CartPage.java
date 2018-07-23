@@ -61,7 +61,7 @@ public class CartPage extends AppCompatActivity {
     Toolbar toolbar;
     LinearLayout footerlay;
     TextView emptytext;
-    ImageView carticon;
+    ImageView carticon,home;
     DatabaseHelper databaseHelper;
     Typeface fonts, bold;
 
@@ -80,6 +80,7 @@ public class CartPage extends AppCompatActivity {
         bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         // getSupportActionBar().setIcon(R.drawable.logo);
+        home=(ImageView)findViewById(R.id.home);
 
         if (global.cartValues.size() > 0) {
 
@@ -170,6 +171,15 @@ public class CartPage extends AppCompatActivity {
              /*   Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);*/
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                finish();
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 finish();
             }
         });

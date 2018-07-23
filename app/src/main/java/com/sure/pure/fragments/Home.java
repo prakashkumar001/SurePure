@@ -59,7 +59,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     public PaginationAdapter adapter;
     LinearLayoutManager linearLayoutManager;
     ProgressBar progressBar;
-
+    ProgressDialog dialog;
 
     private int currentPage = 0;
 
@@ -84,7 +84,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final String categoryValue = this.getArguments().getString("category");
+       // final String categoryValue = this.getArguments().getString("category");
 
 
         // Inflate the layout for this fragment
@@ -121,7 +121,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                 if (global.listmodel.equals("grid")) {
                     list_grid.setImageResource(R.drawable.list_icon);
                     global.listmodel = "list";
-                    if (categoryValue != null) {
+                    if (global.Category != null) {
                         linearLayout();
 
                     } else {
@@ -132,7 +132,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                 } else {
                     list_grid.setImageResource(R.drawable.grid_icon);
                     global.listmodel = "grid";
-                    if (categoryValue != null) {
+                    if (global.Category != null) {
                         gridLayout();
 
                     } else {
@@ -147,11 +147,11 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         addTextListener();
 
 
-        adapter=new PaginationAdapter(getActivity(),productList,item);
+        adapter=new PaginationAdapter(getActivity(),productList);
         gridLayout();
-        if (categoryValue != null) {
+        if (global.Category != null) {
             currentPage=0;
-            getSelectCategory(categoryValue);
+            getSelectCategory(global.Category);
 
         } else {
             addDataToList();
@@ -163,8 +163,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore() {
-                if (categoryValue != null) {
-                    getSelectCategory(categoryValue);
+                if (global.Category != null) {
+                    getSelectCategory(global.Category);
 
                 } else {
                     addDataToList();
@@ -209,7 +209,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             global.listmodel = list;
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(linearLayoutManager);
-            adapter=new PaginationAdapter(getActivity(),productList,item);
+            adapter=new PaginationAdapter(getActivity(),productList);
             recyclerView.setAdapter(adapter);
 
 
@@ -231,7 +231,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             GridLayoutManager linearLayoutManager = new GridLayoutManager(getActivity(), 2);
             //linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(linearLayoutManager);
-            adapter=new PaginationAdapter(getActivity(),productList,item);
+            adapter=new PaginationAdapter(getActivity(),productList);
             recyclerView.setAdapter(adapter);
 
 
@@ -301,11 +301,11 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
                    // productList=new ArrayList<>();
                     //productList.addAll(filteredList);
-                    adapter=new PaginationAdapter(getActivity(),filteredList,item);
+                    adapter=new PaginationAdapter(getActivity(),filteredList);
                     recyclerView.setAdapter(adapter);
                 } else {
                     String list = "list";
-                    adapter=new PaginationAdapter(getActivity(),filteredList,item);
+                    adapter=new PaginationAdapter(getActivity(),filteredList);
                     recyclerView.setAdapter(adapter);
 
                 }
@@ -348,7 +348,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
                 productList=new ArrayList<>();
                 productList.addAll(response.body());
-                adapter=new PaginationAdapter(getActivity(),productList,item);
+                adapter=new PaginationAdapter(getActivity(),productList);
 
                 if(global.listmodel.equalsIgnoreCase("list"))
                 {
@@ -380,9 +380,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     }
 
 
-    private void load() {
+    public void load() {
         // Set up progress before call
-        final ProgressDialog dialog;
+
         dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Loading...");
         // show it
@@ -448,5 +448,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         }, 1500);
 
     }
+
+
 
 }

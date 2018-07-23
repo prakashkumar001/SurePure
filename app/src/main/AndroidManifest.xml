@@ -67,13 +67,7 @@
             android:name=".Checkout"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".payment.Payment"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".payment.PayuMoneyActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ProfileUpdate"
             android:theme="@style/AppTheme.NoActionBar"
@@ -93,13 +87,9 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name=".FullImage"
+            android:theme="@style/FullImageTheme"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

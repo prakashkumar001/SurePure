@@ -48,15 +48,39 @@ public class Checkout extends AppCompatActivity {
 
 
 GlobalClass globalClass;
+ImageView back;
+Toolbar toolbar;
+    ImageView home;
+    DatabaseHelper databaseHelper;
+    Typeface fonts, bold;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkout);
-
+        back=(ImageView)findViewById(R.id.back);
+        home=(ImageView)findViewById(R.id.home);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
         globalClass=(GlobalClass)getApplicationContext();
         globalClass.cartValues.clear();
         globalClass.productIDS.clear();
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectFirstItemAsDefault();
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -66,5 +90,15 @@ GlobalClass globalClass;
         startActivity(i);
         ActivityCompat.finishAffinity(Checkout.this);
         finish();
+    }
+
+    private void selectFirstItemAsDefault() {
+
+        Intent i=new Intent(Checkout.this,MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        ActivityCompat.finishAffinity(Checkout.this);
+        finish();
+
     }
 }

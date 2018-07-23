@@ -1,6 +1,7 @@
 package com.sure.pure;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -14,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sure.pure.common.GlobalClass;
+import com.sure.pure.model.Product;
 import com.sure.pure.utils.TouchImageView;
 
 import java.util.ArrayList;
@@ -24,17 +27,31 @@ import java.util.ArrayList;
  */
 
 public class FullImage extends AppCompatActivity {
-
-    ViewPager viewPager; private LinearLayout pager_indicator;
+    private LinearLayout pager_indicator;
+    ViewPager viewPager;
     private int dotsCount;
     private ImageView[] dots;
+    Product p;
+    ImageLoader loader;
+    ImageView close;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullview);
+        close=(ImageView)findViewById(R.id.close);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
 
+        loader=ImageLoader.getInstance();
+        try {
+            Intent i = getIntent();
+
+            p = (Product) i.getSerializableExtra("product");
+        }catch (Exception e)
+        {
+
+        }
         viewPager.setAdapter(new CustomPagerAdapter(this));
         setUiPageViewController();
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -59,6 +76,12 @@ public class FullImage extends AppCompatActivity {
 
             }
         });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
@@ -74,7 +97,7 @@ public class FullImage extends AppCompatActivity {
         public Object instantiateItem(ViewGroup collection, int position) {
 
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
+            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.full_item_view, collection, false);
             TouchImageView imageView=(TouchImageView)layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
             loader.displayImage("http://www.boolfox.com/rest"+drawables[position],imageView);

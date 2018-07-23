@@ -33,12 +33,12 @@ android:layout_marginRight="10dip">
 
 
 
-    <!--<ImageView
-        android:id="@+id/profile"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/profile_icon"
-        />-->
+    <ImageView
+        android:id="@+id/home"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_home_black_24dp"
+        />
 
 
 <RelativeLayout

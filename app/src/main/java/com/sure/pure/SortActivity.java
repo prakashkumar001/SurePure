@@ -1,7 +1,9 @@
 package com.sure.pure;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -67,17 +69,10 @@ public class SortActivity extends AppCompatActivity {
                 if(HolderClass.optionSelected>-1)
                 {
 
-                    Home home=new Home();
+                   global.sort= SortActivity.data.get(HolderClass.optionSelected);
 
-                    home.item= SortActivity.data.get(HolderClass.optionSelected);
-                        if(global.listmodel.equalsIgnoreCase("list"))
-                        {
-                            home.linearLayout();
-                        }else
-                        {
-                            home.gridLayout();
+                            selectFirstItemAsDefault();
 
-                        }
                     finish();
 
 
@@ -89,11 +84,22 @@ public class SortActivity extends AppCompatActivity {
         Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                global.sort="Price High-Low";
                 HolderClass.optionSelected=-1;
                 finish();
             }
         });
 
     }
+    private void selectFirstItemAsDefault() {
+
+        Intent i=new Intent(SortActivity.this,MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        ActivityCompat.finishAffinity(SortActivity.this);
+        finish();
+
+    }
+
+
 }

@@ -33,7 +33,6 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     List<Product> product;
     Context ctx;
-    String sort = "";
     Typeface fonts, bold;
     int count = 0;
     ImageLoader loader;
@@ -47,12 +46,11 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * */
 
 
-    public PaginationAdapter(Context context, List<Product> movies,String sort) {
+    public PaginationAdapter(Context context, List<Product> movies) {
         this.ctx = context;
         this.product = movies;
         loader = ImageLoader.getInstance();
         global = (GlobalClass) ctx.getApplicationContext();
-        this.sort=sort;
     }
 
     @Override
@@ -72,9 +70,9 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder recyclerHolder, final int position) {
         MovieVH holder = (MovieVH) recyclerHolder;
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.cart_image) // resource or drawable
-                .showImageForEmptyUri(R.drawable.cart_image) // resource or drawable
-                .showImageOnFail(R.drawable.cart_image) // resource or drawable
+                .showImageOnLoading(R.drawable.logo) // resource or drawable
+                .showImageForEmptyUri(R.drawable.logo) // resource or drawable
+                .showImageOnFail(R.drawable.logo) // resource or drawable
                 .resetViewBeforeLoading(false)  // default
                 .delayBeforeLoading(100)
                 .cacheInMemory(true) // default
@@ -82,15 +80,15 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .build();
 
         //Product product = moviesList[position];
-        if (sort.equalsIgnoreCase("Quantity Low-High")) {
+        if (global.sort.equalsIgnoreCase("Quantity Low-High")) {
             Collections.sort(product, new Product.lowToHighQuantity());
-        } else if (sort.equalsIgnoreCase("Quantity High-Low")) {
+        } else if (global.sort.equalsIgnoreCase("Quantity High-Low")) {
 
             Collections.sort(product, Collections.reverseOrder(new Product.lowToHighQuantity()));
 
-        } else if (sort.equalsIgnoreCase("Price Low-High")) {
+        } else if (global.sort.equalsIgnoreCase("Price Low-High")) {
             Collections.sort(product, new Product.lowToHighPrice());
-        } else if (sort.equalsIgnoreCase("Price High-Low")) {
+        } else if (global.sort.equalsIgnoreCase("Price High-Low")) {
             Collections.sort(product, Collections.reverseOrder(new Product.lowToHighPrice()));
         }
         String seller = ctx.getResources().getString(R.string.Rupees);
@@ -159,8 +157,18 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                     for (int i = 0; i < global.cartValues.size(); i++) {
                         if (global.cartValues.get(i).getProduct_id().equalsIgnoreCase(product.get(position).getProduct_id())) {
+
                             Product p = global.cartValues.get(i);
-                            p.setQuantity(p.getQuantity() + 1);
+                            if(p.getQuantity()<Integer.parseInt(p.getStock()))
+
+                            {
+                                p.setQuantity(p.getQuantity() + 1);
+
+                            }else {
+                                p.setQuantity(p.getQuantity());
+
+                            }
+
                         }
 
 
@@ -168,33 +176,42 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     //   Toast.makeText(ctx,"Already added in the cart", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Product products = new Product();
-                    products.setProduct_id(product.get(position).getProduct_id());
-                    products.setProductimage(product.get(position).getProductimage());
-                    products.setSellerprice(product.get(position).getSellerprice());
-                    products.setProductdes(product.get(position).getProductdes());
-                    products.setOfferprice(product.get(position).getOfferprice());
-                    products.setProductname(product.get(position).getProductname());
-                    products.setTotalprice(product.get(position).getOfferprice());
-                    products.setQuantity(1);
-                    global.productIDS.add(product.get(position).getProduct_id());
-                    global.cartValues.add(products);
-                    count = global.cartValues.size();
-                    String value = String.valueOf(count);
-                    Log.i("Count", "Count" + product.get(position).getProductname());
-                    global.BadgeCount = value;
+
+                    if(product.get(position).getQuantity()>Integer.parseInt(product.get(position).getStock()))
+                    {
+
+                    }else {
+                        Product products = new Product();
+                        products.setProduct_id(product.get(position).getProduct_id());
+                        products.setProductimage(product.get(position).getProductimage());
+                        products.setSellerprice(product.get(position).getSellerprice());
+                        products.setProductdes(product.get(position).getProductdes());
+                        products.setOfferprice(product.get(position).getOfferprice());
+                        products.setProductname(product.get(position).getProductname());
+                        products.setTotalprice(product.get(position).getOfferprice());
+                        products.setStock(product.get(position).getStock());
+                        products.setCategory(product.get(position).getCategory());
+                        products.setQuantity(1);
+                        global.productIDS.add(product.get(position).getProduct_id());
+                        global.cartValues.add(products);
+                        count = global.cartValues.size();
+                        String value = String.valueOf(count);
+                        Log.i("Count", "Count" + product.get(position).getProductname());
+                        global.BadgeCount = value;
 
                    /* MainActivity.setBadgeCount(ctx, MainActivity.icon,value);
                     global.BadgeCount=value;
                    */
-                    Toast.makeText(ctx, product.get(position).getProductname() + " " + "Added in the cart", Toast.LENGTH_SHORT).show();
-                    // notifyDataSetChanged();
+                        Toast.makeText(ctx, product.get(position).getProductname() + " " + "Added in the cart", Toast.LENGTH_SHORT).show();
+                        // notifyDataSetChanged();
 
-                    MainActivity.cartcount.setVisibility(View.VISIBLE);
-                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx, R.animator.flip);
-                    set.setTarget(MainActivity.cartcount);
-                    MainActivity.cartcount.setText(global.BadgeCount);
-                    set.start();
+                        MainActivity.cartcount.setVisibility(View.VISIBLE);
+                        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx, R.animator.flip);
+                        set.setTarget(MainActivity.cartcount);
+                        MainActivity.cartcount.setText(global.BadgeCount);
+                        set.start();
+
+                    }
 
 
                 }

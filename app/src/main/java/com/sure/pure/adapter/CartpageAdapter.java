@@ -113,9 +113,9 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.cart_image) // resource or drawable
-                .showImageForEmptyUri(R.drawable.cart_image) // resource or drawable
-                .showImageOnFail(R.drawable.cart_image) // resource or drawable
+                .showImageOnLoading(R.drawable.logo) // resource or drawable
+                .showImageForEmptyUri(R.drawable.logo) // resource or drawable
+                .showImageOnFail(R.drawable.logo) // resource or drawable
                 .resetViewBeforeLoading(false)  // default
                 .delayBeforeLoading(10)
                 .cacheInMemory(true) // default
@@ -185,7 +185,16 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
             public void onClick(View view) {
                 double b;
                 int values = Integer.parseInt(holder.quantity.getText().toString());
-                values = values + 1;
+                if(values<Integer.parseInt(global.cartValues.get(position).getStock()))
+
+                {
+                    values = values + 1;
+
+                }else {
+
+                }
+
+
                 global.cartValues.get(position).setQuantity(values);
 
                 holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));

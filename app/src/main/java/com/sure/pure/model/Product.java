@@ -173,57 +173,13 @@ public class Product implements Serializable{
 
         @Override
         public int compare(Product p1, Product p2) {
-            if (p1.getQuantity() < p2.getQuantity()) return -1;
-            if (p1.getQuantity() > p2.getQuantity()) return 1;
+            if (Integer.parseInt(p1.getStock()) < Integer.parseInt(p2.getStock())) return -1;
+            if (Integer.parseInt(p1.getStock()) > Integer.parseInt(p2.getStock())) return 1;
             return 0;
         }
     }
 
-    public static class OrderByQuantityLow implements Comparator<Product> {
-
-        @Override
-        public int compare(Product p1, Product p2) {
-            if (p1.getQuantity() < p2.getQuantity()) return -1;
-            if (p1.getQuantity() > p2.getQuantity()) return 1;
-            return 0;
-        }
-    }
-
-    /*public static class OrderByDescending implements Comparator<Product> {
-
-        @Override
-        public int compare(Product o1, Product o2) {
-            return null;
-        }
-    }*/
-    /*
-     * Anohter implementation or Comparator interface to sort list of Order object
-     * based upon customer name.
-     */
-
-    public static class OrderByCustomer implements Comparator<Product> {
-
-        @Override
-        public int compare(Product o1, Product o2) {
-            return o1.getProductname().compareTo(o2.getProductname());
-        }
-    }
 
 
-    /*
-      * Sorting on orderId is natural sorting for Order.
-      */
-   /* @Override
-    public int compareTo(Product o) {
-        return this.offerprice > o.offerprice ? 1 : (this.orderId < o.orderId ? -1 : 0);
-    }*/
 
-    /*
-     * implementing toString method to print orderId of Order
-     */
-    /*@Override
-    public String toString(){
-        return String.valueOf(orderId);
-    }
-*/
 }

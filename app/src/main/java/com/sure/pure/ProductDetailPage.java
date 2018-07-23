@@ -27,9 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -71,6 +69,7 @@ public class ProductDetailPage extends AppCompatActivity {
     private LinearLayout pager_indicator;
     private int dotsCount;
     private ImageView[] dots;
+    ImageView home;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -89,6 +88,7 @@ public class ProductDetailPage extends AppCompatActivity {
         quantity = (TextView) findViewById(R.id.quantity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        home=(ImageView)findViewById(R.id.home);
         stock = (TextView) findViewById(R.id.stockquants);
         productdescription = (TextView) findViewById(R.id.description);
         image = (ImageView) findViewById(R.id.image);
@@ -106,6 +106,16 @@ public class ProductDetailPage extends AppCompatActivity {
 
 
         add.setVisibility(View.INVISIBLE);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+            }
+        });
 
         add.setTypeface(fonts);
 
@@ -335,6 +345,8 @@ public class ProductDetailPage extends AppCompatActivity {
                     products.setProductname(p.getProductname());
                     products.setSellerprice(p.getSellerprice());
                     products.setOfferprice(p.getOfferprice());
+                    products.setStock(p.getStock());
+                    products.setCategory(p.getCategory());
                     products.setProductimage(p.getProductimage());
                     products.setQuantity(Integer.parseInt(quantity.getText().toString()));
                     products.setTotalprice(String.valueOf(b));
@@ -438,41 +450,10 @@ public class ProductDetailPage extends AppCompatActivity {
         finish();
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("ProductDetailPage Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
 
     public class CustomPagerAdapter extends PagerAdapter {
 
@@ -488,7 +469,7 @@ public class ProductDetailPage extends AppCompatActivity {
 
             LayoutInflater inflater = LayoutInflater.from(mContext);
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
-            TouchImageView imageView = (TouchImageView) layout.findViewById(R.id.image);
+            ImageView imageView = (ImageView) layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
             loader.displayImage("http://www.boolfox.com/rest" + drawables[position], imageView);
 
@@ -520,7 +501,8 @@ public class ProductDetailPage extends AppCompatActivity {
         }
 
 
-    }
+
+}
 
     private void setUiPageViewController() {
 

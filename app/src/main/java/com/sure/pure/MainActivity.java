@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
     public static LayerDrawable icon;
     GlobalClass global;
     public static TextView title, cartcount, text;
-    ImageView carticon, sorticon;
+    ImageView carticon, sorticon,home;
     Point p;
     DatabaseHelper databaseHelper;
     int backPressedCount = 0;
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         drawer = (RecyclerView) findViewById(R.id.drawer);
         title = (TextView) findViewById(R.id.title);
         cartcount = (TextView) findViewById(R.id.cartcount);
-        //profile = (ImageView) findViewById(R.id.profile);
+        home = (ImageView) findViewById(R.id.home);
         carticon = (ImageView) findViewById(R.id.carticon);
         sorticon = (ImageView) findViewById(R.id.sorticon);
         fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
@@ -148,6 +148,14 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), SortActivity.class);
                 startActivity(i);
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                global.Category=null;
+               selectFirstItemAsDefault();
             }
         });
 

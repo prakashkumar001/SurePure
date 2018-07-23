@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.sure.pure.MainActivity;
 import com.sure.pure.R;
+import com.sure.pure.common.GlobalClass;
 import com.sure.pure.fragments.Home;
 import com.sure.pure.utils.DrawerItem;
 
@@ -28,10 +29,12 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerView
    private List<DrawerItem> drawerMenuList;
     Activity context;
     Home home;
+    GlobalClass global;
    public DrawerAdapter(Activity context,List<DrawerItem> drawerMenuList,Home home) {
      this.drawerMenuList = drawerMenuList;
        this.context=context;
        this.home=home;
+       global=(GlobalClass)context.getApplicationContext();
    }  
    @Override  
    public DrawerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,11 +57,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerView
                    MainActivity.drawerlayout.closeDrawers();
                    //((MainActivity)context).getSelectCategory(drawerMenuList.get(position).getCategory());
                   // home.getSelectCategory(drawerMenuList.get(position).getCategory());
-                   Bundle b=new Bundle();
-                   b.putString("category",drawerMenuList.get(position).getCategory());
-                   home=new Home();
-                   home.setArguments(b);
+                   global.Category=drawerMenuList.get(position).getCategory();
 
+                   home=new Home();
                    FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
                    fragmentManager.beginTransaction()
                            .replace(R.id.container, home)
