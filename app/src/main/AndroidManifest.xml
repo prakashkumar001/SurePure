@@ -89,7 +89,7 @@
         <activity
             android:name=".FullImage"
             android:theme="@style/FullImageTheme"
-            android:screenOrientation="portrait"/>
+           />
     </application>
 
 </manifest>
