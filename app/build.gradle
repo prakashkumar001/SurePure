@@ -41,10 +41,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:10.0.1'
     compile 'com.android.support:palette-v7:25.3.1'
 
-    compile 'com.google.code.gson:gson:2.2.4'
+   // compile 'com.google.code.gson:gson:2.2.4'
 
     //retrofit
-    compile 'com.google.code.gson:gson:2.6.2'
+   // compile 'com.google.code.gson:gson:2.6.2'
 
     //these two lines are added
     compile 'com.squareup.retrofit2:retrofit:2.3.0'

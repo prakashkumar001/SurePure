@@ -79,6 +79,10 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .cacheOnDisk(true) // default
                 .build();
 
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
+
+
         //Product product = moviesList[position];
         if (global.sort.equalsIgnoreCase("Quantity Low-High")) {
             Collections.sort(product, new Product.lowToHighQuantity());
@@ -110,10 +114,10 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.productname.setText(product.get(position).getProductname());
 
-        holder.sellerprice.setTypeface(fonts);
+       /* holder.sellerprice.setTypeface(fonts);
         //holder.offerprice.setTypeface(fonts);
         holder.productname.setTypeface(bold);
-        holder.add.setTypeface(bold);
+        holder.add.setTypeface(bold);*/
 
         //String images=String.valueOf(drawables[position]);
         //loader.displayImage(images,holder.image,options);

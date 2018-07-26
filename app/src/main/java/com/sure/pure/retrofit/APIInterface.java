@@ -15,6 +15,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -23,7 +25,6 @@ import retrofit2.http.Url;
 
 public interface APIInterface {
     String BASE_URL = "http://www.boolfox.com";
-    @Headers("Content-Type: application/json")
 
     @GET("/rest/index.php/htc/product_category")
     Call<List<DrawerItem>> getCategoryList();
@@ -36,10 +37,9 @@ public interface APIInterface {
      @POST("/rest/index.php/htc/checkout_cart")
     Call<CheckoutResponse> checkout(@Body ProductList task);
 
-    /*@GET("/api/users?")
-    Call<UserList> doGetUserList(@Query("page") String page);
-
     @FormUrlEncoded
-    @POST("/api/users?")
-    Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);*/
+    @POST("/rest/index.php/htc/product_search")
+    Call<List<Product>> getSearchFilter(@Field("qry_string") String qry_string);
+
+
 }

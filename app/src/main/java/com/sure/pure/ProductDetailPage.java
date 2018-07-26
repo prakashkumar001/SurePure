@@ -100,8 +100,8 @@ public class ProductDetailPage extends AppCompatActivity {
         title = (TextView) findViewById(R.id.title);
         cartcount = (TextView) findViewById(R.id.cartcount);
         carticon = (ImageView) findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         loader = ImageLoader.getInstance();
 
 
@@ -117,7 +117,7 @@ public class ProductDetailPage extends AppCompatActivity {
             }
         });
 
-        add.setTypeface(fonts);
+       // add.setTypeface(fonts);
 
         if (global.cartValues.size() > 0) {
             cartcount.setVisibility(View.VISIBLE);
@@ -126,11 +126,11 @@ public class ProductDetailPage extends AppCompatActivity {
             cartcount.setVisibility(View.GONE);
         }
 
-        cartcount.setTypeface(fonts);
+      //  cartcount.setTypeface(fonts);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
         setSupportActionBar(toolbar);
         title.setText("HTC Furniture");
-        title.setTypeface(bold);
+       // title.setTypeface(bold);
         // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -198,9 +198,9 @@ public class ProductDetailPage extends AppCompatActivity {
             price.setText(seller + p.getSellerprice());
             productdescription.setText(p.getProductdes());
             stock.setText(p.getStock());
-            productname.setTypeface(fonts);
+           /* productname.setTypeface(fonts);
             price.setTypeface(fonts);
-            productdescription.setTypeface(fonts);
+            productdescription.setTypeface(fonts);*/
 
 
             if (global.productIDS.contains(p.getProduct_id())) {
@@ -271,7 +271,7 @@ public class ProductDetailPage extends AppCompatActivity {
                     //total.setText(String.valueOf(b));
                     tv.setText(String.format("%.2f", b));
 
-                    tv.setTypeface(fonts);
+                    //tv.setTypeface(fonts);
 
                 } else {
                     Toast.makeText(ProductDetailPage.this, "Stock Not available", Toast.LENGTH_SHORT).show();
@@ -408,9 +408,9 @@ public class ProductDetailPage extends AppCompatActivity {
         tv.setText(String.format("%.2f", b));
         tv.setTextColor(getResources().getColor(android.R.color.white));
         tv.setPadding(5, 0, 5, 0);
-        tv.setTypeface(null, Typeface.BOLD);
+        //tv.setTypeface(null, Typeface.BOLD);
         tv.setTextSize(14);
-        tv.setTypeface(fonts);
+        //tv.setTypeface(fonts);
         menu.add(0, 1, 1, R.string.Rupees).setActionView(tv).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         invalidateOptionsMenu();

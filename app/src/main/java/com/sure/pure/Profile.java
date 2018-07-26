@@ -64,8 +64,8 @@ public class Profile extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-         font = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+         font = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         collapsingToolbarLayout.setTitle(user.name);
         TextView privacy = (TextView) findViewById(R.id.privacy);
         TextView aboutus = (TextView) findViewById(R.id.aboutus);

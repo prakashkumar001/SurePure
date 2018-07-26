@@ -66,7 +66,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.MyViewHo
         this.items=items;
         ctx=context;
 
-        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Rg.ttf");
+        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
     }
 
     @Override

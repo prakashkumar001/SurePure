@@ -83,8 +83,8 @@ public class Signup extends RuntimePermissionActivity {
         back=(ImageView) findViewById(R.id.back);
         profile=(CircleImage) findViewById(R.id.profileimage);
         title=(TextView)findViewById(R.id.title);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+         fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+         bold= Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         title.setText("Sign Up");
         title.setTypeface(bold);
         TextView privacy = (TextView) findViewById(R.id.privacy);

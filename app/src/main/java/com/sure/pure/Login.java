@@ -94,8 +94,8 @@ public class Login extends RuntimePermissionActivity {
         databaseHelper=new DatabaseHelper(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
         title=(TextView)findViewById(R.id.title);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         title.setText("Login");
         title.setTypeface(bold);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()

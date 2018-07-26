@@ -35,7 +35,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:orientation="vertical"
@@ -64,7 +64,7 @@
                         android:textSize="18dp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
-                        android:typeface="serif"
+                        
                         android:layout_height="wrap_content"
                         android:text="Product"/>
 
@@ -87,12 +87,16 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textSize="16dp"
+                        android:textColor="@color/colorPrimary"
+                        
                         android:text="Price :"/>
                     <TextView
                         android:id="@+id/offerprice"
                         android:layout_width="wrap_content"
                         android:gravity="left"
                         android:textSize="16dp"
+                        
+                        android:textColor="@android:color/black"
                         android:layout_height="wrap_content"
                         android:text="70 Rupees"/>
 
@@ -106,11 +110,13 @@
                     <TextView
                         android:id="@+id/quantext"
                         android:layout_width="0dp"
-                        android:layout_weight=".5"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textSize="16dp"
+                        android:textColor="@color/colorPrimary"
+                        
                         android:text="Qty :"/>
 
                         <ImageView
@@ -130,6 +136,8 @@
                         android:textSize="16dp"
                         android:layout_gravity="center"
                         android:layout_height="20dp"
+                        android:textColor="@android:color/black"
+                        
                         android:text="1"/>
                         <ImageView
                             android:id="@+id/add"
@@ -163,12 +171,16 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textSize="16dp"
+                        android:textColor="@color/colorPrimary"
+                        
                         android:text="Total :"/>
                     <TextView
                         android:id="@+id/total"
                         android:layout_width="wrap_content"
                         android:gravity="left"
                         android:textSize="16dp"
+                        android:textColor="@android:color/black"
+                        
                         android:layout_height="wrap_content"
                         android:text="70 Rupees"/>
 
@@ -198,7 +210,7 @@
                 android:textSize="16dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@android:color/black"
-                android:typeface="serif"
+                
                 android:layout_height="20dp"
                 android:text="Product"/>
 
@@ -230,8 +242,9 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/removeicon"
                         android:layout_centerInParent="true"
-                        android:textColor="@android:color/black"
                         android:textSize="16dp"
+                        android:textColor="@android:color/black"
+                        
                         android:text="Remove"
                         />
                 </RelativeLayout>

@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity
         home = (ImageView) findViewById(R.id.home);
         carticon = (ImageView) findViewById(R.id.carticon);
         sorticon = (ImageView) findViewById(R.id.sorticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         setSupportActionBar(toolbar);
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), CartPage.class);
-                startActivity(i);
+                startActivityForResult(i,100);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 //finish();
             }
@@ -361,6 +361,22 @@ public class MainActivity extends AppCompatActivity
         });
 
             }
+            public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                if (requestCode == 100) {
+                    if (resultCode == RESULT_OK) {
+                       // String returnedResult = data.getData().toString();
+                        // OR
+                        // String returnedResult = data.getDataString();
 
+                        if (global.cartValues.size() > 0) {
+                            cartcount.setVisibility(View.VISIBLE);
+                            cartcount.setText(String.valueOf(global.cartValues.size()));
+                        } else {
+                            cartcount.setVisibility(View.GONE);
+                        }
+
+                    }
+                }
+            }
 
 }

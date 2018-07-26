@@ -65,8 +65,8 @@ public class Order_History extends AppCompatActivity {
         title=(TextView)findViewById(R.id.title);
         cartcount=(TextView)findViewById(R.id.cartcount);
         carticon=(ImageView)findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold= Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold= Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         globalClass=(GlobalClass)getApplicationContext();
         databaseHelper=new DatabaseHelper(getApplicationContext());
         Log.i("user_id","user_id"+databaseHelper.getLoginid());

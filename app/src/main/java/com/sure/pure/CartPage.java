@@ -76,8 +76,8 @@ public class CartPage extends AppCompatActivity {
         cartcount = (TextView) findViewById(R.id.cartcount);
         carticon = (ImageView) findViewById(R.id.carticon);
         title = (TextView) findViewById(R.id.title);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         // getSupportActionBar().setIcon(R.drawable.logo);
         home=(ImageView)findViewById(R.id.home);
@@ -98,7 +98,7 @@ public class CartPage extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         title.setText("HTC Furniture");
-        title.setTypeface(bold);
+       // title.setTypeface(bold);
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -139,10 +139,10 @@ public class CartPage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        total.setTypeface(bold);
+       /* total.setTypeface(bold);
         sub.setTypeface(bold);
         placeorder.setTypeface(bold);
-        back.setTypeface(bold);
+        back.setTypeface(bold);*/
         double roundoffsubtotal=Math.round(adapter.totalvalue());
         sub.setText(String.format ("%.2f",roundoffsubtotal));
 
@@ -156,8 +156,15 @@ public class CartPage extends AppCompatActivity {
 
 
 
+                if(global.cartValues.size()>0)
+                {
+                    addToOrders();
+                }else
+                {
+                    Toast.makeText(CartPage.this,"Please add product to continue",Toast.LENGTH_SHORT).show();
+                }
 
-                  addToOrders();
+
 
 
 
@@ -170,8 +177,13 @@ public class CartPage extends AppCompatActivity {
             public void onClick(View v) {
              /*   Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);*/
-                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                Intent data = new Intent();
+               // String text = "Result to be returned...."
+
+                setResult(RESULT_OK, data);
                 finish();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+               // finish();
             }
         });
         home.setOnClickListener(new View.OnClickListener() {
@@ -311,4 +323,6 @@ public class CartPage extends AppCompatActivity {
         });
 
     }
+
+
 }

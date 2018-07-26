@@ -59,7 +59,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.MyViewHo
         this.items=items;
         ctx=context;
 
-        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/Monitorica_Rg.ttf");
+        font = Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.MyViewHo
         holder.paymentdate.setText(item.payment_date);
         holder.orderstatus.setText(item.status);
 
-        holder.order_text.setTypeface(font);
+      /*  holder.order_text.setTypeface(font);
         holder.quantity_text.setTypeface(font);
         holder.type_text.setTypeface(font);
         holder.product_text.setTypeface(font);
@@ -100,7 +100,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.MyViewHo
         holder.prd_name.setTypeface(font);
         holder.prd_price.setTypeface(font);
         holder.paymentdate.setTypeface(font);
-        holder.orderstatus.setTypeface(font);
+        holder.orderstatus.setTypeface(font);*/
 
 
 

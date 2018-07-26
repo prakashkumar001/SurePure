@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,21 +25,28 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sure.pure.CartPage;
 import com.sure.pure.R;
 import com.sure.pure.adapter.PaginationAdapter;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.pojo.Search;
 import com.sure.pure.retrofit.APIInterface;
 import com.sure.pure.utils.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.sure.pure.retrofit.APIInterface.BASE_URL;
 
 /**
  * Created by Creative IT Works on 09-Jun-17.
@@ -47,7 +55,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Home extends Fragment implements Spinner.OnItemSelectedListener, SearchView.OnQueryTextListener {
 
     public  List<Product> productList;
-
+    Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+    Runnable workRunnable;
     public RecyclerView recyclerView;
     public static Activity a;
     static GlobalClass global;
@@ -60,6 +69,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     LinearLayoutManager linearLayoutManager;
     ProgressBar progressBar;
     ProgressDialog dialog;
+    public String queryData=null;
 
     private int currentPage = 0;
 
@@ -90,8 +100,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.home, container, false);
         title = "8";
-        fonts = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Monitorica_Rg.ttf");
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Monitorica_Bd.ttf");
+        fonts = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ethnocentric_rg_it.ttf");
         Log.i("Title", "Title" + title);
         global = (GlobalClass) getActivity().getApplicationContext();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
@@ -101,9 +111,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         progressBar = (ProgressBar) v.findViewById(R.id.item_progress_bar);
 
         TextView copyrights = (TextView) v.findViewById(R.id.copyrights);
-        copyrights.setTypeface(bold);
+       /* copyrights.setTypeface(bold);
         privacy.setTypeface(bold);
-        aboutus.setTypeface(bold);
+        aboutus.setTypeface(bold);*/
 
         a = getActivity();
         global.listmodel = "grid";
@@ -112,7 +122,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
 
         search = (EditText) v.findViewById(R.id.search);
-        search.setTypeface(bold);
+       // search.setTypeface(bold);
 
 
         list_grid.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +176,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                 if (global.Category != null) {
                     getSelectCategory(global.Category);
 
-                } else {
+                } else if(queryData!=null) {
+                    searchData(queryData);
+                }else {
                     addDataToList();
                 }
             }
@@ -273,6 +285,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     public void addTextListener() {
 
         search.addTextChangedListener(new TextWatcher() {
+            final android.os.Handler handler = new android.os.Handler();
+            Runnable runnable;
 
             public void afterTextChanged(Editable s) {
             }
@@ -280,11 +294,21 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            public void onTextChanged(CharSequence query, int start, int before, int count) {
+            public void onTextChanged(final CharSequence query, int start, int before, int count) {
 
-                query = query.toString().toLowerCase();
+                   //show some progress, because you can access UI here
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        //query = query.toString().toLowerCase();
+                        queryData=query.toString();
 
-                final ArrayList<Product> filteredList = new ArrayList<>();
+                        //do some work with s.toString()
+                        searchData(String.valueOf(queryData));
+                    }
+                };
+                handler.postDelayed(runnable, 1500);
+              /*  final ArrayList<Product> filteredList = new ArrayList<>();
 
                 for (int i = 0; i < productList.size(); i++) {
 
@@ -294,6 +318,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                         filteredList.add(productList.get(i));
                     }
                 }
+
 
                 if (global.listmodel.equalsIgnoreCase("grid")) {
 
@@ -308,7 +333,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                     adapter=new PaginationAdapter(getActivity(),filteredList);
                     recyclerView.setAdapter(adapter);
 
-                }
+                }*/
             }
         });
     }
@@ -330,7 +355,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
         //Creating a retrofit object
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIInterface.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                 .build();
 
@@ -389,7 +414,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         dialog.show();
         //Creating a retrofit object
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIInterface.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                 .build();
 
@@ -398,7 +423,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
         //now making the call object
         //Here we are using the api method that we created inside the api interface
-        final String page = APIInterface.BASE_URL + "/rest/index.php/htc?p_id=" + currentPage;
+        final String page = BASE_URL + "/rest/index.php/htc?p_id=" + currentPage;
         Call<List<Product>> call = api.getAllProductList(page);
         call.enqueue(new Callback<List<Product>>() {
 
@@ -449,6 +474,67 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
     }
 
+    public void searchData(String searchString) {
+        // Set up progress before call
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
+        // show it
+        dialog.show();
 
+
+
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+        Search search=new Search();
+        search.setSearchkey(searchString);
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getSearchFilter(searchString);
+        call.enqueue(new Callback<List<Product>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+
+                productList=new ArrayList<>();
+                productList.addAll(response.body());
+                adapter=new PaginationAdapter(getActivity(),productList);
+
+                if(global.listmodel.equalsIgnoreCase("list"))
+                {
+                    linearLayout();
+                }else
+                {
+                    gridLayout();
+                }
+
+                recyclerView.setAdapter(adapter);
+
+                currentPage = currentPage + 1;
+
+                dialog.dismiss();
+                /*recyclerView.removeOnScrollListener(new EndlessRecyclerOnScrollListener() {
+                    @Override
+                    public void onLoadMore() {
+
+                    }
+                });*/
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+
+    }
 
 }
