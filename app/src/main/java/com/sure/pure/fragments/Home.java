@@ -38,6 +38,8 @@ import com.sure.pure.utils.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -72,6 +74,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     public String queryData=null;
 
     private int currentPage = 0;
+    private Timer timer;
 
     public Home() {
         // Required empty public constructor
@@ -285,29 +288,45 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
     public void addTextListener() {
 
         search.addTextChangedListener(new TextWatcher() {
-            final android.os.Handler handler = new android.os.Handler();
-            Runnable runnable;
 
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged( final Editable s) {
+
+                // user typed: start the timer
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // do your actual work here
+
+                        // do your actual work here
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                queryData=s.toString();
+                                searchData(queryData);
+
+                            }
+                        });
+
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, 600); // 600ms delay before the timer executes the „run“ method from TimerTask
+
+
             }
+
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            public void onTextChanged(final CharSequence query, int start, int before, int count) {
+            public void onTextChanged( CharSequence query, int start, int before, int count) {
 
-                   //show some progress, because you can access UI here
-                runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        //query = query.toString().toLowerCase();
-                        queryData=query.toString();
 
-                        //do some work with s.toString()
-                        searchData(String.valueOf(queryData));
-                    }
-                };
-                handler.postDelayed(runnable, 1500);
               /*  final ArrayList<Product> filteredList = new ArrayList<>();
 
                 for (int i = 0; i < productList.size(); i++) {
@@ -334,6 +353,11 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                     recyclerView.setAdapter(adapter);
 
                 }*/
+
+                // user is typing: reset already started timer (if existing)
+                if (timer != null) {
+                    timer.cancel();
+                }
             }
         });
     }

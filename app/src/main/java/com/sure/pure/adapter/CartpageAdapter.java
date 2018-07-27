@@ -190,21 +190,23 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                 {
                     values = values + 1;
 
+                    global.cartValues.get(position).setQuantity(values);
+
+                    holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
+                    String seller = ctx.getResources().getString(R.string.Rupees);
+                    b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
+                    global.cartValues.get(position).setTotalprice(String.format ("%.2f",b));
+                    holder.total.setText(seller + String.format ("%.2f",b));
+                    CartPage.total.setText(String.format ("%.2f",totalvalue()));
+                    CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
+                    CartPage.gstamount.setText(String.format ("%.2f",getgst()));
+
+
                 }else {
 
                 }
 
 
-                global.cartValues.get(position).setQuantity(values);
-
-                holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
-                String seller = ctx.getResources().getString(R.string.Rupees);
-                b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
-                global.cartValues.get(position).setTotalprice(String.format ("%.2f",b));
-                holder.total.setText(seller + String.format ("%.2f",b));
-                CartPage.total.setText(String.format ("%.2f",totalvalue()));
-                CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
-                CartPage.gstamount.setText(String.format ("%.2f",getgst()));
 
             }
         });
@@ -219,18 +221,19 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
 
                 } else {
                     values = values - 1;
+                    global.cartValues.get(position).setQuantity(values);
+
+                    holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
+                    String seller = ctx.getResources().getString(R.string.Rupees);
+                    b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
+                    global.cartValues.get(position).setTotalprice(String.format ("%.2f",b));
+                    holder.total.setText(seller + String.format ("%.2f",b));
+                    CartPage.total.setText(String.format ("%.2f",totalvalue()));
+                    CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
+                    CartPage.gstamount.setText(String.format ("%.2f",getgst()));
+
                 }
 
-                global.cartValues.get(position).setQuantity(values);
-
-                holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
-                String seller = ctx.getResources().getString(R.string.Rupees);
-                b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
-                global.cartValues.get(position).setTotalprice(String.format ("%.2f",b));
-                holder.total.setText(seller + String.format ("%.2f",b));
-                CartPage.total.setText(String.format ("%.2f",totalvalue()));
-                CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
-                CartPage.gstamount.setText(String.format ("%.2f",getgst()));
 
             }
         });
