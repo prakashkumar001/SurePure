@@ -379,4 +379,16 @@ public class MainActivity extends AppCompatActivity
                 }
             }
 
-}
+            @Override
+            protected void onResume() {
+                super.onResume();
+
+                if (global.cartValues.size() > 0) {
+                    cartcount.setVisibility(View.VISIBLE);
+                    cartcount.setText(String.valueOf(global.cartValues.size()));
+                } else {
+                    cartcount.setVisibility(View.GONE);
+                }
+
+            }
+        }

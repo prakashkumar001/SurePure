@@ -197,9 +197,12 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                     b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
                     global.cartValues.get(position).setTotalprice(String.format ("%.2f",b));
                     holder.total.setText(seller + String.format ("%.2f",b));
-                    CartPage.total.setText(String.format ("%.2f",totalvalue()));
-                    CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
-                    CartPage.gstamount.setText(String.format ("%.2f",getgst()));
+                    double roundofftotal=Math.round(totalvalue());
+                    double roundoffsubtotal=Math.round(subtotalvalue());
+                    double roundoffgst=Math.round(getgst());
+                    CartPage.total.setText(String.format ("%.2f",roundofftotal));
+                    CartPage.sub.setText(String.format ("%.2f",roundoffsubtotal));
+                    CartPage.gstamount.setText(String.format ("%.2f",roundoffgst));
 
 
                 }else {
@@ -228,10 +231,12 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                     b = global.cartValues.get(position).getQuantity() * Double.parseDouble(global.cartValues.get(position).getSellerprice());
                     global.cartValues.get(position).setTotalprice(String.format ("%.2f",b));
                     holder.total.setText(seller + String.format ("%.2f",b));
-                    CartPage.total.setText(String.format ("%.2f",totalvalue()));
-                    CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
-                    CartPage.gstamount.setText(String.format ("%.2f",getgst()));
-
+                    double roundofftotal=Math.round(totalvalue());
+                    double roundoffsubtotal=Math.round(subtotalvalue());
+                    double roundoffgst=Math.round(getgst());
+                    CartPage.total.setText(String.format ("%.2f",roundofftotal));
+                    CartPage.sub.setText(String.format ("%.2f",roundoffsubtotal));
+                    CartPage.gstamount.setText(String.format ("%.2f",roundoffgst));
                 }
 
 
@@ -257,10 +262,12 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
                                 set.start();
                                 if (global.cartValues.size() > 0) {
                                     CartPage.cartcount.setVisibility(View.VISIBLE);
-                                    CartPage.total.setText(String.format ("%.2f",totalvalue()));
-                                    CartPage.sub.setText(String.format ("%.2f",subtotalvalue()));
-                                    CartPage.gstamount.setText(String.format ("%.2f",getgst()));
-
+                                    double roundofftotal=Math.round(totalvalue());
+                                    double roundoffsubtotal=Math.round(subtotalvalue());
+                                    double roundoffgst=Math.round(getgst());
+                                    CartPage.total.setText(String.format ("%.2f",roundofftotal));
+                                    CartPage.sub.setText(String.format ("%.2f",roundoffsubtotal));
+                                    CartPage.gstamount.setText(String.format ("%.2f",roundoffgst));
                                 } else {
                                     CartPage.cartcount.setVisibility(View.GONE);
                                     CartPage.total.setText("0.0");
