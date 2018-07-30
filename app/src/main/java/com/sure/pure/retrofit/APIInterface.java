@@ -24,7 +24,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 public interface APIInterface {
-    String BASE_URL = "http://www.boolfox.com";
+    String BASE_URL = "http://www.htcfurniturestore.com";
 
     @GET("/rest/index.php/htc/product_category")
     Call<List<DrawerItem>> getCategoryList();

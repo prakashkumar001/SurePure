@@ -28,6 +28,7 @@ import com.sure.pure.ProductDetailPage;
 import com.sure.pure.R;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.retrofit.APIInterface;
 
 
 import org.json.JSONArray;
@@ -155,7 +156,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
 
 
         //holder.image.setImageResource(global.cartValues.get(position).getProductimage());
-        loader.displayImage("http://www.boolfox.com/rest" + global.cartValues.get(position).getProductimage(), holder.image, options);
+        loader.displayImage(APIInterface.BASE_URL + global.cartValues.get(position).getProductimage(), holder.image, options);
         holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
 
 

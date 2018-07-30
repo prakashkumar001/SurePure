@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.retrofit.APIInterface;
 import com.sure.pure.utils.TouchImageView;
 
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class FullImage extends AppCompatActivity {
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.full_item_view, collection, false);
             TouchImageView imageView=(TouchImageView)layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
-            loader.displayImage("http://www.boolfox.com/rest"+drawables[position],imageView);
+            loader.displayImage(APIInterface.BASE_URL+drawables[position],imageView);
             collection.addView(layout);
             return layout;
         }

@@ -33,6 +33,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.retrofit.APIInterface;
 import com.sure.pure.utils.TouchImageView;
 
 import java.io.Serializable;
@@ -471,7 +472,7 @@ public class ProductDetailPage extends AppCompatActivity {
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
             ImageView imageView = (ImageView) layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
-            loader.displayImage("http://www.boolfox.com/rest" + drawables[position], imageView);
+            loader.displayImage(APIInterface.BASE_URL + drawables[position], imageView);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

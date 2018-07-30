@@ -100,60 +100,53 @@
                         android:layout_height="wrap_content"
                         android:text="70 Rupees"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:weightSum="2"
-                        android:layout_marginRight="10dp"
-                        >
-                    <TextView
-                        android:id="@+id/quantext"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textSize="16dp"
-                        android:textColor="@color/colorPrimary"
-                        
-                        android:text="Qty :"/>
-
-                        <ImageView
-                            android:id="@+id/minus"
-                            android:layout_width="0dp"
-                            android:layout_weight=".4"
-                            android:layout_gravity="center"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_remove_black_24dp"
-
-                            />
-                    <TextView
-                        android:id="@+id/quantity"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
-                        android:gravity="center"
-                        android:textSize="16dp"
-                        android:layout_gravity="center"
-                        android:layout_height="20dp"
-                        android:textColor="@android:color/black"
-                        
-                        android:text="1"/>
-                        <ImageView
-                            android:id="@+id/add"
-                            android:layout_width="0dp"
-                            android:layout_weight=".4"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_add_black_24dp"
-                            />
-
-
-                    </LinearLayout>
 
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linear2"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/quantext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:textColor="@color/colorPrimary"
+
+                        android:text="Qty :"/>
+
+                    <ImageView
+                        android:id="@+id/minus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_remove_black_24dp"
+                        android:layout_marginLeft="10dp"
+
+                        />
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="wrap_content"
+                        android:textSize="16dp"
+                        android:layout_gravity="center"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+
+                        android:textColor="@android:color/black"
+                        android:text="1"/>
+                    <ImageView
+                        android:id="@+id/add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_add_black_24dp"
+                        />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -193,6 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <!--  <TextView
                   android:id="@+id/pricedummy"
@@ -205,8 +199,9 @@
                   android:text="Offer price :"/>-->
             <TextView
                 android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center|left"
                 android:textSize="16dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@android:color/black"
@@ -214,41 +209,37 @@
                 android:layout_height="20dp"
                 android:text="Product"/>
 
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RelativeLayout
+
+                android:id="@+id/removelay"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                >
 
-                <RelativeLayout
-
-                    android:id="@+id/removelay"
-                    android:layout_width="200dp"
+                <ImageView
+                    android:id="@+id/removeicon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/thrash"
+                    />
+                <TextView
+                    android:id="@+id/remove"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/removeicon"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    >
+                    android:textSize="16dp"
+                    android:textColor="@android:color/black"
+                    android:text="Remove"
+                    />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/removeicon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/thrash"
-                        />
-                    <TextView
-                        android:id="@+id/remove"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/removeicon"
-                        android:layout_centerInParent="true"
-                        android:textSize="16dp"
-                        android:textColor="@android:color/black"
-                        
-                        android:text="Remove"
-                        />
-                </RelativeLayout>
-            </LinearLayout>
+        </LinearLayout>
 
 
         </LinearLayout>
