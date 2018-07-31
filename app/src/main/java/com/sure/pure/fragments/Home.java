@@ -100,8 +100,8 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.home, container, false);
         title = "8";
-        fonts = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(getActivity().getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/futura.ttf");
         Log.i("Title", "Title" + title);
         global = (GlobalClass) getActivity().getApplicationContext();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
@@ -111,9 +111,9 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         progressBar = (ProgressBar) v.findViewById(R.id.item_progress_bar);
 
         TextView copyrights = (TextView) v.findViewById(R.id.copyrights);
-       /* copyrights.setTypeface(bold);
+        copyrights.setTypeface(bold);
         privacy.setTypeface(bold);
-        aboutus.setTypeface(bold);*/
+        aboutus.setTypeface(bold);
 
         a = getActivity();
         global.listmodel = "grid";
@@ -122,7 +122,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
 
         search = (EditText) v.findViewById(R.id.search);
-       // search.setTypeface(bold);
+        search.setTypeface(bold);
 
 
         list_grid.setOnClickListener(new View.OnClickListener() {

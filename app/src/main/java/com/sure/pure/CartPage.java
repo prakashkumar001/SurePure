@@ -76,8 +76,8 @@ public class CartPage extends AppCompatActivity {
         cartcount = (TextView) findViewById(R.id.cartcount);
         carticon = (ImageView) findViewById(R.id.carticon);
         title = (TextView) findViewById(R.id.title);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         // getSupportActionBar().setIcon(R.drawable.logo);
         home=(ImageView)findViewById(R.id.home);
@@ -98,7 +98,7 @@ public class CartPage extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         title.setText("HTC Furniture");
-       // title.setTypeface(bold);
+        title.setTypeface(bold);
         //getSupportActionBar().setIcon(R.drawable.logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -139,10 +139,10 @@ public class CartPage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-       /* total.setTypeface(bold);
+        total.setTypeface(bold);
         sub.setTypeface(bold);
         placeorder.setTypeface(bold);
-        back.setTypeface(bold);*/
+        back.setTypeface(bold);
         double roundoffsubtotal=Math.round(adapter.totalvalue());
         sub.setText(String.format ("%.2f",roundoffsubtotal));
 

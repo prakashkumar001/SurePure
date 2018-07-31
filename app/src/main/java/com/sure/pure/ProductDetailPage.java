@@ -100,8 +100,8 @@ public class ProductDetailPage extends AppCompatActivity {
         title = (TextView) findViewById(R.id.title);
         cartcount = (TextView) findViewById(R.id.cartcount);
         carticon = (ImageView) findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
         loader = ImageLoader.getInstance();
 
 
@@ -117,7 +117,7 @@ public class ProductDetailPage extends AppCompatActivity {
             }
         });
 
-       // add.setTypeface(fonts);
+        add.setTypeface(fonts);
 
         if (global.cartValues.size() > 0) {
             cartcount.setVisibility(View.VISIBLE);
@@ -126,11 +126,11 @@ public class ProductDetailPage extends AppCompatActivity {
             cartcount.setVisibility(View.GONE);
         }
 
-      //  cartcount.setTypeface(fonts);
+        cartcount.setTypeface(fonts);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
         setSupportActionBar(toolbar);
         title.setText("HTC Furniture");
-       // title.setTypeface(bold);
+        title.setTypeface(bold);
         // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

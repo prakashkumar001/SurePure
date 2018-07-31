@@ -46,10 +46,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerView
    }  
    @Override  
    public void onBindViewHolder(DrawerViewHolder holder, final int position) {
-        fonts = Typeface.createFromAsset(context.getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold= Typeface.createFromAsset(context.getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(context.getAssets(), "fonts/futura.ttf");
+        bold= Typeface.createFromAsset(context.getAssets(), "fonts/futura.ttf");
 
-      //  holder.title.setTypeface(fonts);
+       holder.title.setTypeface(fonts);
      holder.title.setText(drawerMenuList.get(position).getCategory());
      //holder.icon.setImageResource(drawerMenuList.get(position).getId());
        holder.itemView.setOnClickListener(new View.OnClickListener() {
