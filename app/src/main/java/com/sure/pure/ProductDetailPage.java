@@ -342,7 +342,7 @@ public class ProductDetailPage extends AppCompatActivity {
                 } else {
                     Product products = new Product();
                     products.setProduct_id(p.getProduct_id());
-                    //products.setProductimage(images);
+                    products.setProductdes(p.getCategory());
                     products.setProductname(p.getProductname());
                     products.setSellerprice(p.getSellerprice());
                     products.setOfferprice(p.getOfferprice());

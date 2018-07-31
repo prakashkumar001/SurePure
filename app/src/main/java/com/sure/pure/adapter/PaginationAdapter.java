@@ -115,6 +115,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.productname.setText(product.get(position).getProductname());
 
+        holder.outofstock.setTypeface(fonts);
         holder.sellerprice.setTypeface(fonts);
         //holder.offerprice.setTypeface(fonts);
         holder.productname.setTypeface(bold);

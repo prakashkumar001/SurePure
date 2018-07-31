@@ -60,7 +60,7 @@ public class CartPage extends AppCompatActivity {
     GlobalClass global;
     Toolbar toolbar;
     LinearLayout footerlay;
-    TextView emptytext;
+    TextView emptytext,gsttext,subtotaltext,totaltext;
     ImageView carticon,home;
     DatabaseHelper databaseHelper;
     Typeface fonts, bold;
@@ -132,6 +132,11 @@ public class CartPage extends AppCompatActivity {
         sub = (TextView) findViewById(R.id.sub);
         total = (TextView) findViewById(R.id.total);
         gstamount= (TextView) findViewById(R.id.gstamount);
+
+
+        gsttext = (TextView) findViewById(R.id.gsttext);
+        subtotaltext = (TextView) findViewById(R.id.subtotaltext);
+        totaltext = (TextView) findViewById(R.id.totaltext);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -139,8 +144,13 @@ public class CartPage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+
+        totaltext.setTypeface(bold);
+        subtotaltext.setTypeface(bold);
+        gsttext.setTypeface(bold);
         total.setTypeface(bold);
         sub.setTypeface(bold);
+        gstamount.setTypeface(bold);
         placeorder.setTypeface(bold);
         back.setTypeface(bold);
         double roundoffsubtotal=Math.round(adapter.totalvalue());
