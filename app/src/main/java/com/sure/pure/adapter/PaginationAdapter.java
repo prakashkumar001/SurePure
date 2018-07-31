@@ -22,6 +22,7 @@ import com.sure.pure.ProductDetailPage;
 import com.sure.pure.R;
 import com.sure.pure.common.GlobalClass;
 import com.sure.pure.model.Product;
+import com.sure.pure.retrofit.APIInterface;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -123,9 +124,8 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         //loader.displayImage(images,holder.image,options);
         //holder.image.setImageResource(product.get(position).getProductimage());
         // holder.image.setImageResource(product.get(position).getProductimage());
-
         try {
-            loader.displayImage("http://www.boolfox.com/rest" + product.get(position).getProductimage(), holder.image, options);
+            loader.displayImage(APIInterface.BASE_URL + product.get(position).getProductimage(), holder.image, options);
 
         } catch (Exception e) {
 
