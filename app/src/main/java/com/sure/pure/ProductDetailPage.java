@@ -46,7 +46,7 @@ import java.util.List;
 public class ProductDetailPage extends AppCompatActivity {
     // String name,sellerprice,offerprice,description,product_id;
     String images;
-    TextView productname, price, productdescription, quantity, stock;
+    TextView productname, price, productdescription, quantity, stock,stocktext;
     ViewPager viewPager;
     ImageView image, plus, minus;
     Button add;
@@ -91,6 +91,7 @@ public class ProductDetailPage extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         home=(ImageView)findViewById(R.id.home);
         stock = (TextView) findViewById(R.id.stockquants);
+        stocktext = (TextView) findViewById(R.id.stock);
         productdescription = (TextView) findViewById(R.id.description);
         image = (ImageView) findViewById(R.id.image);
         plus = (ImageView) findViewById(R.id.plus);
@@ -199,10 +200,15 @@ public class ProductDetailPage extends AppCompatActivity {
             price.setText(seller + p.getSellerprice());
             productdescription.setText(p.getProductdes());
             stock.setText(p.getStock());
-           /* productname.setTypeface(fonts);
+            productname.setTypeface(fonts);
             price.setTypeface(fonts);
-            productdescription.setTypeface(fonts);*/
-
+            stock.setTypeface(fonts);
+            productdescription.setTypeface(fonts);
+            next.setTypeface(fonts);
+            previous.setTypeface(fonts);
+            price.setTypeface(fonts);
+            quantity.setTypeface(fonts);
+            stocktext.setTypeface(fonts);
 
             if (global.productIDS.contains(p.getProduct_id())) {
                 for (int ii = 0; ii < global.cartValues.size(); ii++) {

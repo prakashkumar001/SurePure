@@ -53,18 +53,27 @@ Toolbar toolbar;
     ImageView home;
     DatabaseHelper databaseHelper;
     Typeface fonts, bold;
+    TextView team,thanks,title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkout);
         back=(ImageView)findViewById(R.id.back);
         home=(ImageView)findViewById(R.id.home);
+        team=(TextView) findViewById(R.id.team);
+        thanks=(TextView) findViewById(R.id.thanks);
+        title=(TextView) findViewById(R.id.title);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
         globalClass=(GlobalClass)getApplicationContext();
         globalClass.cartValues.clear();
         globalClass.productIDS.clear();
+
+        thanks.setTypeface(fonts);
+        team.setTypeface(fonts);
+        title.setTypeface(fonts);
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

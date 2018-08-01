@@ -102,7 +102,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         holder.sellerprice.setText(seller + product.get(position).getSellerprice());
         //holder.offerprice.setText(seller + product.get(position).getOfferprice());
-        if (product.get(position).getSellerprice().equals("0")) {
+        if (product.get(position).getStock().equals("0")) {
             holder.outofstock.setText("Out of Stock");
             holder.sellerprice.setVisibility(View.GONE);
             holder.add.setVisibility(View.GONE);
