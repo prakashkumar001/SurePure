@@ -176,10 +176,10 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore() {
-                if (global.Category != null) {
+            /*    if (global.Category != null) {
                     getSelectCategory(global.Category);
 
-                } else if(queryData!=null) {
+                } else*/ if(queryData!=null) {
                     searchData(queryData);
                 }else {
                     addDataToList();
