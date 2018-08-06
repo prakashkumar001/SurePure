@@ -66,6 +66,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerView
                    global.Category=drawerMenuList.get(position).getCategory();
 
                    home=new Home();
+                  // home.queryData=null;
                    FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
                    fragmentManager.beginTransaction()
                            .replace(R.id.container, home)

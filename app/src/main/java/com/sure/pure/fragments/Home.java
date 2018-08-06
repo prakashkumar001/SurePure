@@ -176,10 +176,10 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore() {
-            /*    if (global.Category != null) {
-                    getSelectCategory(global.Category);
+                if (global.Category != null && queryData!=null) {
+                    CategorysearchData(queryData,global.Category);
 
-                } else*/ if(queryData!=null) {
+                } else if(queryData!=null) {
                     searchData(queryData);
                 }else {
                     addDataToList();
@@ -303,7 +303,14 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                             @Override
                             public void run() {
                                 queryData=s.toString();
-                                searchData(queryData);
+                                if (global.Category != null && queryData!=null) {
+                                    CategorysearchData(queryData,global.Category);
+
+                                } else if(queryData!=null) {
+                                    searchData(queryData);
+                                }else {
+                                    addDataToList();
+                                }
 
                             }
                         });
@@ -545,12 +552,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
                 currentPage = currentPage + 1;
 
                 dialog.dismiss();
-                /*recyclerView.removeOnScrollListener(new EndlessRecyclerOnScrollListener() {
-                    @Override
-                    public void onLoadMore() {
 
-                    }
-                });*/
             }
 
             @Override
@@ -560,5 +562,63 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
         });
 
     }
+
+    public void CategorysearchData(String searchString,String cat_name) {
+        // Set up progress before call
+        final ProgressDialog dialog;
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
+        // show it
+        dialog.show();
+
+
+
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //creating the api interface
+        APIInterface api = retrofit.create(APIInterface.class);
+
+
+        //now making the call object
+        //Here we are using the api method that we created inside the api interface
+        Call<List<Product>> call = api.getCategorySearchFilter(cat_name,searchString);
+        call.enqueue(new Callback<List<Product>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
+
+                productList=new ArrayList<>();
+                productList.addAll(response.body());
+                adapter=new PaginationAdapter(getActivity(),productList);
+
+                if(global.listmodel.equalsIgnoreCase("list"))
+                {
+                    linearLayout();
+                }else
+                {
+                    gridLayout();
+                }
+
+                recyclerView.setAdapter(adapter);
+
+                currentPage = currentPage + 1;
+
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
 
 }

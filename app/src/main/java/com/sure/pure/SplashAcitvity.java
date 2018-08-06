@@ -1,6 +1,7 @@
 package com.sure.pure;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 public class SplashAcitvity extends AppCompatActivity {
 
     ImageView imageView;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +38,24 @@ public class SplashAcitvity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent i=new Intent(SplashAcitvity.this,MainActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
+
+                SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                String restoredText = prefs.getString("mobile", null);
+                if (restoredText != null) {
+                    String name = prefs.getString("email", "No name defined");//"No name defined" is the default value.
+
+                    Intent i=new Intent(SplashAcitvity.this,MainActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                    finish();
+                }else
+                {
+                    Intent i=new Intent(SplashAcitvity.this,Register.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                    finish();
+                }
+
             }
 
             @Override

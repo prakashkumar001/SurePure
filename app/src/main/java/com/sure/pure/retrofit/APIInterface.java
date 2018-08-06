@@ -41,5 +41,13 @@ public interface APIInterface {
     @POST("/rest/index.php/htc/product_search")
     Call<List<Product>> getSearchFilter(@Field("qry_string") String qry_string);
 
+    @FormUrlEncoded
+    @POST("/rest/index.php/htc/user_register")
+    Call<CheckoutResponse> register(@Field("mobile") String mobile,@Field("email") String email,@Field("macaddress") String macaddress);
+
+    @FormUrlEncoded
+    @POST("/rest/index.php/htc/product_category_search")
+    Call<List<Product>> getCategorySearchFilter(@Field("cat_name") String catname,@Field("qry_string") String qry_string);
+
 
 }
