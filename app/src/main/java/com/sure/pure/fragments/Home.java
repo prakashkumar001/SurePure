@@ -181,7 +181,7 @@ public class Home extends Fragment implements Spinner.OnItemSelectedListener, Se
 
                 } else if(queryData!=null) {
                     searchData(queryData);
-                }else {
+                }else if(global.Category==null) {
                     addDataToList();
                 }
             }
