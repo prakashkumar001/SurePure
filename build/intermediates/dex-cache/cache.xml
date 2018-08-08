@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Bairavi\.android\build-cache\9421a5d36b14ac07f2586255597f66d9fec6888c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44a694d4095be84c2888764b1f7256b385c030ad">
+        <dex dex="E:\Gani\SurePure\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fc59f0ef68cf484aabe9a7b29841465b90cf9822\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Bairavi\.android\build-cache\47c4f32b4bcf8427a0d610f594655950f6a3c685\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="E:\Gani\SurePure\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_26654b437d1da871df941d6a914ad47654255da1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Bairavi\.android\build-cache\27cc1c9029d624aa5a82afcdcb859977d6ff29db\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="E:\Gani\SurePure\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6f7fac2ae77b86948f67c0aebcca3c76fa523670\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Bairavi\.android\build-cache\ca71fdeacf73394e35deeccb228d199a161a1ecf\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="E:\Gani\SurePure\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6b3740cc49917a536d8106cc35eb2f09e0c8eea0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Bairavi\.android\build-cache\7945e379d2591ad87998c4dc2dcb525901f501e1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="27777b3cad3c20b1acab19f6e37fe3e03371bf6e">
+        <dex dex="E:\Gani\SurePure\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1f1483b5b7cf8c22c329d3e4991594c1adc895e6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Bairavi\.android\build-cache\7db2572db662785c4bd213ce59b6fe2f360806de\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="E:\Gani\SurePure\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fafec697d47f2fa72389d9ab60079e21834105f5\classes.dex" />
+    </item>
+
+</items>
