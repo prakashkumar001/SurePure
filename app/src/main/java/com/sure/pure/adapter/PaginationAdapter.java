@@ -126,7 +126,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         //holder.image.setImageResource(product.get(position).getProductimage());
         // holder.image.setImageResource(product.get(position).getProductimage());
         try {
-            loader.displayImage(APIInterface.BASE_URL + product.get(position).getProductimage(), holder.image, options);
+            loader.displayImage(product.get(position).getProductimage(), holder.image, options);
 
         } catch (Exception e) {
 
