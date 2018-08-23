@@ -101,7 +101,7 @@ public class FullImage extends AppCompatActivity {
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.full_item_view, collection, false);
             TouchImageView imageView=(TouchImageView)layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
-            loader.displayImage(APIInterface.BASE_URL+drawables[position],imageView);
+            loader.displayImage(drawables[position],imageView);
             collection.addView(layout);
             return layout;
         }

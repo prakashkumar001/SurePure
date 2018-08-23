@@ -478,7 +478,7 @@ public class ProductDetailPage extends AppCompatActivity {
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.view_item, collection, false);
             ImageView imageView = (ImageView) layout.findViewById(R.id.image);
             //imageView.setImageResource(drawables[position]);
-            loader.displayImage(APIInterface.BASE_URL + drawables[position], imageView);
+            loader.displayImage( drawables[position], imageView);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

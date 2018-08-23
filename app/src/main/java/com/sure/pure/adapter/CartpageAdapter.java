@@ -156,7 +156,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
 
 
         //holder.image.setImageResource(global.cartValues.get(position).getProductimage());
-        loader.displayImage(APIInterface.BASE_URL + global.cartValues.get(position).getProductimage(), holder.image, options);
+        loader.displayImage(global.cartValues.get(position).getProductimage(), holder.image, options);
         holder.quantity.setText(String.valueOf(global.cartValues.get(position).getQuantity()));
 
 
