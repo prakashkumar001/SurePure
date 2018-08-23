@@ -62,7 +62,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         public TextView offerprice, quantity;
         public ImageView image, increase, decrease;
         public RelativeLayout remove;
-        public TextView plus, minus, total, removetext;
+        public TextView plus, minus, total;
 
         public TextView pricedummy, quantext, totaltext;
 
@@ -75,7 +75,7 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
             decrease = (ImageView) view.findViewById(R.id.minus);
             quantity = (TextView) view.findViewById(R.id.quantity);
             total = (TextView) view.findViewById(R.id.total);
-            removetext = (TextView) view.findViewById(R.id.remove);
+            //removetext = (TextView) view.findViewById(R.id.remove);
 
             increase = (ImageView) view.findViewById(R.id.add);
             image = (ImageView) view.findViewById(R.id.image);
@@ -97,8 +97,8 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         global = (GlobalClass) ctx.getApplicationContext();
         // drawables=new int[]{R.drawable.apple,R.drawable.banana,R.drawable.kiwi,R.drawable.grapes,R.drawable.starwbery,R.drawable.orange,R.drawable.watermelon};
         loader = ImageLoader.getInstance();
-        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(ctx.getAssets(), "fonts/futura.ttf");
     }
 
     @Override
@@ -143,16 +143,16 @@ public class CartpageAdapter extends RecyclerView.Adapter<CartpageAdapter.MyView
         holder.offerprice.setText(global.cartValues.get(position).getSellerprice());
 
 
-      /*  holder.total.setTypeface(fonts);
+        holder.total.setTypeface(fonts);
         holder.productname.setTypeface(bold);
         holder.description.setTypeface(fonts);
         holder.offerprice.setTypeface(fonts);
-        holder.removetext.setTypeface(bold);
+        holder.quantext.setTypeface(bold);
 
 
         holder.totaltext.setTypeface(fonts);
         holder.pricedummy.setTypeface(fonts);
-        holder.totaltext.setTypeface(fonts);*/
+        holder.totaltext.setTypeface(fonts);
 
 
         //holder.image.setImageResource(global.cartValues.get(position).getProductimage());

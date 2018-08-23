@@ -80,8 +80,8 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .cacheOnDisk(true) // default
                 .build();
 
-        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(ctx.getAssets(), "fonts/futura.ttf");
+        bold= Typeface.createFromAsset(ctx.getAssets(), "fonts/futura.ttf");
 
 
         //Product product = moviesList[position];
@@ -102,7 +102,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         holder.sellerprice.setText(seller + product.get(position).getSellerprice());
         //holder.offerprice.setText(seller + product.get(position).getOfferprice());
-        if (product.get(position).getSellerprice().equals("0")) {
+        if (product.get(position).getStock().equals("0")) {
             holder.outofstock.setText("Out of Stock");
             holder.sellerprice.setVisibility(View.GONE);
             holder.add.setVisibility(View.GONE);
@@ -115,10 +115,11 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         // holder.sellerprice.setPaintFlags(holder.sellerprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.productname.setText(product.get(position).getProductname());
 
-       /* holder.sellerprice.setTypeface(fonts);
+        holder.outofstock.setTypeface(fonts);
+        holder.sellerprice.setTypeface(fonts);
         //holder.offerprice.setTypeface(fonts);
         holder.productname.setTypeface(bold);
-        holder.add.setTypeface(bold);*/
+        holder.add.setTypeface(bold);
 
         //String images=String.valueOf(drawables[position]);
         //loader.displayImage(images,holder.image,options);

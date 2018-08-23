@@ -29,8 +29,8 @@ public class SortAdapter extends BaseAdapter {
     {
         this.data=data;
         this.context=context;
-        fonts = Typeface.createFromAsset(context.getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold= Typeface.createFromAsset(context.getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(context.getAssets(), "fonts/futura.ttf");
+        bold= Typeface.createFromAsset(context.getAssets(), "fonts/futura.ttf");
 
     }
 

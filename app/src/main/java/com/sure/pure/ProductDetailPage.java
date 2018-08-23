@@ -46,7 +46,7 @@ import java.util.List;
 public class ProductDetailPage extends AppCompatActivity {
     // String name,sellerprice,offerprice,description,product_id;
     String images;
-    TextView productname, price, productdescription, quantity, stock;
+    TextView productname, price, productdescription, quantity, stock,stocktext;
     ViewPager viewPager;
     ImageView image, plus, minus;
     Button add;
@@ -91,6 +91,7 @@ public class ProductDetailPage extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         home=(ImageView)findViewById(R.id.home);
         stock = (TextView) findViewById(R.id.stockquants);
+        stocktext = (TextView) findViewById(R.id.stock);
         productdescription = (TextView) findViewById(R.id.description);
         image = (ImageView) findViewById(R.id.image);
         plus = (ImageView) findViewById(R.id.plus);
@@ -101,8 +102,8 @@ public class ProductDetailPage extends AppCompatActivity {
         title = (TextView) findViewById(R.id.title);
         cartcount = (TextView) findViewById(R.id.cartcount);
         carticon = (ImageView) findViewById(R.id.carticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
         loader = ImageLoader.getInstance();
 
 
@@ -118,7 +119,7 @@ public class ProductDetailPage extends AppCompatActivity {
             }
         });
 
-       // add.setTypeface(fonts);
+        add.setTypeface(fonts);
 
         if (global.cartValues.size() > 0) {
             cartcount.setVisibility(View.VISIBLE);
@@ -127,11 +128,11 @@ public class ProductDetailPage extends AppCompatActivity {
             cartcount.setVisibility(View.GONE);
         }
 
-      //  cartcount.setTypeface(fonts);
+        cartcount.setTypeface(fonts);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.colorPrimary));
         setSupportActionBar(toolbar);
         title.setText("HTC Furniture");
-       // title.setTypeface(bold);
+        title.setTypeface(bold);
         // getSupportActionBar().setIcon(R.drawable.surelogo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -199,10 +200,15 @@ public class ProductDetailPage extends AppCompatActivity {
             price.setText(seller + p.getSellerprice());
             productdescription.setText(p.getProductdes());
             stock.setText(p.getStock());
-           /* productname.setTypeface(fonts);
+            productname.setTypeface(fonts);
             price.setTypeface(fonts);
-            productdescription.setTypeface(fonts);*/
-
+            stock.setTypeface(fonts);
+            productdescription.setTypeface(fonts);
+            next.setTypeface(fonts);
+            previous.setTypeface(fonts);
+            price.setTypeface(fonts);
+            quantity.setTypeface(fonts);
+            stocktext.setTypeface(fonts);
 
             if (global.productIDS.contains(p.getProduct_id())) {
                 for (int ii = 0; ii < global.cartValues.size(); ii++) {
@@ -342,7 +348,7 @@ public class ProductDetailPage extends AppCompatActivity {
                 } else {
                     Product products = new Product();
                     products.setProduct_id(p.getProduct_id());
-                    //products.setProductimage(images);
+                    products.setProductdes(p.getCategory());
                     products.setProductname(p.getProductname());
                     products.setSellerprice(p.getSellerprice());
                     products.setOfferprice(p.getOfferprice());

@@ -106,12 +106,14 @@ public class MainActivity extends AppCompatActivity
         home = (ImageView) findViewById(R.id.home);
         carticon = (ImageView) findViewById(R.id.carticon);
         sorticon = (ImageView) findViewById(R.id.sorticon);
-        fonts = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
-        bold = Typeface.createFromAsset(getAssets(), "fonts/ethnocentric_rg_it.ttf");
+        fonts = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
+        bold = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
         databaseHelper = new DatabaseHelper(getApplicationContext());
         setSupportActionBar(toolbar);
 
         invalidateOptionsMenu();
+
+        title.setTypeface(fonts);
 
         drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
