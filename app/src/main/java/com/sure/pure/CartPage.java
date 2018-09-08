@@ -153,12 +153,12 @@ public class CartPage extends AppCompatActivity {
         gstamount.setTypeface(bold);
         placeorder.setTypeface(bold);
         back.setTypeface(bold);
-        double roundoffsubtotal=Math.round(adapter.totalvalue());
+        double roundoffsubtotal=Math.round(adapter.subtotalvalue());
         sub.setText(String.format ("%.2f",roundoffsubtotal));
 
-        double roundofftotal=Math.round(getTotal());
+        double roundofftotal=Math.round(adapter.totalvalue());
         total.setText(String.format ("%.2f",roundofftotal));
-        double roundoffgstamount=Math.round(getgst());
+        double roundoffgstamount=Math.round(adapter.getgst());
         gstamount.setText(String.format("%.2f",roundoffgstamount));
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -151,10 +151,7 @@ public class Register extends AppCompatActivity {
 
 
                 CheckoutResponse result=response.body();
-                if(result.getMessage().equalsIgnoreCase("Not Registered"))
-                {
-                    Toast.makeText(getApplicationContext(),result.getMessage(),Toast.LENGTH_SHORT).show();
-                }else
+                if(result.getMessage().equalsIgnoreCase("Registration Successfully."))
                 {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -165,6 +162,12 @@ public class Register extends AppCompatActivity {
                     Intent i=new Intent(Register.this,MainActivity.class);
                     startActivity(i);
                     finish();
+                }else
+                {
+
+                    Toast.makeText(getApplicationContext(),result.getMessage(),Toast.LENGTH_SHORT).show();
+
+
                 }
 
             }
