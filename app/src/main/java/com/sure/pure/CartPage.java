@@ -2,6 +2,7 @@ package com.sure.pure;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ public class CartPage extends AppCompatActivity {
     ImageView carticon,home;
     DatabaseHelper databaseHelper;
     Typeface fonts, bold;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -281,58 +283,66 @@ public class CartPage extends AppCompatActivity {
             productData.add(new ProductData(global.cartValues.get(i).getProduct_id(),global.cartValues.get(i).getSellerprice(),global.cartValues.get(i).getQuantity(),global.cartValues.get(i).getTotalprice(),global.cartValues.get(i).getProductname()));
 
         }
-        ProductList productList=new ProductList();
-        productList.setEmailid("akshav00@gmail.com");
-        productList.setProductData(productData);
+        ProductList productList = null;
+        SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        String restoredText = prefs.getString("mobile", null);
+        if (restoredText != null) {
+            String email = prefs.getString("email", "No name defined");//"No name defined" is the default value.
+
+             productList=new ProductList();
+            productList.setEmailid(email);
+            productList.setProductData(productData);
+            Gson gson = new Gson();
+            String product=gson.toJson(productList);
+            ProductList data = gson.fromJson(product, ProductList.class);
+
+            Log.d("addToOrders", "addToOrders: "+data);
+            Log.d("addToOrders", "addToOrders: "+data);
+
+            //now making the call object
+            //Here we are using the api method that we created inside the api interface
+
+            Call<CheckoutResponse> call = api.checkout(data);
+            call.enqueue(new Callback<CheckoutResponse>() {
+
+
+                @Override
+                public void onResponse(Call<CheckoutResponse> call, retrofit2.Response<CheckoutResponse> response) {
+
+                    dialog.dismiss();
+                    CheckoutResponse result=response.body();
+                    if(result.getStatus().equals("200"))
+                    {
+                        Intent i=new Intent(CartPage.this,Checkout.class);
+                        startActivity(i);
+                        finish();
+                    }
 
 
 
 
 
-        Gson gson = new Gson();
-        String product=gson.toJson(productList);
-        ProductList data = gson.fromJson(product, ProductList.class);
 
 
-
-        Log.d("addToOrders", "addToOrders: "+data);
-        Log.d("addToOrders", "addToOrders: "+data);
-
-        //now making the call object
-        //Here we are using the api method that we created inside the api interface
-
-        Call<CheckoutResponse> call = api.checkout(data);
-        call.enqueue(new Callback<CheckoutResponse>() {
-
-
-            @Override
-            public void onResponse(Call<CheckoutResponse> call, retrofit2.Response<CheckoutResponse> response) {
-
-                dialog.dismiss();
-                CheckoutResponse result=response.body();
-                if(result.getStatus().equals("200"))
-                {
-                    Intent i=new Intent(CartPage.this,Checkout.class);
-                    startActivity(i);
-                    finish();
                 }
 
+                @Override
+                public void onFailure(Call<CheckoutResponse> call, Throwable t) {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
 
+        }
 
 
-
-            }
-
-            @Override
-            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
+
+
+
 
 
 }
